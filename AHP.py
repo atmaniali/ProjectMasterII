@@ -72,7 +72,7 @@ class ahp:
 
 # executions :
 
-ahp_execute = ahp(file,matrice)
+ahp_execute = ahp(file1,matrice)
 matrice =ahp_execute.csv_to_matrix(matrice)
 print(matrice) 
 print(type(matrice))
