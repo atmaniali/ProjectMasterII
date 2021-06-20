@@ -1,7 +1,7 @@
                                  ,sensibilité au point d'injection ,douleur au point d'injection ,céphalées ,hyperthermie ,nausées ,fatigue 
-sensibilité au point d'injection ,1                                ,                             ,          ,             ,        ,        
-douleur au point d'injection     ,                                 ,1                            ,          ,             ,        ,        
-céphalées                        ,                                 ,                             ,1         ,             ,        ,        
-hyperthermie                     ,                                 ,                             ,          ,1            ,        ,        
-nausées                          ,                                 ,                             ,          ,             ,1       ,        
-fatigue                          ,                                 ,                             ,          ,             ,        ,1       
+sensibilité au point d'injection ,1                                ,1                            ,3         ,0.2          ,0.33    ,3        
+douleur au point d'injection     ,1                                ,1                            ,5         ,3            ,1       ,5        
+céphalées                        ,3                                ,0.33                         ,1         ,5            ,0.33    ,1        
+hyperthermie                     ,0.2                              ,5                            ,0.2       ,1            ,1       ,0.2        
+nausées                          ,0.33                             ,3                            ,3         ,1            ,1       ,3        
+fatigue                          ,3                                ,0.33                         ,1         ,5            ,0.33    ,1       
