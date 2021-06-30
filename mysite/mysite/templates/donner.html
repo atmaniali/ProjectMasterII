@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js"></script>
+
+
+    <title>Data</title>
+</head>
+
+<body>
+    <h1>Data </h1>
+    <!-- {{genders.male }} -->
+    {{sexe_values}}
+    {{sexe}}
+    <script>
+        console.log({{sexe_values}})
+    </script>
+    <br>
+    <br>
+    <h4>hjh</h4>
+    {{ target_weights }} <br>
+    <table>
+        {% for key, value in dictonary_items %}
+        <!-- <p>key :</p>
+        {{key}}
+        <p>values :</p>
+        {{value}}
+        <br> -->
+        <tr>
+            <td>{{key}}</td>
+            <td>{{value}}</td>
+        </tr>
+        <!-- <tr>
+                <td>{{value}}</td>
+            </tr> -->
+        <!-- ToDo : save in table and sort the result -->
+        {% endfor %}
+    </table>
+    {% include "chart1.html"%}
+    <br>
+    <br>
+    <br>
+    <div>
+        <h1>Test</h1>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. 
+            Beatae alias dolorem ea unde, reiciendis natus mollitia. 
+            Animi iusto minima cumque facere repellat nam quis, iure, 
+            dolorum accusantium quam est odit.</p>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="card">
+        <div class="card-body">
+          This is some text within a card body.
+            {% include "chart2.html"%}
+        </div>
+      </div>
+</body>
+
+</html>

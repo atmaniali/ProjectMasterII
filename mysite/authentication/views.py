@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.forms.utils import ErrorList
 from django.http import HttpResponse
 from .forms import LoginForm, SignUpForm
+from app.models import Profile
 
 def login_view(request):
     form = LoginForm(request.POST or None)
@@ -21,6 +22,7 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
+                
                 return redirect("/")
             else:    
                 msg = 'Invalid credentials'    
@@ -45,7 +47,7 @@ def register_user(request):
             msg     = 'User created - please <a href="/login">login</a>.'
             success = True
             
-            #return redirect("/login/")
+            return redirect("/login/")
 
         else:
             msg = 'Form is not valid'    

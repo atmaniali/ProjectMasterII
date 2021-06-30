@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaccins</title>
+</head>
+<body>
+    <h2>Vaccins</h2>
+    <!-- Form 1 -->
+    <form method="POST">
+        {% csrf_token %}
+        <h3>Vaccins :</h3>
+        <h4>Vaccin nom</h4>
+        {{vaccin_form}}
+        <h4>Charachteristique Form :</h4>
+        {{charachteristique_form.as_p}}
+        <h4>Posologie Form :</h4>
+        {{posologie_form.as_p}}
+        <h4>Cout Form :</h4>
+        {{cout_form.as_p}}
+        <h4>Effet Secondaire Form :</h4>
+        {{effets_secondaire_form.as_p}}
+        <button  class="btn btn-lg btn-primary"  type="submit" style = "width : 150px">Save</button>
+    </form>
+        
+   
+</body>
+</html>

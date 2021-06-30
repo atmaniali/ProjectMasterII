@@ -53,8 +53,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'mysite.urls'
-LOGIN_REDIRECT_URL = "home"   # Route defined in app/urls.py
-LOGOUT_REDIRECT_URL = "home"  # Route defined in app/urls.py
+LOGIN_REDIRECT_URL = "/"   # Route defined in app/urls.py
+LOGOUT_REDIRECT_URL = "home.html"  # Route defined in app/urls.py
 TEMPLATE_DIR = os.path.join(BASE_DIR, "mysite/templates")  # ROOT dir for templates
 
 
@@ -120,8 +120,16 @@ USE_L10N = True
 
 USE_TZ = True
 
+# SameSite resolve cookies 
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SAMESITE = 'None'
+#  End 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+

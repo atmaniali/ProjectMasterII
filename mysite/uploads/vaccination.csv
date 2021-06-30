@@ -1,0 +1,11 @@
+            ,Carachterisique Vaccin ,           ,Posologie ,            ,              ,                 ,Cout         ,           ,                                 ,effets secondaire            ,          ,             ,        ,
+            ,Type                   ,Efficacite ,NBr Dose  ,Age         ,Delais(jours) ,Temps d'effet(M) ,Conservation ,Prix(euro) ,sensibilité au point d'injection ,douleur au point d'injection ,céphalées ,hyperthermie ,nausées ,fatigue
+AstraZeneca ,vector virale          ,65%        ,2         ,55 +        ,28/84         ,?                ,2/ 8         ,6          ,63.7%                            ,54.2%                        ,52.6%     ,33.6%        ,21.9%   ,53%
+Sinovac     ,Entiere inactivité     ,50%        ,2         ,18 +        ,14            ,18               ,2 /8         ,23         ,0%                               ,17%                          ,4%        ,5%           ,0%      ,4%
+sputnik     ,Vecteur viral          ,92%        ,2         ,18 +        ,28            ,24               ,2 /8         ,17         ,0%                               ,0%                           ,42%       ,15.2%        ,0%      ,0%
+Janssen     ,Vecteur viral          ,67%        ,1         ,55 +        ,0             ,?                ,2 /8         ,8          ,0%                               ,48.6%                        ,38.9%     ,9%           ,14.2%   ,38.2
+Pfizer      ,ARN                    ,95%        ,2         ,12 + & 55 - ,42            ,6                ,-60/ -90     ,31         ,0%                               ,80%                          ,50%       ,10%          ,30%     ,60%
+Moderna     ,ARN                    ,90%        ,2         ,15 + & 50 - ,42            ,                 ,-15/ -25     ,31         ,19.8%                            ,92%                          ,64.7%     ,15.5%        ,23%     ,70%
+
+
+

@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js"></script>
+    <title>Api2</title>
 </head>
+
 <body>
     <strong>Live By Country And Status</strong>
-        <p>play 1.0</p>
-        
-        {% for i in respense%}
-            <p>play2.0</p>
-            {{i.Country}}
+    <p>play 1.0</p>
+    <br>
+    
+    {{response}}
+    <!-- <table>
+        {% for i in data%}
+            <tr>
+                <td>{{i.deaths}}</td>
+                <td>{{i.date}}</td>
+            </tr>
         {% endfor %}
+    </table> -->
 </body>
+
 </html>

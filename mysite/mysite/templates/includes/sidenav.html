@@ -34,15 +34,15 @@
             <div class=" dropdown-header noti-title">
               <h6 class="text-overflow m-0">Welcome!</h6>
             </div>
-            <a href="/profile.html" class="dropdown-item">
+            <a href="{% url 'app:profile' %}" class="dropdown-item">
               <i class="ni ni-single-02"></i>
               <span>My profile</span>
             </a>
-            <a href="/profile.html" class="dropdown-item">
+            <a href="{% url 'app:profile' %}" class="dropdown-item">
               <i class="ni ni-settings-gear-65"></i>
               <span>Settings</span>
             </a>
-            <a href="/profile.html" class="dropdown-item">
+            <a href="{% url 'app:profile' %}" class="dropdown-item">
               <i class="ni ni-calendar-grid-58"></i>
               <span>Activity</span>
             </a>
@@ -104,7 +104,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if 'profile' in segment %} active {% endif %}" href="/profile.html">
+            <a class="nav-link {% if 'profile' in segment %} active {% endif %}" href="{% url 'app:profile' %}">
               <i class="ni ni-single-02 text-yellow"></i> User profile
             </a>
           </li>
@@ -120,8 +120,23 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="api2.html">
-              <i class="ni ni-user-run text-red"></i> API
+            <a class="nav-link" href="{% url 'app:home' %}">
+              <i class="ni ni-user-run text-red"></i> Home
+            </a>
+          </li>
+           <li class="nav-item">
+            <a class="nav-link" href="{% url 'app:data_page' %}">
+              <i class="ni ni-user-run text-red"></i> Donner
+            </a>
+          </li>
+          <li class="nav-item {% if 'api' in segment %} active {% endif %}">
+            <a class="nav-link" href="{% url 'app:api'%}">
+              <i class="ni ni-user-run text-red"></i> UI_API
+            </a>
+          </li>
+          <li class="nav-item {% if 'api' in segment %} active {% endif %}">
+            <a class="nav-link" href="{% url 'app:api2'%}">
+              <i class="ni ni-user-run text-red"></i> UI_API II
             </a>
           </li>
         </ul>

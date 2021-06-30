@@ -18,8 +18,8 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">Medicole 01</h5>
-                      <span class="h2 font-weight-bold mb-0">350,897</span>
+                      <h5 class="card-title text-uppercase text-muted mb-0">Coronavirus Cases:</h5>
+                      <span class="h2 font-weight-bold mb-0">{{data.confirmed}}</span>
                     </div>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
@@ -39,8 +39,8 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">New users</h5>
-                      <span class="h2 font-weight-bold mb-0">2,356</span>
+                      <h5 class="card-title text-uppercase text-muted mb-0">Deaths:</h5>
+                      <span class="h2 font-weight-bold mb-0">{{data.deaths}}</span>
                     </div>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
@@ -60,8 +60,8 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col">
-                      <h5 class="card-title text-uppercase text-muted mb-0">Sales</h5>
-                      <span class="h2 font-weight-bold mb-0">924</span>
+                      <h5 class="card-title text-uppercase text-muted mb-0">Recovered:</h5>
+                      <span class="h2 font-weight-bold mb-0">{{data.recovered}}</span>
                     </div>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -153,12 +153,10 @@
             <div class="card-body">
                 <!-- hada ziyada pr test -->
                 <strong>Live By Country And Status</strong>
-        <p>play 1.0</p>
+                <p>play 1.0</p>
+                {{response}}
         
-        {% for i in respense%}
-            <p>play2.0</p>
-            {{i}}
-        {% endfor %}
+        
             <!-- hna     tkml ziyada -->
               <!-- Chart -->
               <!-- <div class="chart">
