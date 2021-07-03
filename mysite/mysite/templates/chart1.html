@@ -36,10 +36,10 @@
     var myChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: {{sexe_values | safe}},
+            labels: {{sexe  | safe}},
             datasets: [{
                 label: '# of Votes',
-                data: [29930, 25700],
+                data: {{sexe_values | safe}},
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',

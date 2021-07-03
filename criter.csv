@@ -3,3 +3,7 @@ Carachterisique Vaccin ,1                      ,3         ,5    ,1
 Posologie              ,0.33                   ,1         ,3    ,0.2
 Cout                   ,0.2                    ,0.33       ,1    ,3
 Effet Secondaire       ,1                      ,5         ,0.33  ,1
+
+{('Carachterisique Vaccin', 'Posologie'): 3, ('Carachterisique Vaccin', 'Cout'): 5, ('Carachterisique Vaccin', 'Effets Secondaire'): 1,
+    ('Safety', 'Style'): 9, ('Safety', 'Capacity'): 1,
+    ('Style', 'Capacity'): 1/7}

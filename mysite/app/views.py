@@ -4,6 +4,7 @@ Copyright (c) 2019 - present AppSeed.us
 """
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
+from django.forms.widgets import DateTimeBaseInput
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import loader
 from django.http import HttpResponse
@@ -14,17 +15,23 @@ from ahpy import ahpy
 from django.utils.dateparse import parse_datetime
 import requests
 import itertools
+import csv
+import numpy as np
 
-@login_required(login_url="/login/")
+# @login_required(login_url="/login/")
 def index(request):
-    
-    context = {}
+    data = requests.get('https://api.corona-dz.live/country/latest').json()
+    date_auj = parse_datetime(data['date']).date()
+    context = {
+        'response' : data,
+        'date_de_donner' : date_auj     
+    } 
     context['segment'] = 'index'
-
+    print("data context", data)
     html_template = loader.get_template( 'index.html' )
     return HttpResponse(html_template.render(context, request))
 
-@login_required(login_url="/login/")
+# @login_required(login_url="/login/")
 def pages(request):
     context = {}
     # All resource paths end in .html.
@@ -62,8 +69,7 @@ def api(request):
     # Home
 def home_view(request):
     context = {
-        'response' : 'arwah netlag 3lik',
-         
+        'response' : 'arwah netlag 3lik',     
     }
     context['segment'] = 'home'
 
@@ -189,11 +195,24 @@ def data_page(request):
 def ahp_page(request):
     print('salam')
     genders = requests.get('https://api.corona-dz.live/country/gender/latest').json()
+    all_genders = requests.get('https://api.corona-dz.live/country/gender/all').json()
     sexe = ['male', 'female']
+    males = []
+    females = []
+    dates_all_genderes = []
     sexe_values = []
     sexe_values.append(genders['male'])
     sexe_values.append(genders['female'])
+# remplire  all gender male female with  dates
+    for gnder in all_genders :
+        males.append(gnder['male'])
+        females.append(gnder['female'])
+        dates_all_genderes.append(parse_datetime(gnder['date']).date())
+
     context = {}
+    print('male .', males[:5])
+    print('dates ***************** .', dates_all_genderes[-5:])
+    print('type dates !:', type(dates_all_genderes[1].date()))
     # URL  example : https://en.wikipedia.org/wiki/Analytic_hierarchy_process_–_car_example  
     # Creteria
     criteria_comparisons = {('Cost', 'Safety'): 3, ('Cost', 'Style'): 7, ('Cost', 'Capacity'): 3,
@@ -272,6 +291,25 @@ def ahp_page(request):
             result.save()
             print("type of key",type(keys), "values = ",keys)
             print("type of value",type(values), "values = ",values)
+    # PROMETH II
+    # Matrix = np.array(list(csv.reader(open("media/files/promethee_testing.csv", "r"), delimiter=",")))
+    # print('Matrice de performance',Matrix)
+    # array_Matrix  = np.array(Matrix)
+    # Alternative_matix = array_Matrix[2:,1:].astype(np.single)
+    # labels = array_Matrix[0,1:]
+    # Alternatives = array_Matrix[2:,0]
+    # maximisation = array_Matrix[1,1:]
+    # min_criteria_array = Alternative_matix.min(axis=0)
+    # max_criteria_array = Alternative_matix.max(axis=0)
+    # for i in range(len(Alternative_matix)):
+    #     for j in range(len(Alternative_matix[i])):
+    #         if maximisation[j] == 'yes':
+    #             Alternative_matix[i][j] = (max_criteria_array[j]-Alternative_matix[i][j])/(max_criteria_array[j]-min_criteria_array[j])
+    #         else:
+    #             Alternative_matix[i][j] = (Alternative_matix[i][j]-min_criteria_array[j])/(max_criteria_array[j]-min_criteria_array[j])
+
+
+            
     context['dictonary_items'] = dict_items
     context['genders'] = genders
     context['sexe'] = sexe
@@ -285,7 +323,10 @@ def ahp_page(request):
         labels.append(result.key)
         data.append(result.value)
     context['labels'] = labels
-    context['data'] = data   
+    context['data'] = data 
+    context['males'] = males
+    context['females'] = females  
+    context['date_all'] = dates_all_genderes
     print(genders['male']) 
     html_template = loader.get_template( 'donner.html' )
     return HttpResponse(html_template.render(context, request))    
