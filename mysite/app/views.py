@@ -18,7 +18,7 @@ import itertools
 import csv
 import numpy as np
 
-# @login_required(login_url="/login/")
+@login_required(login_url="/login/")
 def index(request):
     data = requests.get('https://api.corona-dz.live/country/latest').json()
     date_auj = parse_datetime(data['date']).date()
@@ -31,7 +31,7 @@ def index(request):
     html_template = loader.get_template( 'index.html' )
     return HttpResponse(html_template.render(context, request))
 
-# @login_required(login_url="/login/")
+@login_required(login_url="/login/")
 def pages(request):
     context = {}
     # All resource paths end in .html.
@@ -207,12 +207,15 @@ def ahp_page(request):
     for gnder in all_genders :
         males.append(gnder['male'])
         females.append(gnder['female'])
-        dates_all_genderes.append(parse_datetime(gnder['date']).date())
-
+        # recupirer date sous forme 'dd/mm/yyyy' et turn in string
+        dates_all_genderes.append(str(parse_datetime(gnder['date']).date()))
+        
     context = {}
     print('male .', males[:5])
     print('dates ***************** .', dates_all_genderes[-5:])
-    print('type dates !:', type(dates_all_genderes[1].date()))
+    x = dates_all_genderes[1]
+    print('type dates !:', type(str(x)))
+
     # URL  example : https://en.wikipedia.org/wiki/Analytic_hierarchy_process_–_car_example  
     # Creteria
     criteria_comparisons = {('Cost', 'Safety'): 3, ('Cost', 'Style'): 7, ('Cost', 'Capacity'): 3,
@@ -324,9 +327,9 @@ def ahp_page(request):
         data.append(result.value)
     context['labels'] = labels
     context['data'] = data 
-    context['males'] = males
-    context['females'] = females  
-    context['date_all'] = dates_all_genderes
+    context['males'] = males[-10:]
+    context['females'] = females [-10:] 
+    context['date_all'] = dates_all_genderes[-10:]
     print(genders['male']) 
     html_template = loader.get_template( 'donner.html' )
     return HttpResponse(html_template.render(context, request))    

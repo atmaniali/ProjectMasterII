@@ -6,7 +6,7 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
-
+  { % csrf_token % }
     <!-- Page content -->
     <div class="container mt--8 pb-5">
       <div class="row justify-content-center">
@@ -34,7 +34,7 @@
                   <p>
                     Add your credentials
                     <br />
-                    OR <a href={% url 'register' %} >create your own user</a>
+                    OR <a href="{% url 'register' %}" >create your own user</a>
                   </p>
                 {% endif %}  
 
