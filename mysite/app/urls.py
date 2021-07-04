@@ -12,7 +12,7 @@ app_names='app'
 urlpatterns = [
 
     # The home page
-    path('', views.index, name='home'),
+    path('index/', views.index, name='index'),
     # /Profile.html
     path('profile', views.profile, name='profile'),
     # vaccin.html/
@@ -20,7 +20,7 @@ urlpatterns = [
     # data_page.html/
     path('data_page', views.ahp_page, name='data_page'),
     # home.html
-    path('home', views.home_view, name='home'),
+    path('', views.home_view, name='home'),
     # API page
     path('api', views.api, name='api'),
     path('api2', views.api2, name='api2'),

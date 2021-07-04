@@ -3,11 +3,12 @@
     <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
       <div class="container-fluid">
         <!-- Brand -->
-        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="/">Dashboard</a>
-        <!-- Form -->
-        {% block navBar%}
-        {% include "includes/navBarSearch.html" %}
-        {% endblock %}
+        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="/">LOGO OF OUR SITE</a>
+        <!-- Button Login & Signin -->
+        <div>
+          <button type="submit" class="btn btn-primary">Sign in</button>
+          <button type="submit" class="btn btn-primary">Login</button>
+        </div>
         <!-- User -->
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
@@ -40,7 +41,7 @@
                 <span>Support</span>
               </a>
               <div class="dropdown-divider"></div>
-              <a href="{% url 'logout' %}" class="dropdown-item">
+              <a href="/logout.html" class="dropdown-item">
                 <i class="ni ni-user-run"></i>
                 <span>Logout</span>
               </a>

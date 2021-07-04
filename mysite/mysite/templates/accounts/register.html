@@ -6,7 +6,7 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
-
+{ % csrf_token % }
     <!-- Page content -->
     <div class="container mt--8 pb-5">
       <!-- Table -->
@@ -33,7 +33,7 @@
                 {% if msg %}
                   <small>{{ msg | safe }}</small>
                 {% else %}
-                  Add your credentials or <a href={% url 'login' %} >authenticate</a> with an existing account.
+                  Add your credentials or <a href="{% url 'login' %}" >authenticate</a> with an existing account.
                 {% endif %}  
               
               </div>
@@ -41,7 +41,7 @@
               {% if success %}
 
                 <p class="text-center">
-                  Please <a href={% url 'login' %} class="text-black text-small">authenticate</a> using the new account.
+                  Please <a href="{% url 'regist:login' %}" class="text-black text-small">authenticate</a> using the new account.
                 </p>  
 
               {% else %}
