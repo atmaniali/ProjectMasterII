@@ -807,7 +807,7 @@ var Charts = (function() {
       ticks: {
         padding: 20
       },
-      maxBarThickness: 10
+      // maxBarThickness: 10
     });
 
     return options;
@@ -1070,13 +1070,13 @@ var SalesChart = (function() {
               color: Charts.colors.gray[900],
               zeroLineColor: Charts.colors.gray[900]
             },
-            ticks: {
-              callback: function(value) {
-                if (!(value % 10)) {
-                  return '$' + value + 'k';
-                }
-              }
-            }
+            // ticks: {
+            //   callback: function(value) {
+            //     if (!(value % 10)) {
+            //       return '$' + value + 'k';
+            //     }
+            //   }
+            // }
           }]
         },
         tooltips: {
@@ -1097,7 +1097,7 @@ var SalesChart = (function() {
         }
       },
       data: {
-        labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        labels: ['Maiy', 'Juin', 'Juil', 'Auig', 'Seip', 'Ocit', 'Noiv', 'Deic'],
         datasets: [{
           label: 'Performance',
           data: [0, 20, 10, 30, 15, 40, 20, 60, 60]

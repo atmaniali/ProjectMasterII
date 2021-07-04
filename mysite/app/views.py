@@ -18,20 +18,32 @@ import itertools
 import csv
 import numpy as np
 
-@login_required(login_url="/login/")
+# @login_required(login_url="/login/")
 def index(request):
     data = requests.get('https://api.corona-dz.live/country/latest').json()
+    all_genders = requests.get('https://api.corona-dz.live/country/gender/all').json()
     date_auj = parse_datetime(data['date']).date()
+    males = []
+    females = []
+    dates_all_genderes = []
+    for gnder in all_genders :
+        males.append(gnder['male'])
+        females.append(gnder['female'])
+        # recupirer date sous forme 'dd/mm/yyyy' et turn in string
+        dates_all_genderes.append(str(parse_datetime(gnder['date']).date()))
     context = {
         'response' : data,
         'date_de_donner' : date_auj     
     } 
     context['segment'] = 'index'
+    context['males'] = males[:20]
+    context['females'] = females [:20] 
+    context['date_all'] = dates_all_genderes[:20]
     print("data context", data)
     html_template = loader.get_template( 'index.html' )
     return HttpResponse(html_template.render(context, request))
 
-@login_required(login_url="/login/")
+# #  @login_required(login_url="/login/")
 def pages(request):
     context = {}
     # All resource paths end in .html.
@@ -327,9 +339,9 @@ def ahp_page(request):
         data.append(result.value)
     context['labels'] = labels
     context['data'] = data 
-    context['males'] = males[-10:]
-    context['females'] = females [-10:] 
-    context['date_all'] = dates_all_genderes[-10:]
+    context['males'] = males[:20]
+    context['females'] = females [:20] 
+    context['date_all'] = dates_all_genderes[:20]
     print(genders['male']) 
     html_template = loader.get_template( 'donner.html' )
     return HttpResponse(html_template.render(context, request))    
