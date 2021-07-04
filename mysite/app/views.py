@@ -18,7 +18,7 @@ import itertools
 import csv
 import numpy as np
 
-# @login_required(login_url="/login/")
+@login_required(login_url="/login/")
 def index(request):
     data = requests.get('https://api.corona-dz.live/country/latest').json()
     all_genders = requests.get('https://api.corona-dz.live/country/gender/all').json()
@@ -43,7 +43,7 @@ def index(request):
     html_template = loader.get_template( 'index.html' )
     return HttpResponse(html_template.render(context, request))
 
-@login_required(login_url="/login/")
+@login_required(login_url="{url 'login' }")
 def pages(request):
     context = {}
     # All resource paths end in .html.
@@ -155,7 +155,7 @@ def vccins_page(request):
             if charachteristique_form.is_valid():
                 obj4 = charachteristique_form.save()
                 
-            vaccin = vaccins.objects.create(nom_vaccin = vaccin_nom, effets_secondaires = obj1,
+            vaccin = Vaccins.objects.create(nom_vaccin = vaccin_nom, effets_secondaires = obj1,
             Characteristiques =  obj4,
             posologie = obj3,
             cout = obj2)    

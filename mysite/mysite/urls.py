@@ -21,7 +21,7 @@ from app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),          # Django admin route
-    path("authentification/", include("authentication.urls")), # Auth routes - login / register
+    path("", include("authentication.urls")), # Auth routes - login / register
     path("", include(("app.urls", "app"), namespace= 'app'))  ,           # UI Kits Html files
     
 ]

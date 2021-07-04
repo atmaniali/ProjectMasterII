@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_cookies_samesite.middleware.CookiesSameSite',
 ]
 
 ROOT_URLCONF = 'mysite.urls'
@@ -121,10 +122,15 @@ USE_L10N = True
 USE_TZ = True
 
 # SameSite resolve cookies 
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SAMESITE = 'None'
-SESSION_COOKIE_SAMESITE = 'None'
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True sof
+# CSRF_COOKIE_SAMESITE = 'None'
+# SESSION_COOKIE_SAMESITE = 'None' sof 
+SESSION_COOKIE_SAMESITE = 'lax'
+SESSION_COOKIE_SAMESITE_KEYS = {'my-custom-cookies'}
+SESSION_COOKIE_SAMESITE_FORCE_ALL = True
+SESSION_COOKIE_SAMESITE_FORCE_CORE = False
+
 #  End 
 
 # Static files (CSS, JavaScript, Images)

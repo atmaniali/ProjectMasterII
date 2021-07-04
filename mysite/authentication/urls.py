@@ -6,9 +6,9 @@ Copyright (c) 2019 - present AppSeed.us
 from django.urls import path
 from .views import login_view, register_user
 from django.contrib.auth.views import LogoutView
-app_names = 'registe'
+# app_names = 'registe'
 urlpatterns = [
     path('login/', login_view, name="login"),
-    path('register/', register_user, name="register"),
+    path('register/', register_user),
     path("logout/", LogoutView.as_view(), name="logout")
 ]
