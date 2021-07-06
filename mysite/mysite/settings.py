@@ -54,8 +54,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'mysite.urls'
-LOGIN_REDIRECT_URL = "home.html"   # Route defined in app/urls.py
-LOGOUT_REDIRECT_URL = "home.html"  # Route defined in app/urls.py
+LOGIN_REDIRECT_URL = "index"   # Route defined in app/urls.py
+LOGOUT_REDIRECT_URL = "/"  # Route defined in app/urls.py
 TEMPLATE_DIR = os.path.join(BASE_DIR, "mysite/templates")  # ROOT dir for templates
 
 

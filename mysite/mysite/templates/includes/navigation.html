@@ -5,24 +5,7 @@
         <!-- Brand -->
         <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="/">LOGO OF OUR SITE</a>
         <!-- Button Login & Signin -->
-        <div>
-          <button type="submit" class="btn btn-primary" id="sign_btn" onclick="my()"> Sign in</button>
-          <button type="button" class="btn btn-primary" onclick="myFunction()">Login</button>
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-          <script>
-              function myFunction() {
-              console.log("hello every one from login");
-              alert("hello every one from login");
-          }
-          </script>
-          <script>
-              function my() {
-                  console.log("hello every one from signi");
-                  alert("hello every one from signi");
-              }
-          </script>
-          
-        </div>
+        {% if request.user.is_authenticated %}
         <!-- User -->
         <ul class="navbar-nav align-items-center d-none d-md-flex">
           <li class="nav-item dropdown">
@@ -62,6 +45,15 @@
             </div>
           </li>
         </ul>
+        {% else %}
+        <div>
+          <a class="btn btn-primary" href="{% url 'register' %}">Sign in</a>
+          <a class="btn btn-primary" href="{% url 'app:index' %}">Login</a>
+          
+        </div>
+
+        {% endif %}
+        
       </div>
     </nav>
     <!-- End Navbar -->
