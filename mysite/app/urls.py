@@ -24,6 +24,11 @@ urlpatterns = [
     # API page
     path('api', views.api, name='api'),
     path('api2', views.api2, name='api2'),
+    # test_ahp/
+    # path('test_ahp/', views.create_critere_model_form, name = 'test_ahp'),
+    path('create_normal/', views.create_critere_normal, name = 'create_critere_normal'),
+    path('list/', views.CritereListView.as_view(), name = 'critere_list'),
+    path('create_with_subcritere/', views.create_critere_with_subcritere, name = 'create_critere_with_subcritere'),
 
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),

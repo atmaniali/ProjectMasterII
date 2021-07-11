@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Test AHP</h1>
+    <br>
+    <br>
+    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus, soluta delectus,
+        accusamus quisquam temporibus necessitatibus exercitationem veniam nisi tenetur excepturi non sequi sint ratione
+        quod quidem suscipit,
+        amet qui in.</p>
+    <br>
+    <br>
+    <div>
+        <p>Entrer la critere pour le vaccin :</p>
+        <br>
+        <!-- <form action="" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <button class="add_field_button">Add new Criteria</button>
+                <br>
+               <div>
+                <label for="example-text-input" class="form-control-label">Criteria:</label> <br>
+                <input class="form-control" type="text" value=" Posologie " id="example-text-input">
+               </div>
+                <script>
+                    function myFunction() {
+                        var input = document.createElement("input");
+                        input.type = "text";
+                        console.dir(input)
+                        // var element = getElementByClassName;
+                        //  container.appendChild(input);
+                    }
+                </script>
+            </div>
+
+        </form> -->
+        <!-- <form class="form-horizontal" method="POST" action="">
+            {% csrf_token %}
+            {{ formset.management_form }}
+            {% for form in formset %}
+            <div class="row form-row spacer">
+                <div class="col-2">
+                    <label>{{form.name.label}}</label>
+                </div>
+                <div class="col-4">
+                    <div class="input-group">
+                        {{form.name}}
+                        <div class="input-group-append">
+                            <button class="btn btn-success add-form-row">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="row spacer">
+                <div class="col-4 offset-2">
+                    <button type="submit" class="btn btn-block btn-primary">Create</button>
+                </div>
+            </div>
+        </form> -->
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <div class="container1" style="">
+            <button class="add_form_field btn btn-primary " >Add New Field &nbsp; 
+              <span style="font-size:16px; font-weight:bold;">+ </span>
+            </button>
+            <div style="margin-top: 20px; margin-bottom:  20px;"><br><input type="text" name="mytext[]" ><br></div>
+        </div>
+        
+        <script type="">
+            $(document).ready(function() {
+            var max_fields = 10;
+            var wrapper = $(".container1");
+            var add_button = $(".add_form_field");
+        
+            var x = 1;
+            $(add_button).click(function(e) {
+                e.preventDefault();
+                if (x < max_fields) {
+                    x++;
+                    $(wrapper).append('<div><input type="text" name="mytext[]"/><a href="#" class="delete btn btn-danger">Delete</a></div>'); //add input box
+                } else {
+                    alert('You Reached the limits')
+                }
+            });  li rslohli
+        
+            $(wrapper).on("click", ".delete", function(e) {
+                e.preventDefault();
+                $(this).parent('div').remove();
+                x--;
+            })
+        });
+        </script> -->
+    </div>
+    <br>
+    <br>
+    Test
+    <div id="container"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var button = document.createElement('input');
+            button.type = 'button';
+            button.id = 'submit';
+            button.value = 'Submit';
+            button.className = 'btn';
+
+            button.onclick = function () {
+                // …
+            };
+
+            var container = document.getElementById('container');
+            container.appendChild(button);
+        }, false);
+    </script>
+</body>
+
+</html>

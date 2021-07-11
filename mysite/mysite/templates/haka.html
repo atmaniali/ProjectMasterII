@@ -115,77 +115,102 @@
     </div>
 </div>
 
-<div class="container-fluid mt--7">
-
-    <div class="row">
-        <div class="col-xl-8 mb-5 mb-xl-0">
-            <div class="card bg-gradient-default shadow">
-                <div class="card-header bg-transparent">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h6 class="text-uppercase text-light ls-1 mb-1">Overview</h6>
-                            <h2 class="text-white mb-0">Sales value</h2>
-                        </div>
-                        <div class="col">
-                            <ul class="nav nav-pills justify-content-end">
-                                <li class="nav-item mr-2 mr-md-0" data-toggle="chart" data-target="#chart-sales"
-                                    data-update='{"data":{"datasets":[{"data":[12, 19, 3, 5, 2, 3]}]}}'>
-                                    <!-- data-prefix="$" data-suffix="k"> -->
-                                    <!-- hada mzl mn b3d nkhdmh -->
-                                    <a href="#" class="nav-link py-2 px-3 active" data-toggle="tab">
-                                        <span class="d-none d-md-block">Males</span>
-                                        
-                                    </a> 
-                                </li>
-                                <li class="nav-item" data-toggle="chart" data-target="#chart-sales"
-                                    data-update='{"data":{"datasets":[{"data":[12, 19, 3, 5, 2, 3]}]}}'>
-                                    <!-- data-prefix="$" data-suffix="k"> -->
-                                    <a href="#" class="nav-link py-2 px-3" data-toggle="tab">
-                                        <span class="d-none d-md-block">Females</span>
-                                        <span class="d-md-none">W</span>
-                                    </a>
-                                </li>
-                            </ul>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <!-- Mauve one -->
-                    <div class="chart">
-                        <canvas id="chart-sales" class="chart-canvas"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-4">
-            <div class="card shadow">
-                <div class="card-header bg-transparent">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h6 class="text-uppercase text-muted ls-1 mb-1">Performance</h6>
-                            <h2 class="mb-0">Total orders</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <!-- Chart -->
-                    <div class="chart">
-                        <canvas id="chart-orders" class="chart-canvas"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
+{% if heading %}
+<h3>{{heading}}</h3>
+{% endif %}
+<form class="form-horizontal" method="POST" action="">
+    {% csrf_token %}
+{{ formset.management_form }}
+{% for form in formset %}
+<div class="row form-row spacer">
+    <div class="col-2">
+        <label>{{form.name.label}}</label>
     </div>
-
-
-
-    {% include "includes/footer.html" %}
-
+    <div class="col-4">
+        <div class="input-group">
+            {{form.name}}
+            <div class="input-group-append">
+                <button class="btn btn-success add-form-row">+</button>
+            </div>
+        </div>
+        <br>
+    </div>
 </div>
+{% endfor %}
+
+<div class="row spacer">
+    <div class="col-4 offset-2">
+        <button type="submit" class="btn btn-block btn-primary">Create</button>
+    </div>
+</div>
+</form>
 
 {% endblock content %}
 
 <!-- Specific JS goes HERE -->
 
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script type="text/javascript">
+function updateElementIndex(el, prefix, ndx) {
+    var id_regex = new RegExp('(' + prefix + '-\\d+)');
+    var replacement = prefix + '-' + ndx;
+    if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
+    if (el.id) el.id = el.id.replace(id_regex, replacement);
+    if (el.name) el.name = el.name.replace(id_regex, replacement);
+}
+function cloneMore(selector, prefix) {
+    var newElement = $(selector).clone(true);
+    var total = $('#id_' + prefix + '-TOTAL_FORMS').val();
+    newElement.find(':input:not([type=button]):not([type=submit]):not([type=reset])').each(function() {
+        var name = $(this).attr('name')
+        if(name) {
+            name = name.replace('-' + (total-1) + '-', '-' + total + '-');
+            var id = 'id_' + name;
+            $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+        }
+    });
+    newElement.find('label').each(function() {
+        var forValue = $(this).attr('for');
+        if (forValue) {
+          forValue = forValue.replace('-' + (total-1) + '-', '-' + total + '-');
+          $(this).attr({'for': forValue});
+        }
+    });
+    total++;
+    $('#id_' + prefix + '-TOTAL_FORMS').val(total);
+    $(selector).after(newElement);
+    var conditionRow = $('.form-row:not(:last)');
+    conditionRow.find('.btn.add-form-row')
+    .removeClass('btn-success').addClass('btn-danger')
+    .removeClass('add-form-row').addClass('remove-form-row')
+    .html('-');
+    return false;
+}
+function deleteForm(prefix, btn) {
+    var total = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
+    if (total > 1){
+        btn.closest('.form-row').remove();
+        var forms = $('.form-row');
+        $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+        for (var i=0, formCount=forms.length; i<formCount; i++) {
+            $(forms.get(i)).find(':input').each(function() {
+                updateElementIndex(this, prefix, i);
+            });
+        }
+    }
+    return false;
+}
+$(document).on('click', '.add-form-row', function(e){
+    e.preventDefault();
+    cloneMore('.form-row:last', 'form');
+    return false;
+});
+$(document).on('click', '.remove-form-row', function(e){
+    e.preventDefault();
+    deleteForm('form', $(this));
+    return false;
+});
+
+</script>
+{% endblock javascripts %}

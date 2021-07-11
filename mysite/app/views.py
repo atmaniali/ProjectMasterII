@@ -2,6 +2,7 @@
 """
 Copyright (c) 2019 - present AppSeed.us
 """
+from django.views import generic
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.forms.widgets import DateTimeBaseInput
@@ -10,7 +11,7 @@ from django.template import loader
 from django.http import HttpResponse
 from django import template
 from .form import *
-from .models import Vaccins, Resultat
+from .models import (Vaccins, Resultat, Critere)
 from ahpy import ahpy
 from django.utils.dateparse import parse_datetime
 import requests
@@ -345,6 +346,88 @@ def ahp_page(request):
     print(genders['male']) 
     html_template = loader.get_template( 'donner.html' )
     return HttpResponse(html_template.render(context, request))    
+#  test_ahp/ pages   
+def test_ahp_view(request):
+    context = {}
+    context['segment'] = 'test_ahp'
+    html_template = loader.get_template( 'haka.html' )
+    if request.method == 'GET':
+        formset = CritereFormset(request.GET or None)
+    elif request.method == 'POST':
+        formset = CritereFormset(request.POST)
+        if formset.is_valid():
+            for form in formset:
+                # extract name from each form and save
+                name = form.cleaned_data.get('name')
+                # save book instance
+                if name:
+                    Critere(nom_critere=name).save()
+            # once all books are saved, redirect to book list view
+            return redirect('haka.html')
+    # return render(request, template_name, {
+    #     'formset': formset,
+    #     'heading': heading_message,
+    # })
+    context['formset'] = formset
+    # context['segment'] = 'test_ahp'
+    return HttpResponse(html_template.render(context, request))
+#  hada test 
+def create_critere_model_form(request):
+    
+    html_template = loader.get_template( 'haka.html' )
+    context = {
+    
+    }
+    return HttpResponse(html_template.render(context, request))     
+
+# kayn jdid 3labali
+# je c c c c         
+def create_critere_normal(request):
+    template_name = 'haka.html'
+    heading_message = 'Formset Demo'
+    if request.method == 'GET':
+        formset = CritereFormset(request.GET or None)
+    elif request.method == 'POST':
+        formset = CritereFormset(request.POST)
+        if formset.is_valid():
+            for form in formset:
+                name = form.cleaned_data.get('name')
+                # save Critere instance
+                if name:
+                    Critere(name=name).save()
+            return redirect('app:critere_list')
+
+    return render(request, template_name, {
+        'formset': formset,
+        'heading': heading_message,
+    }) 
+class CritereListView(generic.ListView):
+
+    model = Critere
+    context_object_name = 'criteres'
+    template_name = 'tables.html'   
+
+def create_critere_with_subcritere(request):
+    template_name = 'create_with_subcritere.html'
+    if request.method == 'GET':
+        critereform = CritereModelForm(request.GET or None)
+        formset = SubcritereFormset(queryset=Subcritere.objects.none())
+    elif request.method == 'POST':
+        critereform = CritereModelForm(request.POST)
+        formset = SubcritereFormset(request.POST)
+        if critereform.is_valid() and formset.is_valid():
+            # first save this book, as its reference will be used in `Author`
+            critere = critereform.save()
+            for form in formset:
+                # so that `book` instance can be attached.
+                subcritere = form.save(commit=False)
+                subcritere.critere = critere
+                subcritere.save()
+            return redirect('app:critere_list')
+    return render(request, template_name, {
+        'bookform': critereform,
+        'formset': formset,
+    })  
     
 
 

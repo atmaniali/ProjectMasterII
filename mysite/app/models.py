@@ -58,7 +58,7 @@ class Effets_secondaires (models.Model):
     def __str__(self):
         return str(self.sensibilité_au_point_injection_vaccin)
     
-    # ToDO modifier 
+    # TODO: modifier 
 
 class Cout (models.Model):
     conservation_vaccin_max = models.IntegerField()
@@ -66,7 +66,7 @@ class Cout (models.Model):
     prix_vaccin = models.IntegerField()
     def __str__(self):
         return str(self.conservation_vaccin_max)
-    # ToDO modifier 
+    # TODO: modifier 
 
 class Posologie(models.Model):
     nombre_dose_vaccin = models.IntegerField()
@@ -102,5 +102,51 @@ class Resultat(models.Model):
     value = models.FloatField()
     def __str__(self):
             return self.key
+
+# critere table
+# critere table
+class Critere(models.Model):
+    name = models.CharField(max_length=200, null=  True)
+
+    class Meta:
+        db_table = 'critere'
+
+
+
+    def __str__(self):
+        return self.name
+        
+class Subcritere(models.Model):
+
+    name = models.CharField(max_length=255)
+    critere = models.ForeignKey(
+        Critere,
+        related_name='subcriters', on_delete=models.SET_NULL,
+        null=True)
+
+    class Meta:
+        db_table = 'subcritere'
+
+    def __str__(self):
+        return self.name
+
+class Alternative(models.Model):
+    nom_vaccin = models.CharField(max_length=200)
+    def __str__(self) :
+        return self.nom_vaccin
+
+class Book(models.Model):
+
+    name = models.CharField(max_length=255)
+    isbn_number = models.CharField(max_length=13)
+
+    class Meta:
+        db_table = 'book'
+
+    def __str__(self):
+        return self.name    
+
+    
+
     
         

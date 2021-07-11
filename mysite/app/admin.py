@@ -20,3 +20,4 @@ admin.site.register(Characteristiques),
 # Show vaccn with all sub creteria :
 admin.site.register(Vaccins),
 admin.site.register(Resultat),
+admin.site.register(Critere),
