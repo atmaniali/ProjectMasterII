@@ -107,14 +107,21 @@ class Resultat(models.Model):
 # critere table
 class Critere(models.Model):
     name = models.CharField(max_length=200, null=  True)
+    created_at = models.DateTimeField(auto_now_add=True, null=  True)
+    # updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = 'critere'
-
-
+        
 
     def __str__(self):
         return self.name
+
+    def get_subcriters(self):
+        return ', '.join(self.subcriters.all().values_list('name', flat=True)) 
+    def get_pk(self):
+        return self.pk       
+    
         
 class Subcritere(models.Model):
 
@@ -129,6 +136,7 @@ class Subcritere(models.Model):
 
     def __str__(self):
         return self.name
+        
 
 class Alternative(models.Model):
     nom_vaccin = models.CharField(max_length=200)
