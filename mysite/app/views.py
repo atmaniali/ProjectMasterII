@@ -3,6 +3,7 @@
 Copyright (c) 2019 - present AppSeed.us
 """
 from django.views import generic
+from django.views.generic import ListView
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.forms.widgets import DateTimeBaseInput
@@ -394,7 +395,9 @@ def create_critere_normal(request):
                 name = form.cleaned_data.get('name')
                 # save Critere instance
                 if name:
-                    Critere(name=name).save()
+                    us = request.user.username
+                    print("***************************", us)
+                    Critere(name=name, user = request.user).save()
             return redirect('app:critere_list')
 
     return render(request, template_name, {
@@ -405,7 +408,8 @@ class CritereListView(generic.ListView):
 
     model = Critere
     context_object_name = 'criteres'
-    template_name = 'tables.html'   
+    template_name = 'tables.html' 
+    paginate_by = 5  
 
 def create_critere_with_subcritere(request):
     template_name = 'create_with_subcritere.html'
@@ -427,7 +431,12 @@ def create_critere_with_subcritere(request):
     return render(request, template_name, {
         'bookform': critereform,
         'formset': formset,
-    })  
+    }) 
+class  teser_tableau_ta3k(ListView):
+    model = Critere
+    context_object_name = 'criteres'
+    template_name = 't3_tableau.html'
+    
     
 
 

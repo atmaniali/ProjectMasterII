@@ -1,0 +1,66 @@
+{% extends 'layouts/base.html' %}
+
+{% block title %} Tables {% endblock title %}
+
+{% block content %}
+
+    <!-- Header -->
+    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+      <div class="container-fluid">
+        <div class="header-body">
+          <!-- Card stats -->
+         
+        </div>
+      </div>
+    </div>
+    <!-- tables start -->
+    <!-- HERE !! -->
+    <div>
+      <h2>Titre h2</h2>
+      <div class="row mt-5">
+        <div class="col">
+          <div class="card bg-default shadow">
+            <div class="card-header bg-transparent border-0">
+              <h3 class="text-white mb-0">Card tables: <strong>Critere Subcritere</strong> </h3>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-dark table-flush">
+                <thead class="thead-dark">
+                  {% for critere in criteres %}
+                  <tr>
+                    <th scope="col">{{critere.name}}</th>
+                  </tr>
+                  {% endfor %}
+                </thead>
+                <tbody>
+                {% for critere in criteres %}
+                  <tr>
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <a href="#" class="avatar rounded-circle mr-3">
+                          <img alt="Image placeholder" src="/static/assets/img/avatar/avatar_masque.png">
+                        </a>
+                        <div class="media-body">
+                          <span class="mb-0 text-sm">{{ request.user.username }}</span>
+                        </div>
+                      </div>
+                    </th>
+                    
+                    <td>
+                      {{critere.name}}
+                    </td>
+                    
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock content %}
+
+<!-- Specific JS goes HERE --> 
+{% block javascripts %}{% endblock javascripts %}
+{% comment %} TODO: createcarte containt detail of methods {% endcomment %}    

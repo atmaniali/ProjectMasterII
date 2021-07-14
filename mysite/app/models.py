@@ -108,6 +108,8 @@ class Resultat(models.Model):
 class Critere(models.Model):
     name = models.CharField(max_length=200, null=  True)
     created_at = models.DateTimeField(auto_now_add=True, null=  True)
+    user = models.ForeignKey(User, related_name = 'criteres', 
+    on_delete=models.CASCADE, null=  True)
     # updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -126,6 +128,7 @@ class Critere(models.Model):
 class Subcritere(models.Model):
 
     name = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True, null=  True)
     critere = models.ForeignKey(
         Critere,
         related_name='subcriters', on_delete=models.SET_NULL,
@@ -136,6 +139,8 @@ class Subcritere(models.Model):
 
     def __str__(self):
         return self.name
+    def get_pk(self):
+        return self.pk     
         
 
 class Alternative(models.Model):

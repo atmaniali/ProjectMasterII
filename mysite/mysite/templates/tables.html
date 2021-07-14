@@ -28,6 +28,7 @@
                 <thead class="thead-light">
                   <tr>
                     <th scope="col">Users</th>
+                    <th scope="col">ID's</th>
                     <th scope="col">Critere</th>
                     <th scope="col">Dates</th>
                     
@@ -42,16 +43,19 @@
                           <img alt="Image placeholder" src="/static/assets/img/avatar/avatar_masque.png">
                         </a>
                         <div class="media-body">
-                          <span class="mb-0 text-sm">{{ request.user.username }}</span>
+                          <span class="mb-0 text-sm">{{ critere.user}}</span>
                         </div>
                       </div>
                     </th>
+                    <td>
+                      {{critere.get_pk}}
+                    </td>
                     <td>
                       {{critere.name}}
                     </td>
                     {% comment %} TODO: i need options in tables {% endcomment %}
                     <td > 
-                      <span class="mb-0 text-sm">-</span>
+                      <span class="mb-0 text-sm">{{critere.created_at}}</span>
                       <div class="text-right">
                         <div class="dropdown">
                           <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -71,8 +75,35 @@
                 </tbody>
               </table>
             </div>
+           {% if is_paginated %}
             <div class="card-footer py-4">
               
+              <nav aria-label="...">
+                <ul class="pagination justify-content-end mb-0">
+                {% if page_obj.has_previous %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                      <i class="fas fa-angle-left"></i>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                {% endif %}
+                  <li class="page-item active">
+                    <a class="page-link" href="#">{{ page_obj.number }}/{{ page_obj.paginator.num_pages }}</a>
+                  </li>
+                {% if page_obj.has_next %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">
+                      <i class="fas fa-angle-right"></i>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                {% endif %}
+                </ul>
+              </nav>
+            </div> 
+           {% else %}
+           <div class="card-footer py-4">
               <nav aria-label="...">
                 <ul class="pagination justify-content-end mb-0">
                   <li class="page-item disabled">
@@ -96,7 +127,8 @@
                   </li>
                 </ul>
               </nav>
-            </div> 
+            </div>
+           {% endif %}
           </div>
         </div>
       </div>

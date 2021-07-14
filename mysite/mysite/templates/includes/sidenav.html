@@ -136,22 +136,28 @@
           </li>
           <li class="nav-item {% if 'api' in segment %} active {% endif %}">
             <a class="nav-link" href="{% url 'app:create_critere_normal'%}">
-              <i class="ni ni-user-run text-red"></i> TEST AHP
+              <i class="ni ni-user-run text-red"></i> Critere
             </a>
           </li>
           <li class="nav-item {% if 'api' in segment %} active {% endif %}">
             <a class="nav-link" href="{% url 'app:create_critere_with_subcritere'%}">
-              <i class="ni ni-user-run text-red"></i> TEST Souscritere
+              <i class="ni ni-user-run text-red"></i> Critere with subcritere
             </a>
           </li>
           <li class="nav-item {% if 'api' in segment %} active {% endif %}">
             <a class="nav-link" href="{% url 'app:critere_list'%}">
-              <i class="ni ni-user-run text-red"></i> LIST AHP
+              <i class="ni ni-user-run text-red"></i> LIST Criteres
             </a>
           </li>
           <li class="nav-item {% if 'api' in segment %} active {% endif %}">
             <a class="nav-link" href="{% url 'app:api2'%}">
               <i class="ni ni-user-run text-red"></i> UI_API II
+            </a>
+          </li>
+          {% comment %} TODO: segam segmant {% endcomment %}
+          <li class="nav-item {% if 'api' in segment %} active {% endif %}">
+            <a class="nav-link" href="{% url 'app:teser_tableau_ta3k'%}">
+              <i class="ni ni-user-run text-red"></i> teser_tableau_ta3k
             </a>
           </li>
         </ul>

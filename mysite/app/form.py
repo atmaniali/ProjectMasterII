@@ -66,7 +66,7 @@ class CritereModelForm(forms.ModelForm):
 CritereFormset = formset_factory(CritereForm) 
 CritereModelFormset = modelformset_factory(
     Critere,
-    fields=('name', ),
+    fields=('name','user' ),
     extra=1,
     widgets={
         'name': forms.TextInput(attrs={
