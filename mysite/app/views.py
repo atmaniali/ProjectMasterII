@@ -436,6 +436,28 @@ class  teser_tableau_ta3k(ListView):
     model = Critere
     context_object_name = 'criteres'
     template_name = 't3_tableau.html'
+
+import csv  
+import numpy as np
+def test_csv_ahp(request) :
+    template_name = 't3_tableau.html'
+    query = Critere.objects.all()
+    query_list = Critere.objects.all().count()
+    list_critere = []
+    for i in query:
+        list_critere.append(i.name) 
+    list_np = np.array(list_critere) 
+    hak = np.array(["a","b","c","d","e","f"])   
+    matrix = [ [ 1 for i in range(query_list) ] for j in range(query_list) ]
+    matrix_np = np.array(matrix)  
+    print("matrix_np  \n",matrix_np)
+    print("matrix", matrix)
+    matrix_with_critere_ligne = np.vstack((list_np,matrix_np))
+    print("matrix_critere  \n",matrix_with_critere_ligne)
+    matrix_with_critere_clmn = np.hstack((hak, matrix_with_critere_ligne))
+    print("matrix_critere  \n",matrix_with_critere_clmn)
+    context = {}
+    return render(request, template_name, context)   
     
     
 

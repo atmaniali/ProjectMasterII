@@ -46,6 +46,7 @@ class ahp:
         """ convert csv file to matrix return matrice"""
         # condition : file csv chould have floating number like xx.xx not x/x
         matrice = np.array(list(csv.reader(open(file, "r"), delimiter=",")))
+        print('***********', type(matrice))
         return matrice
 
     def extract_line_matrice(self, matrice):

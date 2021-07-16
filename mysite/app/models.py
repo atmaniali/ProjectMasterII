@@ -114,6 +114,7 @@ class Critere(models.Model):
 
     class Meta:
         db_table = 'critere'
+        ordering = ['created_at']
         
 
     def __str__(self):
