@@ -114,7 +114,7 @@ class Critere(models.Model):
 
     class Meta:
         db_table = 'critere'
-        ordering = ['created_at']
+        ordering = ['-created_at']
         
 
     def __str__(self):
@@ -160,7 +160,11 @@ class Book(models.Model):
     def __str__(self):
         return self.name    
 
-    
+class A(models.Model):
+    name = models.CharField(max_length=30)   
+    critere = models.ForeignKey(Critere, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name
 
     
         

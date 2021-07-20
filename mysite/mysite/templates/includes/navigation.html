@@ -33,12 +33,12 @@
                 <i class="ni ni-settings-gear-65"></i>
                 <span>Settings</span>
               </a>
-              <a href="https://appseed.us" target="_blank" class="dropdown-item">
+              {% comment %} <a href="https://appseed.us" target="_blank" class="dropdown-item">
                 <i class="ni ni-support-16"></i>
                 <span>Support</span>
-              </a>
+              </a> {% endcomment %}
               <div class="dropdown-divider"></div>
-              <a href="/logout.html" class="dropdown-item">
+              <a href="{% url 'logout' %}" class="dropdown-item">
                 <i class="ni ni-user-run"></i>
                 <span>Logout</span>
               </a>

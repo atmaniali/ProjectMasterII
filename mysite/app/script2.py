@@ -15,5 +15,8 @@ for i in range(len(matrix_list)):
     for j in range(len(matrix_list)):
         if i < j:
             dictionnaire.update({(matrix_list[i],matrix_list[j]):matrix[i][j]})
-print("dictionaire \n:", dictionnaire)            
-            
+print("dictionaire \n:", dictionnaire)   
+def convert_to_tuple(list):
+    return tuple(list)
+         
+print("*", convert_to_tuple(matrix_list))           

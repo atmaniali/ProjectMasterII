@@ -13,7 +13,7 @@
             <br>
             
             <!-- Card stats -->
-            <div class="row">
+            {% comment %} <div class="row">
                 <!-- Confirmed -->
                 <div class="col-xl-3 col-lg-6">
                     <div class="card card-stats mb-4 mb-xl-0">
@@ -110,7 +110,7 @@
 
                     </div>
                 </div>
-            </div>
+            </div> {% endcomment %}
         </div>
     </div>
 </div>
@@ -120,30 +120,35 @@
 {% endif %}
 <form class="form-horizontal" method="POST" action="">
     {% csrf_token %}
-{{ formset.management_form }}
-{% for form in formset %}
-<div class="row form-row spacer">
-    <div class="col-2">
-        <label>{{form.name.label}}</label>
-    </div>
-    <div class="col-4">
-        <div class="input-group">
-            {{form.name}}
-            <div class="input-group-append">
-                <button class="btn btn-success add-form-row">+</button>
+    {{ formset.management_form }}
+    {% for form in formset %}
+        <div   class="row form-row spacer">
+            <div class="col-2">
+                <label>{{form.name.label}}</label>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    {{form.name}}
+                    <div class="input-group-append">
+                        <button class="btn btn-success add-form-row">+</button>
+                    </div>
+                </div>
+                <br>
             </div>
         </div>
-        <br>
+    {% endfor %}
+    <div class="row spacer">
+        <div class="col-4 offset-2">
+            <button type="submit" class="btn btn-block btn-primary">Create</button>
+             <br>
+            <input type="text" name="input_name" id="">
+            <br> <br>
+            <button type= "submit" class="btn btn-block btn-primary" >Save as CSV</button>  
+        </div>
     </div>
-</div>
-{% endfor %}
 
-<div class="row spacer">
-    <div class="col-4 offset-2">
-        <button type="submit" class="btn btn-block btn-primary">Create</button>
-    </div>
-</div>
 </form>
+
 
 {% endblock content %}
 

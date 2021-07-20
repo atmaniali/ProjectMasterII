@@ -28,9 +28,12 @@ urlpatterns = [
     # path('test_ahp/', views.create_critere_model_form, name = 'test_ahp'),
     path('create_normal/', views.create_critere_normal, name = 'create_critere_normal'),
     path('list/', views.CritereListView.as_view(), name = 'critere_list'),
-    path('create_with_subcritere/', views.create_critere_with_subcritere, name = 'create_critere_with_subcritere'),
+    path('create_with_subcritere/', views.create_critere_with_subcritere,
+     name = 'create_critere_with_subcritere'),
     path('teser_tableau_ta3k/', views.test_csv_ahp, name = 'teser_tableau_ta3k'),
-
+    path('aimen/', views.aimen_methode, name = 'aimen_methode'),
+    path('haka/', views.save_critere_as_csv, name = 'haka'),
+    path('result/',views.show_resultat, name = "result"),
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),
 

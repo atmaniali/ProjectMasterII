@@ -9,7 +9,8 @@ from .models import Critere, Subcritere
 class ContactForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = '__all__'
+        exclude = ['user']
+        
 
 class Effets_secondairesForm(forms.ModelForm):
     class  Meta:

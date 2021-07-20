@@ -385,12 +385,15 @@ def create_critere_model_form(request):
 # je c c c c         
 def create_critere_normal(request):
     template_name = 'haka.html'
-    heading_message = 'Formset Demo'
+    heading_message = 'Formset Demo'    
+    context = {}
     if request.method == 'GET':
+        print("request.method == 'GET'", request.GET)
         formset = CritereFormset(request.GET or None)
     elif request.method == 'POST':
         formset = CritereFormset(request.POST)
         if formset.is_valid():
+            csv_file = request.POST.get('input_name')
             for form in formset:
                 name = form.cleaned_data.get('name')
                 # save Critere instance
@@ -398,28 +401,52 @@ def create_critere_normal(request):
                     us = request.user.username
                     print("***************************", us)
                     Critere(name=name, user = request.user).save()
+                    # hada chkla 
+            if len(csv_file ) != 0 :
+                query = Critere.objects.all()
+                # query_list = Critere.objects.all().count()
+                list_critere = []
+                for i in query:
+                    list_critere.append(i.name) 
+                list_np = np.array(list_critere) 
+                matrix = [ [ 0 for i in range(len(list_np)) ] for j in range(len(list_np)) ]
+                for i in range(len(list_np)):
+                    for j in range(len(list_np)):
+                        if i == j:
+                            matrix[i][j] = 1
+                    matrix_np = np.array(matrix) 
+                    matrix_with_critere_ligne= np.vstack((list_np,matrix_np))
+                    matrix_transpose = matrix_with_critere_ligne.transpose()
+                    list_np_1 = np.append("",list_np)
+                    matrix_with_critere_ligne_transpose= np.vstack((list_np_1,matrix_transpose))
+                    pd.DataFrame(matrix_with_critere_ligne_transpose).to_csv("media/files/{}.csv".format(csv_file))        
             return redirect('app:critere_list')
-
-    return render(request, template_name, {
-        'formset': formset,
-        'heading': heading_message,
-    }) 
+    context['formset']=formset
+    context['heading']=heading_message
+    return render(request, template_name, context) 
 class CritereListView(generic.ListView):
 
     model = Critere
     context_object_name = 'criteres'
     template_name = 'tables.html' 
     paginate_by = 5  
+    ordering = ['-created_at']
 
 def create_critere_with_subcritere(request):
+    
     template_name = 'create_with_subcritere.html'
     if request.method == 'GET':
+        print("get \t \n",request.get)
         critereform = CritereModelForm(request.GET or None)
         formset = SubcritereFormset(queryset=Subcritere.objects.none())
     elif request.method == 'POST':
+        print("post \t \n",request.POST)
         critereform = CritereModelForm(request.POST)
+        print("critereform ", critereform )
         formset = SubcritereFormset(request.POST)
+        print("formset", formset)
         if critereform.is_valid() and formset.is_valid():
+            print("*********************************************")
             # first save this book, as its reference will be used in `Author`
             critere = critereform.save()
             for form in formset:
@@ -457,7 +484,103 @@ def test_csv_ahp(request) :
     matrix_with_critere_clmn = np.hstack((hak, matrix_with_critere_ligne))
     print("matrix_critere  \n",matrix_with_critere_clmn)
     context = {}
-    return render(request, template_name, context)   
+    return render(request, template_name, context)  
+
+# this view for save critere as csv fiele
+import numpy as np
+import pandas as pd
+def save_critere_as_csv(request):
+    print('a')
+    """ A view that streams a large CSV file."""
+    context = {} 
+    
+    query = Critere.objects.all()
+    # query_list = Critere.objects.all().count()
+    list_critere = []
+    for i in query:
+        list_critere.append(i.name) 
+    list_np = np.array(list_critere) 
+    matrix = [ [ 0 for i in range(len(list_np)) ] for j in range(len(list_np)) ]
+    for i in range(len(list_np)):
+        for j in range(len(list_np)):
+            if i == j:
+                matrix[i][j] = 1
+    matrix_np = np.array(matrix) 
+    matrix_with_critere_ligne= np.vstack((list_np,matrix_np))
+    matrix_transpose = matrix_with_critere_ligne.transpose()
+    list_np = np.append("",list_np)
+    matrix_with_critere_ligne_transpose= np.vstack((list_np,matrix_transpose))    
+    if request.method == 'POST':
+        print(request.POST)
+        print("request", request.POST)
+        name = request.POST.get('input_name')
+        print("name", name)
+        data = pd.DataFrame(matrix_with_critere_ligne_transpose).to_csv("mysite/media/files/{}.csv".format(name)) 
+        print("c bon", data) 
+        return redirect("app:create_critere_normal")
+
+    # context['segment'] = '#'
+    html_template = loader.get_template( 'app:critere_list' )
+    return HttpResponse(html_template.render(context, request))    
+def aimen_methode(request):
+    html_template = loader.get_template( 'aimen.html' )
+    context = {}
+    criteres_values = []
+    query = Critere.objects.all()
+    # query_list = Critere.objects.all().count()
+    list_critere = []
+    dictionnaire = {}
+    for i in query:
+        list_critere.append(i.name) 
+    list_np = np.array(list_critere) 
+    print("hdi ydra",list_np)
+    if request.method == 'GET':
+        # name = request.POST.get('input_name')
+        for i in range(len(list_np)):
+            for j in range(len(list_np)):
+                if i < j:
+                    dictionnaire.update({(list_critere[i],list_critere[j]):float(request.POST.get('{}-{}'.format(list_critere[i], list_critere[j])))})
+        print("hada howa ****", dictionnaire)
+    context["criteres"] = list_np
+    return HttpResponse(html_template.render(context, request)) 
+
+import csv 
+def convert_to_tuple(list):
+    return tuple(list)   
+def show_resultat(request):
+    html_template = loader.get_template( 'result_critere.html' )
+    context = {}
+    dictionnaire = {}
+    Matrix = np.array(list(csv.reader(open("media/files/data2.csv", "r"), delimiter=",")))
+    # print('Matrice ',Matrix)
+    # exraire values from matrix
+    matrix_list = Matrix[2:,1]
+    # print("hak",Matrix[2:,1])
+    matrix = Matrix[2:,2:].astype(float)
+    # print("matrix \n ", matrix)
+    # extrere first triangl of matrice and save in dictionnaire: \n
+    for i in range(len(matrix_list)):
+        for j in range(len(matrix_list)):
+            if i < j:
+                dictionnaire.update({(matrix_list[i],matrix_list[j]):matrix[i][j]})
+    data = convert_to_tuple(matrix_list) 
+    # print("dictionaire \n:", dictionnaire)
+    critere  = Critere.objects.all()
+    # sub = critere.subcritere_set.all()   
+    if request.method == 'POST':
+        pk_critere = request.POST.get("critere_drop_text")   
+        cr = Critere.objects.get(pk= pk_critere) 
+        # sub = cr.subcriters.all()
+        list_sub = [e.name for e in cr.subcriters.all()]
+        print("sub_critere", cr.subcriters.all())
+        print([e.name for e in cr.subcriters.all()])
+    context["dictionnaire"] = dictionnaire 
+    context["critere"] = critere  
+    context["sub"] = list_sub
+    return HttpResponse(html_template.render(context, request))   
+
+
+   
     
     
 
