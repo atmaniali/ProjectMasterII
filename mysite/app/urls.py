@@ -34,6 +34,10 @@ urlpatterns = [
     path('aimen/', views.aimen_methode, name = 'aimen_methode'),
     path('haka/', views.save_critere_as_csv, name = 'haka'),
     path('result/',views.show_resultat, name = "result"),
+
+    path('chkla/',views.tester_chkla_ta3i, name = "chkla"),
+    path('chart4/', views.chart_for, name = "chart_four"),
+    path('promthee2/', views.promether_view, name = "promethee_2"),
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),
 

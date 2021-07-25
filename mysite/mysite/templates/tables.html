@@ -13,7 +13,7 @@
         </div>
       </div>
     </div>
-
+    <!-- {{now}} -->
     <div class="container-fluid mt--7">
 
       <!-- Table -->
@@ -24,7 +24,7 @@
               <h3 class="mb-0">Card tables: <strong>Criteres</strong></h3>
             </div>
             <div class="table-responsive">
-              <table class="table align-items-center table-flush">
+              <table class="table align-items-center table-flush" id="table">
                 <thead class="thead-light">
                   <tr>
                     <th scope="col">Users</th>
@@ -47,7 +47,7 @@
                         </div>
                       </div>
                     </th>
-                    <td>
+                    <td id="pk">
                       {{critere.get_pk}}
                     </td>
                     <td>
@@ -62,8 +62,10 @@
                             <i class="fas fa-ellipsis-v"></i>
                           </a>
                           <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                            <a class="dropdown-item" href="#">Delete</a>
-                            <a class="dropdown-item" href="#">Update</a>
+                            <a class="dropdown-item" id="delete" type="button" href="{% url 'app:critere_list' %}">Delete</a>
+                            <a class="dropdown-item" id="update" type="button" href="{% url 'app:critere_list' %}">Update</a>
+                            <a class="dropdown-item" id="teste" type="button" href="{% url 'app:critere_list' %}">Tesdter</a>
+
                           </div>
                         </div>
                       </div>
@@ -102,32 +104,7 @@
                 </ul>
               </nav>
             </div> 
-           <!-- {% else %}
-           <div class="card-footer py-4">
-              <nav aria-label="...">
-                <ul class="pagination justify-content-end mb-0">
-                  <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1">
-                      <i class="fas fa-angle-left"></i>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                  </li>
-                  <li class="page-item active">
-                    <a class="page-link" href="#">1</a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">
-                      <i class="fas fa-angle-right"></i>
-                      <span class="sr-only">Next</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-            </div> -->
+           
            {% endif %}
           </div>
         </div>
@@ -139,6 +116,7 @@
             <div class="card-header bg-transparent border-0">
               <h3 class="text-white mb-0">Card tables: <strong>Critere Subcritere</strong> </h3>
             </div>
+            
             <div class="table-responsive">
               <table class="table align-items-center table-dark table-flush">
                 <thead class="thead-dark">
@@ -164,7 +142,6 @@
                     </th>
                     
                     <td>
-                      {{critere.name}}
                     </td>
                     <td > 
                       <span class="mb-0 text-sm">{{critere.get_subcriters}}</span> 
@@ -201,5 +178,61 @@
 {% endblock content %}
 
 <!-- Specific JS goes HERE --> 
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+    <!-- TABLE -->
+    <script>
+      $(document).ready(function(){
+            $("#delete").click(function(event){
+               var id = $("#pk").text()   
+              $.ajax({
+                headers: { "X-CSRFToken": '{{csrf_token}}' },
+                type: 'POST',
+                url: "{% url 'app:critere_list' %}",
+                data:{'te' : id},
+                datatype: 'json',
+                success: function(data) {
+                  alert("successfully added to favorites")
+                  }
+              })            
+            })
+            // methode II
+            $("#update").click(function(event){
+              $.ajax({
+                headers: { "X-CSRFToken": '{{csrf_token}}' },
+                type: 'POST',
+                url: "{% url 'app:critere_list' %}",
+                data:{'tet' : 5},
+                datatype: 'json',
+                success: function(data) {
+                  alert("successfully tester work")
+                  }
+              })            
+            })
+            // methode III
+            $("#teste").click(function(event){
+              $.ajax({
+                headers: { "X-CSRFToken": '{{csrf_token}}' },
+                type: 'POST',
+                url: "{% url 'app:critere_list' %}",
+                data:{'test' : 5},
+                datatype: 'json',
+                success: function(data) {
+                  alert("successfully update work")
+                  }
+              })            
+            })
+            // END:
+             });         
+    </script>
+    <!-- DARK TABLE -->
+    <script>
+      $(document).ready(function(){
+        // METHODE I:
+        
+        // END;
+      })
+    </script>
+      
+      
+{% endblock javascripts %}
 {% comment %} TODO: createcarte containt detail of methods {% endcomment %}

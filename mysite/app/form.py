@@ -12,30 +12,30 @@ class ContactForm(forms.ModelForm):
         exclude = ['user']
         
 
-class Effets_secondairesForm(forms.ModelForm):
-    class  Meta:
-       model = Effets_secondaires
-       fields = '__all__'   
+# class Effets_secondairesForm(forms.ModelForm):
+#     class  Meta:
+#        model = Effets_secondaires
+#        fields = '__all__'   
 
-class VaccinsForm(forms.ModelForm):
-    class  Meta:
-       model = Vaccins
-       fields = ['nom_vaccin',]
+# class VaccinsForm(forms.ModelForm):
+#     class  Meta:
+#        model = Vaccins
+#        fields = ['nom_vaccin',]
 
-class CoutForm(forms.ModelForm):
-    class  Meta:
-       model = Cout
-       fields = '__all__' 
+# class CoutForm(forms.ModelForm):
+#     class  Meta:
+#        model = Cout
+#        fields = '__all__' 
 
-class PosologieForm(forms.ModelForm):
-    class  Meta:
-       model = Posologie
-       fields = '__all__' 
+# class PosologieForm(forms.ModelForm):
+#     class  Meta:
+#        model = Posologie
+#        fields = '__all__' 
 
-class CharacteristiquesForm(forms.ModelForm):
-    class  Meta:
-       model = Characteristiques
-       fields = '__all__'        
+# class CharacteristiquesForm(forms.ModelForm):
+#     class  Meta:
+#        model = Characteristiques
+#        fields = '__all__'        
 # Models Form 
 # here i want to creat autoatique forms
 #  start agin Sun, 11 ,21
@@ -65,9 +65,11 @@ class CritereModelForm(forms.ModelForm):
             )
         }
 CritereFormset = formset_factory(CritereForm) 
+CHOICE = Critere.objects.all()
 CritereModelFormset = modelformset_factory(
     Critere,
-    fields=('name','user' ),
+    fields=('name', ),
+    # fields=('name',),
     extra=1,
     widgets={
         'name': forms.TextInput(attrs={

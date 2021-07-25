@@ -13,12 +13,7 @@ class AdminUser(admin.ModelAdmin):
 admin.site.register(Profile),
 admin.site.register(Upload_csv),
 # Show sub creteria in django admine/
-admin.site.register(Effets_secondaires),
-admin.site.register(Cout),
-admin.site.register(Posologie),
-admin.site.register(Characteristiques),
-# Show vaccn with all sub creteria :
-admin.site.register(Vaccins),
+
 admin.site.register(Resultat),
 admin.site.register(Critere),
 admin.site.register(Subcritere),

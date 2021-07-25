@@ -1,7 +1,7 @@
-""
-"this scripts for turn our models to numpy array then to csv_file for make user choice of"
-" charge his values and start process of AHP methode ."
-""
+"""
+this scripts for turn our models to numpy array then to csv_file for make user choice of
+charge his values and start process of AHP methode 
+"""
 # *****************************************
 # PHASE I : turn models into matrix and transfer into csv file
 # import 

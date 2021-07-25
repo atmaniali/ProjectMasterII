@@ -9,8 +9,12 @@
 <body>
     <h1>Rresult afficher  I:</h1>
     <!-- {{dictionnaire}} -->
+    {{dictionnaire}}
+    <br>
     {{critere}}
+    <br>
     {{sub}}
+    <br>
     <h3>Drop down List :</h3>
     <form action="" method="post">
         {% csrf_token %}
@@ -19,7 +23,7 @@
             {% for results in critere %}
                     <option value="{{ results.id}}">{{ results.name}}</option>
             {% endfor %}
-                </select>
+        </select>
         <button type="submit">YES</button>        
     </form>    
 

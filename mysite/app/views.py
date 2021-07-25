@@ -12,7 +12,7 @@ from django.template import loader
 from django.http import HttpResponse
 from django import template
 from .form import *
-from .models import (Vaccins, Resultat, Critere)
+from .models import *
 from ahpy import ahpy
 from django.utils.dateparse import parse_datetime
 import requests
@@ -22,8 +22,8 @@ import numpy as np
 
 @login_required(login_url="/login/")
 def index(request):
-    data = requests.get('https://api.corona-dz.live/country/latest').json()
     all_genders = requests.get('https://api.corona-dz.live/country/gender/all').json()
+    data = requests.get('https://api.corona-dz.live/country/latest').json()
     date_auj = parse_datetime(data['date']).date()
     males = []
     females = []
@@ -31,17 +31,14 @@ def index(request):
     for gnder in all_genders :
         males.append(gnder['male'])
         females.append(gnder['female'])
-        # recupirer date sous forme 'dd/mm/yyyy' et turn in string
         dates_all_genderes.append(str(parse_datetime(gnder['date']).date()))
     context = {
         'response' : data,
-        'date_de_donner' : date_auj     
-    } 
-    context['segment'] = 'index'
-    context['males'] = males[:20]
-    context['females'] = females [:20] 
-    context['date_all'] = dates_all_genderes[:20]
-    print("data context", data)
+        'date_de_donner' : date_auj
+    }  
+    context['males'] = males[-6:]
+    context['females'] = females [-6:] 
+    context['date_all'] = dates_all_genderes [-6:] 
     html_template = loader.get_template( 'index.html' )
     return HttpResponse(html_template.render(context, request))
 
@@ -82,6 +79,11 @@ def api(request):
 
     # Home
 def home_view(request):
+    if request.is_ajax():
+        res = request.POST.get('te') 
+        res_int = int(res)
+        print("type,",type(res_int))
+        print("play",res_int)   
     context = {
         'response' : 'arwah netlag 3lik',     
     }
@@ -137,44 +139,44 @@ def profile(request):
 # Vaccins
 def vccins_page(request):
     context = {} 
-    if request.method =='POST':
-        vaccin_form = VaccinsForm(request.POST or None)
-        effets_secondaire_form = Effets_secondairesForm(request.POST or None)
-        cout_form = CoutForm(request.POST or None)
-        posologie_form = PosologieForm(request.POST or None)
-        charachteristique_form= CharacteristiquesForm(request.POST or None)
-        if vaccin_form.is_valid():
-            vaccin_nom = vaccin_form.cleaned_data['nom_vaccin']
-            if effets_secondaire_form.is_valid():
-                obj1 = effets_secondaire_form.save()
-                # 
-            if cout_form.is_valid():
-                obj2 = cout_form.save()
-                    #
-            if posologie_form.is_valid():
-                obj3 = posologie_form.save()
+    # if request.method =='POST':
+    #     vaccin_form = VaccinsForm(request.POST or None)
+    #     effets_secondaire_form = Effets_secondairesForm(request.POST or None)
+    #     cout_form = CoutForm(request.POST or None)
+    #     posologie_form = PosologieForm(request.POST or None)
+    #     charachteristique_form= CharacteristiquesForm(request.POST or None)
+    #     if vaccin_form.is_valid():
+    #         vaccin_nom = vaccin_form.cleaned_data['nom_vaccin']
+    #         if effets_secondaire_form.is_valid():
+    #             obj1 = effets_secondaire_form.save()
+    #             # 
+    #         if cout_form.is_valid():
+    #             obj2 = cout_form.save()
+    #                 #
+    #         if posologie_form.is_valid():
+    #             obj3 = posologie_form.save()
 
-            if charachteristique_form.is_valid():
-                obj4 = charachteristique_form.save()
+    #         if charachteristique_form.is_valid():
+    #             obj4 = charachteristique_form.save()
                 
-            vaccin = Vaccins.objects.create(nom_vaccin = vaccin_nom, effets_secondaires = obj1,
-            Characteristiques =  obj4,
-            posologie = obj3,
-            cout = obj2)    
-            vaccin.save()
-            return redirect('vaccins.html')    
-    else:
-        vaccin_form = VaccinsForm()
-        effets_secondaire_form = Effets_secondairesForm()
-        cout_form = CoutForm()
-        posologie_form = PosologieForm()
-        charachteristique_form= CharacteristiquesForm()
+    #         vaccin = Vaccins.objects.create(nom_vaccin = vaccin_nom, effets_secondaires = obj1,
+    #         Characteristiques =  obj4,
+    #         posologie = obj3,
+    #         cout = obj2)    
+    #         vaccin.save()
+    #         return redirect('vaccins.html')    
+    # else:
+    #     vaccin_form = VaccinsForm()
+    #     effets_secondaire_form = Effets_secondairesForm()
+    #     cout_form = CoutForm()
+    #     posologie_form = PosologieForm()
+    #     charachteristique_form= CharacteristiquesForm()
               
-    context['effets_secondaire_form'] = effets_secondaire_form
-    context['cout_form'] = cout_form
-    context['posologie_form'] = posologie_form
-    context['charachteristique_form'] = charachteristique_form
-    context['vaccin_form'] = vaccin_form
+    # context['effets_secondaire_form'] = effets_secondaire_form
+    # context['cout_form'] = cout_form
+    # context['posologie_form'] = posologie_form
+    # context['charachteristique_form'] = charachteristique_form
+    # context['vaccin_form'] = vaccin_form
     context['segment'] = 'profile'
 
     html_template = loader.get_template( 'vaccins.html' )
@@ -398,9 +400,8 @@ def create_critere_normal(request):
                 name = form.cleaned_data.get('name')
                 # save Critere instance
                 if name:
-                    us = request.user.username
-                    print("***************************", us)
-                    Critere(name=name, user = request.user).save()
+                    
+                    Critere(name=name).save()
                     # hada chkla 
             if len(csv_file ) != 0 :
                 query = Critere.objects.all()
@@ -424,6 +425,7 @@ def create_critere_normal(request):
     context['formset']=formset
     context['heading']=heading_message
     return render(request, template_name, context) 
+    
 class CritereListView(generic.ListView):
 
     model = Critere
@@ -431,12 +433,30 @@ class CritereListView(generic.ListView):
     template_name = 'tables.html' 
     paginate_by = 5  
     ordering = ['-created_at']
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['subcritere_list'] = Subcritere.objects.all()
+        return context
+    def post(self, request, *args, **kwargs):
+        if request.is_ajax():
+            if request.POST.get('te') :
+                id  = int(request.POST.get('te')) 
+                objet = get_object_or_404(Critere, id = id)
+                # objet.delete()
+                print(id)
+            if request.POST.get('tet'): 
+                print("hi",request.POST.get('tet'))  
+            if request.POST.get('test'): 
+               print('oki')     
+                  
+        return render(request, self.template_name)    
 
 def create_critere_with_subcritere(request):
-    
     template_name = 'create_with_subcritere.html'
     if request.method == 'GET':
-        print("get \t \n",request.get)
+        print("get \t \n",request.GET)
         critereform = CritereModelForm(request.GET or None)
         formset = SubcritereFormset(queryset=Subcritere.objects.none())
     elif request.method == 'POST':
@@ -552,19 +572,15 @@ def show_resultat(request):
     context = {}
     dictionnaire = {}
     Matrix = np.array(list(csv.reader(open("media/files/data2.csv", "r"), delimiter=",")))
-    # print('Matrice ',Matrix)
-    # exraire values from matrix
     matrix_list = Matrix[2:,1]
-    # print("hak",Matrix[2:,1])
     matrix = Matrix[2:,2:].astype(float)
-    # print("matrix \n ", matrix)
-    # extrere first triangl of matrice and save in dictionnaire: \n
     for i in range(len(matrix_list)):
         for j in range(len(matrix_list)):
             if i < j:
                 dictionnaire.update({(matrix_list[i],matrix_list[j]):matrix[i][j]})
-    data = convert_to_tuple(matrix_list) 
-    # print("dictionaire \n:", dictionnaire)
+    donner = Save_result(name = "critere_generale", dictionnaire = dictionnaire)
+    donner.save()
+    print("data is upload", donner)
     critere  = Critere.objects.all()
     # sub = critere.subcritere_set.all()   
     if request.method == 'POST':
@@ -574,10 +590,102 @@ def show_resultat(request):
         list_sub = [e.name for e in cr.subcriters.all()]
         print("sub_critere", cr.subcriters.all())
         print([e.name for e in cr.subcriters.all()])
+        # start script.py to prepar csv fille for  subcritere :
+        list_np = np.array(list_sub)
+        matrix = [ [ 0 for i in range(len(list_sub)) ] for j in range(len(list_sub)) ]
+        for i in range(len(list_sub)):
+            for j in range(len(list_sub)):
+                if i == j:
+                    matrix[i][j] = 1
+        matrix_np = np.array(matrix) 
+        matrix_with_critere_ligne= np.vstack((list_np,matrix_np))
+        print("matrix_critere ligne \n",matrix_with_critere_ligne)
+        matrix_transpose = matrix_with_critere_ligne.transpose()
+        print(matrix_transpose)
+        list_np_1 = np.append("",list_np)
+        print(list_np_1)
+        matrix_with_critere_ligne_transpose= np.vstack((list_np_1,matrix_transpose))
+        print(matrix_with_critere_ligne_transpose)
+        pd.DataFrame(matrix_with_critere_ligne_transpose).to_csv("media/files/data2_subcritere.csv")
+        
     context["dictionnaire"] = dictionnaire 
     context["critere"] = critere  
-    context["sub"] = list_sub
+    # context["sub"] = list_sub
     return HttpResponse(html_template.render(context, request))   
+
+def save_as_csv(query, name):
+    list_np = np.array(query) 
+    matrix = [ [ 0 for i in range(len(query)) ] for j in range(len(query)) ]
+    for i in range(len(query)):
+        for j in range(len(query)):
+            if i == j:
+                matrix[i][j] = 1
+    matrix_np = np.array(matrix)  
+    matrix_with_critere_ligne= np.vstack((list_np,matrix_np))
+    matrix_transpose = matrix_with_critere_ligne.transpose()
+    list_np = np.append("",list_np)
+    matrix_with_critere_ligne_transpose= np.vstack((list_np,matrix_transpose))
+    pd.DataFrame(matrix_with_critere_ligne_transpose).to_csv("media/files/critere_{}.csv".format(name))
+
+def from_csv_to_dict(file):
+    dictionnaire = {}
+    Matrix = np.array(list(csv.reader(open(file, "r"), delimiter=",")))
+    matrix_list = Matrix[2:,1]
+    matrix = Matrix[2:,2:].astype(float)
+    for i in range(len(matrix_list)):
+        for j in range(len(matrix_list)):
+            if i < j:
+                dictionnaire.update({(matrix_list[i],matrix_list[j]):matrix[i][j]})    
+    return dictionnaire 
+
+def tester_chkla_ta3i(request):
+    """ in this function  i want to show result from models and csv file """
+    # 
+    # first we need to load csv file & turn it to dictionnaire
+    dict = {}
+    context= {}
+    critere = Critere.objects.all()
+    list_critere = []
+    for i in critere:
+        list_critere.append(i.name) 
+    print(critere,"\n",list_critere)    
+    save_as_csv(list_critere,"cri")
+    file = "media/files/data2.csv"
+    dict = from_csv_to_dict(file)
+    print(dict)
+        
+    html_template = loader.get_template( 'tester_chkla_ta3i.html' )
+    return HttpResponse(html_template.render(context, request))
+
+def chart_for(request):
+    context= {}
+    all_genders = requests.get('https://api.corona-dz.live/country/gender/all').json()
+    males = []
+    females = []
+    dates_all_genderes = []
+    for gnder in all_genders :
+        males.append(gnder['male'])
+        females.append(gnder['female'])
+        dates_all_genderes.append(str(parse_datetime(gnder['date']).date()))
+    context['males'] = males[-6:]
+    context['females'] = females [-6:] 
+    context['date_all'] = dates_all_genderes [-6:] 
+    html_template = loader.get_template( 'chart4.html' )
+    return HttpResponse(html_template.render(context, request))
+# promethee II : 
+
+def promether_view(request) :
+    context = {}
+    if request.method == 'POST' and request.FILES['excel_file']:
+        print("did")
+        file = request.FILES['excel_file']
+        print(file) 
+        Matrix = np.array(list(csv.reader(open(file, "r"), delimiter=",")))
+        print(matrix)
+    html_template = loader.get_template( 'promethee_2_page.html' )
+    return HttpResponse(html_template.render(context, request))
+
+
 
 
    
