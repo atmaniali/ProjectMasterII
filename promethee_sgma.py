@@ -147,6 +147,7 @@ print(aggrsums)
 # take only the aggragated sum values(LAST column) and create aggregated preference Function(matrix)
 def create_aggregated_matrix(matrix, aggr):
     # retrieve only the aggregated column(list)
+    print("function{}:({},arg2+{})".format("create_aggregated_matrix",matrix, aggr))
     aggregate_column = np.array(matrix[:, -1].transpose())
     agrs = aggr.tolist()
     print(aggregate_column)
@@ -155,7 +156,8 @@ def create_aggregated_matrix(matrix, aggr):
   #  aggregated_matrix  = [[len(Alternatives), len(Alternatives) ]]
     #hada el hmar ghadi ylez madam les valeurs yethattou
    # print(np.array(aggregated_matrix).shape)
-    for i in range(len(aggregated_matrix)) :  
+    for i in range(len(aggregated_matrix)) : 
+        print("matrix {} len {}".format(aggregated_matrix, len(aggregated_matrix))) 
         for j in range(len(aggregated_matrix[i])) :       
             if i == j:
                 aggregated_matrix[i][j] = 0        

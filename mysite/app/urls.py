@@ -38,6 +38,7 @@ urlpatterns = [
     path('chkla/',views.tester_chkla_ta3i, name = "chkla"),
     path('chart4/', views.chart_for, name = "chart_four"),
     path('promthee2/', views.promether_view, name = "promethee_2"),
+    path('ahp/', views.ahp_final, name = "ahp"),
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),
 
