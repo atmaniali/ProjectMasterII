@@ -927,9 +927,11 @@ def promether_view(request) :
     print("typt",liza[2])
     if request.method == 'POST':
         doc_file=request.FILES.get('myfile')
+        white_file = request.FILES.get('myfile1')
         mat = np.loadtxt(doc_file,dtype = str, skiprows=0, delimiter=',')
-        print("matric",mat)i try 
-    context['mat'] = mat   
+        print("matric",mat)
+        
+        context['mat'] = mat   
     html_template = loader.get_template( 'promethee_2_page.html' )
     return HttpResponse(html_template.render(context, request))
 import itertools

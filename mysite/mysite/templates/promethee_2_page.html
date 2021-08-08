@@ -20,8 +20,11 @@
         <input type="submit" value="Upload"> -->
         <div class="form-group">
             {% csrf_token %}
-            <label for="exampleFormControlFile1">Promethee II file input</label>
+            <label for="exampleFormControlFile1">Promethee II Matrice de perfermance</label>
             <input type="file" class="form-control-file" id="exampleFormControlFile1" accept=".csv" name="myfile">
+            <label for="exampleFormControlFile1">Promethee II Weight</label>
+            <input type="file" class="form-control-file" id="exampleFormControlFile1" accept=".csv" name="myfile1">
+            <br>
             <input type="submit" value="Upload">
         </div>
     </form>
