@@ -9,7 +9,7 @@
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
     <div class="container-fluid">
         <div class="header-body">
-            <p style="color: white;">Date de donner : <span>{{date_de_donner}}</span></p>
+            <p style="color: white;">Date de donner : <span>{{response.date}}</span></p>
             <br>
             
             <!-- Card stats -->
@@ -191,6 +191,7 @@
 <!-- Specific JS goes HERE -->
 
 {% block javascripts %}
+<!-- mauve chart -->
 <script>
     var ctx = document.getElementById('4').getContext('2d');
     var myChart = new Chart(ctx, {
@@ -228,4 +229,5 @@
         }
     });
     </script>
+    <!-- white chart -->
 {% endblock javascripts %}

@@ -662,9 +662,13 @@ def tester_chkla_ta3i(request):
 def chart_for(request):
     context= {}
     all_genders = requests.get('https://api.corona-dz.live/country/gender/all').json()
+    latest = requests.get('https://api.corona-dz.live/country/latest').json()
     males = []
     females = []
     dates_all_genderes = []
+    d = datetime.fromisoformat('2020-01-06T00:00:00.000Z'[:-1])
+    d.strftime('%Y-%m-%d ')
+    print('dates',d)
     for gnder in all_genders :
         males.append(gnder['male'])
         females.append(gnder['female'])
@@ -672,6 +676,7 @@ def chart_for(request):
     context['males'] = males[-6:]
     context['females'] = females [-6:] 
     context['date_all'] = dates_all_genderes [-6:] 
+    context['response'] = latest
     html_template = loader.get_template( 'chart4.html' )
     return HttpResponse(html_template.render(context, request))
 # promethee II : 
