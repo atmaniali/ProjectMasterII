@@ -31,7 +31,7 @@
     <br>
     {{hh}}
     <hr>
-    {{liza}}
+    {{result}}
     <hr>
     {{zero}}
     <br>
@@ -55,7 +55,7 @@
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: {{liza | safe}},
+            labels: {{result | safe}},
             datasets: [{
                 label: '# of Votes',
                 data: {{zero | safe}},

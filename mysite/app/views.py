@@ -759,22 +759,9 @@ def calculateflows(matrix):
     for i in range(len(matrix)):
         diffs.append(matrix[i,-1] - matrix[-1, i])
     return diffs
-
-# HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH          
-def promether_view(request) :
-    context = {}
-    # if request.method == 'POST' and request.FILES['excel_file']:
-    #     print("did")
-    #     fileb = request.FILES['excel_file']
-    #     print(fileb)
-        # fs = FileSystemStorage()
-        # filename = fs.save(file.name, file)
-        # uploaded_file_url = fs.url(filename) 
-    print("promethee II")
-    file = "/home/ali/Documents/MasterIIproect/mysite/app/file.csv"
-    fil = "/home/ali/Documents/MasterIIproect/MP.csv"
-    # Matrix = np.array(list(csv.reader(open(file, "r"), delimiter=",")))
-    Matrix = np.loadtxt(fil,dtype = str, skiprows=0, delimiter=',')
+# TODO: Modify functions pls and elemate print
+def readMatrix(MPfiles, weightfiles):
+    Matrix = np.loadtxt(MPfiles,dtype = str, skiprows=0, delimiter=',')
     # STEP 1 : Normalize the Evaluation Matrix
     array_Matrix  = np.array(Matrix)
     Alternative_matix = array_Matrix[2:,1:].astype(np.single)
@@ -818,20 +805,20 @@ def promether_view(request) :
     # concatenate the Names and preferences related 
     the_Preference_matrix = np.hstack([Alternative_possibilities, Preference_matrix])
     print('the_Preference_matrix \n', the_Preference_matrix)
-    weights =list(csv.reader(open("/home/ali/Documents/MasterIIproect/weight.csv", "r"), delimiter=","))  
-    print('weights \n', weights)
-    array_weights = np.asarray(weights[0], dtype='float')
+    # weights =list(csv.reader(open(weightfiles, "r"), delimiter=","))  
+    # print('weights \n', weights)
+    array_weights = np.loadtxt(weightfiles, delimiter=',', dtype=float)
     print('array_weights \n', array_weights)
     Agregate_preference_matrix = mult_matrix_vect(Preference_matrix, array_weights)
     show_calculation = show_mult_matrix_vect(Preference_matrix, array_weights)
     # lets add a column to sum these aggregated preferences
     Agregate_preference_matrix_with_sum = add_aggregated_preferences_line(Agregate_preference_matrix)
     print('Agregate_preference_matrix_with_sum \n', Agregate_preference_matrix_with_sum)
-# time.sleep(3)
+    # time.sleep(3)
     aggrsums = Agregate_preference_matrix_with_sum[:,-1]
     print(aggrsums)
 
-# take only the aggragated sum values(LAST column) and create aggregated preference Function(matrix)
+    # take only the aggragated sum values(LAST column) and create aggregated preference Function(matrix)
     aggregated_matrix = np.zeros((len(Alternatives), len(Alternatives)))
 
     print("len alternatives")
@@ -853,7 +840,7 @@ def promether_view(request) :
 
     for x in sumrows:
         newsumrow.append(x /(len(created_aggregated_matrix) - 1))
-    
+
     print("flots entrants \n" , newsommecolonne)
     print("flots sortants \n" , newsumrow)
 
@@ -898,17 +885,14 @@ def promether_view(request) :
     print(sortedArr[:,0])  
     print("*************************************-******************************************")      
     final_sorted = sortedArr[:,0]
-    print("count finale :", len(final_sorted))
-    print("type{}".format(type(final_sorted)))
-    out_array = numpy.array_str(final_sorted)
-    print(type(out_array[1]))
-    listin  = list(out_array)
-    print("list", listin)
-    list_np = []
-    for i in out_array:
-        list_np.append(i)
-    print(list_np, 'list_np')    
-    print("type  list", type(list_np[0]))
+    # print("count finale :", len(final_sorted))
+    # print("type{}".format(type(final_sorted)))
+    # out_array = numpy.array_str(final_sorted)
+    # list_np = []
+    # for i in out_array:
+    #     list_np.append(i)
+    # print(list_np, 'list_np')    
+    # print("type  list", type(list_np[0]))
     print("*****testing******")
     hh = final_sorted.tolist()
     print("hh",hh)
@@ -920,18 +904,19 @@ def promether_view(request) :
             liza.append(i)
             hay_3liya.append(zero)
             zero = zero+1
-    context['hh'] = hh
-    context['liza'] = liza
-    context['zero'] = hay_3liya
-    print("liza", liza)
-    print("typt",liza[2])
+    return liza   
+
+# HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH          
+def promether_view(request) :
+    context = {}
     if request.method == 'POST':
         doc_file=request.FILES.get('myfile')
-        white_file = request.FILES.get('myfile1')
+        weight_file = request.FILES.get('myfile1')
         mat = np.loadtxt(doc_file,dtype = str, skiprows=0, delimiter=',')
-        print("matric",mat)
-        
-        context['mat'] = mat   
+        print("matric",mat)        
+        context['mat'] = mat  
+        result = readMatrix(doc_file, weight_file) 
+        context['result'] = result  
     html_template = loader.get_template( 'promethee_2_page.html' )
     return HttpResponse(html_template.render(context, request))
 import itertools
