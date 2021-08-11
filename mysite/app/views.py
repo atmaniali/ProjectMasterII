@@ -23,22 +23,37 @@ import numpy as np
 @login_required(login_url="/login/")
 def index(request):
     all_genders = requests.get('https://api.corona-dz.live/country/gender/all').json()
+    all_country = requests.get('https://api.corona-dz.live/country/all').json()
     data = requests.get('https://api.corona-dz.live/country/latest').json()
+    latest_age = requests.get('https://api.corona-dz.live/country/age/latest').json()
     date_auj = parse_datetime(data['date']).date()
     males = []
     females = []
+    confirmedes = []
     dates_all_genderes = []
     for gnder in all_genders :
         males.append(gnder['male'])
         females.append(gnder['female'])
         dates_all_genderes.append(str(parse_datetime(gnder['date']).date()))
+    for countrie in all_country:
+        confirmedes.append(countrie['confirmed'])    
     context = {
         'response' : data,
         'date_de_donner' : date_auj
-    }  
+    } 
+    if request.method == 'POST':
+        id = request.POST.get('wilaya')
+        urls = "https://api.corona-dz.live/province/{}/latest".format(id)
+        wilaya_data = requests.get(urls).json()
+        result = wilaya_data[0]
+        final_result = result['data']
+        context['wilaya'] = final_result[0]
     context['males'] = males[-6:]
     context['females'] = females [-6:] 
     context['date_all'] = dates_all_genderes [-6:] 
+    context['latest_age'] = latest_age
+    context['confirmedes'] = confirmedes[-6:]
+    context['segment'] = 'index'
     html_template = loader.get_template( 'index.html' )
     return HttpResponse(html_template.render(context, request))
 

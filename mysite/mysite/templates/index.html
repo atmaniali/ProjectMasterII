@@ -1,7 +1,7 @@
 {% extends 'layouts/base.html' %} {% block title %} Dashboard {% endblock title %}
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}<script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.0/dist/chart.min.js"></script>{% endblock stylesheets %}
 {% block content %}
 
 <!-- Header -->
@@ -159,6 +159,7 @@
                 
             </div>
         </div>
+        
         <div class="col-xl-4">
             <div class="card shadow">
                 <div class="card-header bg-transparent">
@@ -172,13 +173,436 @@
                 <div class="card-body">
                     <!-- Chart -->
                     <div class="chart">
-                        <canvas id="chart-orders" class="chart-canvas"></canvas>
+                        <canvas id="5" class="chart-canvas" width="600" height="600"></canvas>
+                        <script>
+                            var ctx = document.getElementById('5').getContext('2d');
+                            var myChart = new Chart(ctx, {
+                                type: 'bar',
+                                data: {
+                                    labels: {{date_all | safe}},
+                                    datasets: [{
+                                        label: '# of Votes',
+                                        data: {{confirmedes  | safe}},
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)',
+                                            'rgba(255, 206, 86, 0.2)',
+                                            'rgba(75, 192, 192, 0.2)',
+                                            'rgba(153, 102, 255, 0.2)',
+                                            'rgba(255, 159, 64, 0.2)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(255, 99, 132, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(255, 206, 86, 1)',
+                                            'rgba(75, 192, 192, 1)',
+                                            'rgba(153, 102, 255, 1)',
+                                            'rgba(255, 159, 64, 1)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true
+                                        }
+                                    }
+                                }
+                            });
+                            </script>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <br>
+    <br>
+    <div class="row">
+        <!-- Confirmed -->
+        <div class="col-xl-3 col-lg-6">
+            <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                    <div>
+                        <h5 class="card-title text-uppercase text-muted mb-0">Age: <span class="h2 font-weight-bold mb-0">{{latest_age.0.label}}</span></h5>
+                            
+                    </div>
+                    <div><canvas id="myChartDone" ></canvas>
+                        <script>
+                            var ctx = document.getElementById('myChartDone').getContext('2d');
+                            var myChart = new Chart(ctx, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: ['Confirmed', 'Death'],
+                                    datasets: [{
+                                        label: '# of Votes',
+                                        data: [{{latest_age.0.confirmed}}, {{latest_age.0.deaths}}],
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(255, 99, 132, 1)',
+                                            'rgba(54, 162, 235, 1)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                    legend: {
+                                        position: 'top',
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: 'Chart.js Doughnut Chart'
+                                    }
+                                    }
+                                },
+                            });
+                        </script> 
+                    </div>   
+                </div>
+            </div>
 
+        </div>
+        <!-- Confirmed -->
+        <div class="col-xl-3 col-lg-6">
+            <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                    <div>
+                        <h5 class="card-title text-uppercase text-muted mb-0">Age: <span class="h2 font-weight-bold mb-0">{{latest_age.1.label}}</span></h5>
+                            
+                    </div>
+                    <div><canvas id="myChartDone1" ></canvas>
+                        <script>
+                            var ctx = document.getElementById('myChartDone1').getContext('2d');
+                            var myChart = new Chart(ctx, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: ['Confirmed', 'Death'],
+                                    datasets: [{
+                                        label: '# of Votes',
+                                        data: [{{latest_age.1.confirmed}}, {{latest_age.1.deaths}}],
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(255, 99, 132, 1)',
+                                            'rgba(54, 162, 235, 1)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                    legend: {
+                                        position: 'top',
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: 'Chart.js Doughnut Chart'
+                                    }
+                                    }
+                                },
+                            });
+                        </script> 
+                    </div>   
+                </div>
+            </div>
+
+        </div>
+        <!-- Confirmed -->
+        <div class="col-xl-3 col-lg-6">
+            <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                    <div>
+                        <h5 class="card-title text-uppercase text-muted mb-0">Age: <span class="h2 font-weight-bold mb-0">{{latest_age.2.label}}</span></h5>
+                            
+                    </div>
+                    <div><canvas id="myChartDone2" ></canvas>
+                        <script>
+                            var ctx = document.getElementById('myChartDone2').getContext('2d');
+                            var myChart = new Chart(ctx, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: ['Confirmed', 'Death'],
+                                    datasets: [{
+                                        label: '# of Votes',
+                                        data: [{{latest_age.2.confirmed}}, {{latest_age.2.deaths}}],
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(255, 99, 132, 1)',
+                                            'rgba(54, 162, 235, 1)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                    legend: {
+                                        position: 'top',
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: 'Chart.js Doughnut Chart'
+                                    }
+                                    }
+                                },
+                            });
+                        </script> 
+                    </div>   
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <!-- Confirmed -->
+        <div class="col-xl-3 col-lg-6">
+            <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                    <div>
+                        <h5 class="card-title text-uppercase text-muted mb-0">Age: <span class="h2 font-weight-bold mb-0">{{latest_age.3.label}}</span></h5>
+                            
+                    </div>
+                    <div><canvas id="myChartDone3" ></canvas>
+                        <script>
+                            var ctx = document.getElementById('myChartDone3').getContext('2d');
+                            var myChart = new Chart(ctx, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: ['Confirmed', 'Death'],
+                                    datasets: [{
+                                        label: '# of Votes',
+                                        data: [{{latest_age.3.confirmed}}, {{latest_age.3.deaths}}],
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(255, 99, 132, 1)',
+                                            'rgba(54, 162, 235, 1)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                    legend: {
+                                        position: 'top',
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: 'Chart.js Doughnut Chart'
+                                    }
+                                    }
+                                },
+                            });
+                        </script> 
+                    </div>  
+                    
+                </div>
+            </div>
+
+        </div>
+        <!-- Confirmed -->
+        <div class="col-xl-3 col-lg-6">
+            <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                    <div>
+                        <h5 class="card-title text-uppercase text-muted mb-0">Age: <span class="h2 font-weight-bold mb-0">{{latest_age.4.label}}</span></h5>
+                            
+                    </div>
+                    <div><canvas id="myChartDone4" ></canvas>
+                        <script>
+                            var ctx = document.getElementById('myChartDone4').getContext('2d');
+                            var myChart = new Chart(ctx, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: ['Confirmed', 'Death'],
+                                    datasets: [{
+                                        label: '# of Votes',
+                                        data: [{{latest_age.4.confirmed}}, {{latest_age.4.deaths}}],
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(255, 99, 132, 1)',
+                                            'rgba(54, 162, 235, 1)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                    legend: {
+                                        position: 'top',
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: 'Chart.js Doughnut Chart'
+                                    }
+                                    }
+                                },
+                            });
+                        </script> 
+                    </div>   
+                </div>
+            </div>
+
+        </div>
+        <!-- Confirmed -->
+        <div class="col-xl-3 col-lg-6">
+            <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                    <div>
+                        <h5 class="card-title text-uppercase text-muted mb-0">Age: <span class="h2 font-weight-bold mb-0">{{latest_age.5.label}}</span></h5>
+                            
+                    </div>
+                    <div><canvas id="myChartDone5" ></canvas>
+                        <script>
+                            var ctx = document.getElementById('myChartDone5').getContext('2d');
+                            var myChart = new Chart(ctx, {
+                                type: 'doughnut',
+                                data: {
+                                    labels: ['Confirmed', 'Death'],
+                                    datasets: [{
+                                        label: '# of Votes',
+                                        data: [{{latest_age.5.confirmed}}, {{latest_age.5.deaths}}],
+                                        backgroundColor: [
+                                            'rgba(255, 99, 132, 0.2)',
+                                            'rgba(54, 162, 235, 0.2)'
+                                        ],
+                                        borderColor: [
+                                            'rgba(255, 99, 132, 1)',
+                                            'rgba(54, 162, 235, 1)'
+                                        ],
+                                        borderWidth: 1
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    plugins: {
+                                    legend: {
+                                        position: 'top',
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: 'Chart.js Doughnut Chart'
+                                    }
+                                    }
+                                },
+                            });
+                        </script> 
+                    </div>   
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+    <br>
+    <br>
+    <form action="" method="post">
+        {% csrf_token %} 
+        <label for="">Choisir une wilaya : </label>
+        <select name="wilaya" id="my_select" class="form-control form-control" >
+            <option value="31">Oran</option>
+            <option value="16">Alger</option>
+        </select>
+            <br>
+        <button  type="submit" class="btn btn-outline-primary" id="selbutt">Primary</button>    
+    </form>
+    <br>
+    
+    <div class="row">
+        <!-- Confirmed -->
+        <div class="col-xl-3 col-lg-6">
+            <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">Confirmed</h5>
+                            <span class="h2 font-weight-bold mb-0">{{wilaya.confirmed}}</span>
+
+                        </div>
+
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                                <i class="fas fa-virus"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-3 mb-0 text-muted text-sm">
+                        <span class="text-success mr-2">New Confirmed {{wilaya.newConfirmed}} <br>
+                            Avg7Confirmed</span>
+                        <span class="text-nowrap">{{wilaya.avg7Confirmed}}</span>
+                    </p>
+                </div>
+            </div>
+
+        </div>
+        <!-- Recoverd -->
+        <div class="col-xl-3 col-lg-6">
+            <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">Recoverd</h5>
+                            <span class="h2 font-weight-bold mb-0">{{wilaya.recovered}}</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+                                <i class="fas fa-chart-pie"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-3 mb-0 text-muted text-sm">
+                        <span class="text-danger mr-2">New recovered {{wilaya.newRecovered}} <br>
+                            Avg7Confirmed</span>
+                        <span class="text-nowrap">{{wilaya.avg7Recovered}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- Deaths -->
+        <div class="col-xl-3 col-lg-6">
+            <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">Deaths</h5>
+                            <span class="h2 font-weight-bold mb-0">{{wilaya.deaths}}</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+                                <i class="fas fa-chart-pie"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="mt-3 mb-0 text-muted text-sm">
+                        <span class="text-danger mr-2">New Deaths {{wilaya.newDeaths}} <br> Avg7Deaths</span>
+                        <span class="text-nowrap">{{wilaya.avg7Deaths}}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+    </div>
 
     
     
@@ -192,7 +616,9 @@
 
 {% block javascripts %}
 <script>
-    var ctx = document.getElementById('4').getContext('2d');    
+    // mauve
+    var ctx = document.getElementById('4').getContext('2d');  
+     
     // male button
     $("#male").click(function(){
         var myChart = new Chart(ctx, {
@@ -266,6 +692,9 @@
             }
         }
     });
-    })    
+    })  
+    
 </script>
+
+
 {% endblock javascripts %}

@@ -13,7 +13,7 @@
     </div>
 </div>
 <div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
+   
     <form action="" method="post" enctype="multipart/form-data">
         <!-- {% csrf_token %}
         <input type="file" title="Upload excel file" name="excel_file" required="required">
@@ -26,13 +26,26 @@
             <input type="file" class="form-control-file" id="exampleFormControlFile1" accept=".csv" name="myfile1">
             <br>
             <input type="submit" value="Upload">
+            <!-- <br>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFileLang" lang="fr" accept=".csv" name="myfile">
+                <label class="custom-file-label" for="customFileLang">Select Matrice de perfermance</label>    
+            </div>
+            <br>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFileLang" lang="fr" accept=".csv" name="myfile1">
+                <label class="custom-file-label" for="customFileLang">Select Matrice de perfermance</label>    
+            </div> -->
         </div>
     </form>
     <br>
+    
     {{hh}}
     <hr>
+    resu
     {{result}}
     <hr>
+    zero
     {{zero}}
     <br>
     {{mat.as_table}}
@@ -50,6 +63,7 @@
 <!-- Specific JS goes HERE -->
 {% block javascripts %}
 <!-- Chart JS script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
 <script>
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
@@ -58,7 +72,7 @@
             labels: {{result | safe}},
             datasets: [{
                 label: '# of Votes',
-                data: {{zero | safe}},
+                data: {{result | safe}},
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
                     'rgba(54, 162, 235, 0.2)',
