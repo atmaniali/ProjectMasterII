@@ -997,7 +997,6 @@ def ahp_final(request):
     print('**************************************************************************************************** ')
     print()
     print("I")
-    # TODO: here§§
     type_values = (9, 9, 1, 1/2, 5, 1, 1/9, 1/9, 1/7, 1/9, 1/9, 1/7, 1/2, 5, 6)
     type_comparisons = dict(zip(vaccin_pairs, type_values))
     print(type_comparisons)
