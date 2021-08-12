@@ -1,10 +1,11 @@
 {% extends 'layouts/base.html' %}
 
-{% block title %} Maps {% endblock title %}
+{% block title %} PROMETHEE II {% endblock title %}
 
 {% block content %}
 
 <!-- Header -->
+
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
     <div class="container-fluid">
         <div class="header-body">
@@ -13,31 +14,26 @@
     </div>
 </div>
 <div>
-   
+      <br>
     <form action="" method="post" enctype="multipart/form-data">
-        <!-- {% csrf_token %}
-        <input type="file" title="Upload excel file" name="excel_file" required="required">
-        <input type="submit" value="Upload"> -->
-        <div class="form-group">
-            {% csrf_token %}
-            <label for="exampleFormControlFile1">Promethee II Matrice de perfermance</label>
-            <input type="file" class="form-control-file" id="exampleFormControlFile1" accept=".csv" name="myfile">
-            <label for="exampleFormControlFile1">Promethee II Weight</label>
-            <input type="file" class="form-control-file" id="exampleFormControlFile1" accept=".csv" name="myfile1">
+        {% csrf_token %}
+        <label for="exampleFormControlFile1">Promethee II Matrice de perfermance</label>
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" id="customFileLang" accept=".csv" name="myfile">
+            <label class="custom-file-label" for="customFileLang">Select file</label>
+        </div>
+        <label for="exampleFormControlFile1">Promethee II Weight:</label>
+        <div class="custom-file">
+            <input type="file" class="custom-file-input" id="customFileLang" accept=".csv" name="myfile1">
+            <label class="custom-file-label" for="customFileLang">Select file</label>
             <br>
-            <input type="submit" value="Upload">
-            <!-- <br>
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="customFileLang" lang="fr" accept=".csv" name="myfile">
-                <label class="custom-file-label" for="customFileLang">Select Matrice de perfermance</label>    
-            </div>
-            <br>
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="customFileLang" lang="fr" accept=".csv" name="myfile1">
-                <label class="custom-file-label" for="customFileLang">Select Matrice de perfermance</label>    
-            </div> -->
+        </div>
+        <br>
+        <div class="custom-file" style="margin-top: 20px;">
+            <button class="btn btn-primary" type="submit">Upload CSV</button>
         </div>
     </form>
+
     <br>
     
     {{hh}}

@@ -654,6 +654,10 @@ def from_csv_to_dict(file):
             if i < j:
                 dictionnaire.update({(matrix_list[i],matrix_list[j]):matrix[i][j]})    
     return dictionnaire 
+def from_csv_to_tuple(file, type):
+    Matrix = np.loadtxt(file,dtype = type, skiprows=0, delimiter=',')
+    tuples = tuple(Matrix)
+    return tuples    
 
 def tester_chkla_ta3i(request):
     """ in this function  i want to show result from models and csv file """
@@ -993,6 +997,7 @@ def ahp_final(request):
     print('**************************************************************************************************** ')
     print()
     print("I")
+    # TODO: here§§
     type_values = (9, 9, 1, 1/2, 5, 1, 1/9, 1/9, 1/7, 1/9, 1/9, 1/7, 1/2, 5, 6)
     type_comparisons = dict(zip(vaccin_pairs, type_values))
     print(type_comparisons)

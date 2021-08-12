@@ -12,7 +12,132 @@
         </div>
     </div>
 </div>
+
 <div>
+    <div>
+    
+        <br> 
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="exampleFormControlFile1">Critere :</label>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFileLang" lang="en"accept=".csv" name="critere">
+                <label class="custom-file-label" for="customFileLang">Select file Critere</label>
+                
+            </div>
+            <hr style="border-top:1px dashed #cad1d7">
+            <label for="exampleFormControlFile1">Subcritere :</label>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFileLang" lang="en"accept=".csv" name="caracteristique_vaccin">
+                <label class="custom-file-label" for="customFileLang">Select file Carachterisique Vaccin </label>
+                <br>
+            </div>
+            <div class="custom-file" style="margin-top: 20px;">
+                <input type="file" class="custom-file-input" id="customFileLang" lang="en"accept=".csv" name="posologie">
+                <label class="custom-file-label" for="customFileLang">Select file Posologie</label>
+                <br>
+            </div>
+            <div class="custom-file" style="margin-top: 20px;">
+                <input type="file" class="custom-file-input" id="customFileLang" lang="en"accept=".csv" name="cout">
+                <label class="custom-file-label" for="customFileLang">Select file Cout </label>
+                <br>
+            </div>
+            <div class="custom-file" style="margin-top: 20px;">
+                <input type="file" class="custom-file-input" id="customFileLang" lang="en"accept=".csv" name="effets_secondaire">
+                <label class="custom-file-label" for="customFileLang">Select file Effets Secondaire</label>
+                <br>
+            </div>
+            <hr style="border-top:1px dashed #cad1d7">
+            <label for="exampleFormControlFile1">Les Alternatives :</label>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFileLang" lang="en"accept=".csv" name="alternatives">
+                <label class="custom-file-label" for="customFileLang">Select file Altirnatives </label>
+                <br>
+            </div>
+            <hr style="border-top:1px dashed #cad1d7">
+            <label for="exampleFormControlFile1">******* :</label>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFileLang" lang="en"accept=".csv" name="type">
+                <label class="custom-file-label" for="customFileLang">Select file Type </label>
+                <br>
+            </div>
+            <div class="custom-file" style="margin-top: 20px;">
+                <input type="file" class="custom-file-input" id="customFileLang" lang="en"accept=".csv" name="efficacite">
+                <label class="custom-file-label" for="customFileLang">Select file Efficacite</label>
+                <br>
+            </div>
+   
+            <div class="custom-file" style="margin-top: 20px;">
+                <input type="file" class="custom-file-input" id="customFileLang" lang="en"accept=".csv" name="nbr_dose">
+                <label class="custom-file-label" for="customFileLang">Select file NBr Dose</label>
+                <br>
+            </div>
+            <div class="custom-file" style="margin-top: 20px;">
+                <input type="file" class="custom-file-input" id="customFileLang" lang="en"accept=".csv" name="age">
+                <label class="custom-file-label" for="customFileLang">Select file Age</label>
+                <br>
+            </div>
+            <div class="custom-file" style="margin-top: 20px;">
+                <input type="file" class="custom-file-input" id="customFileLang" lang="en"accept=".csv" name="delais">
+                <label class="custom-file-label" for="customFileLang">Select file Delais</label>
+                <br>
+            </div>
+            <div class="custom-file" style="margin-top: 20px;">
+                <input type="file" class="custom-file-input" id="customFileLang" lang="en"accept=".csv" name="temps_effet">
+                <label class="custom-file-label" for="customFileLang">Select file Temps d'effet</label>
+                <br>
+            </div>
+            
+            <div class="custom-file" style="margin-top: 20px;">
+                <input type="file" class="custom-file-input" id="customFileLang" lang="en"accept=".csv" name="conservation">
+                <label class="custom-file-label" for="customFileLang">Select file Conservation</label>
+                <br>
+            </div>
+            <div class="custom-file" style="margin-top: 20px;">
+                <input type="file" class="custom-file-input" id="customFileLang" lang="en"accept=".csv" name="prix">
+                <label class="custom-file-label" for="customFileLang">Select file Prix</label>
+                <br>
+            </div>
+            <div class="custom-file" style="margin-top: 20px;">
+                <input type="file" class="custom-file-input" id="customFileLang" lang="en"accept=".csv" name="sen_au_point">
+                <label class="custom-file-label" for="customFileLang">Select file sensibilité au point d'injection </label>
+                <br>
+            </div>
+           
+            <div class="custom-file" style="margin-top: 20px;">
+                <input type="file" class="custom-file-input" id="customFileLang" lang="en"accept=".csv" name="doul_au_point">
+                <label class="custom-file-label" for="customFileLang">Select file douleur au point d'injection </label>
+                <br>
+            </div>
+            <div class="custom-file" style="margin-top: 20px;">
+                <input type="file" class="custom-file-input" id="customFileLang" lang="en"accept=".csv" name="cephales">
+                <label class="custom-file-label" for="customFileLang">Select file céphalées</label>
+                <br>
+            </div>
+            <div class="custom-file" style="margin-top: 20px;">
+                <input type="file" class="custom-file-input" id="customFileLang" lang="en"accept=".csv" name="hyperthermie">
+                <label class="custom-file-label" for="customFileLang">Select file hyperthermie</label>
+                <br>
+            </div>
+            <div class="custom-file" style="margin-top: 20px;">
+                <input type="file" class="custom-file-input" id="customFileLang" lang="en"accept=".csv" name="nausees">
+                <label class="custom-file-label" for="customFileLang">Select file nausées</label>
+                <br>
+            </div>
+            <div class="custom-file" style="margin-top: 20px;">
+                <input type="file" class="custom-file-input" id="customFileLang" lang="en"accept=".csv" name="fatigue">
+                <label class="custom-file-label" for="customFileLang">Select file fatigue</label>
+                <br>
+            </div>
+            <hr style="border-top:1px dashed #cad1d7">
+            <div class="custom-file" >
+                <button class="btn btn-outline-primary" type="submit">Upload CSV</button>
+            </div>
+        </form>
+        
+        
+        </div>
+        <br>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
     <h2>Hello word</h2>
     this paragraph for create module :
