@@ -1061,16 +1061,17 @@ def ahp_final(request):
         criteria.add_children([caracteristique_vacc,posologie,cout,effait_sec])
         print("cr", criteria)
         print("final criteria \n", criteria.target_weights)
-        # keys = []
-        # values = []
+        keys = []
+        values = []
         # TODO: result doesn't work
+        result = criteria.target_weights
         # print(criteria.target_weights)
-        # for key, val in result.items():
-        #     keys.append(key)
-        #     values.append(val)
+        for key, val in result.items():
+            keys.append(key)
+            values.append(val)
         context['final'] = criteria.target_weights
-        # context['keys'] = keys
-        # context['values'] = values
+        context['keys'] = keys
+        context['values'] = values
     return HttpResponse(html_template.render(context, request))    
 
 
