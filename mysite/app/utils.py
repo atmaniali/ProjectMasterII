@@ -1,9 +1,11 @@
 from django.conf import settings
 import numpy
 import numpy as np
+import pandas as pd
 from django.core.files.storage import FileSystemStorage
 
-
+def convert_to_tuple(list):
+    return tuple(list) 
 # PROMETHEE_II
 def all_alternatives(Alternatives):
     Alternative_possibilities = []
@@ -238,4 +240,80 @@ def readMatrix(MPfiles, weightfiles):
 doc_file = '/home/ali/Documents/MasterIIproect/proethee_csv/data2.csv'
 weight_file = '/home/ali/Documents/MasterIIproect/proethee_csv/weight2.csv'
 
-result = readMatrix(doc_file, weight_file)      
+result = readMatrix(doc_file, weight_file) 
+
+#***
+# # def show_resultat(request):
+#     html_template = loader.get_template( 'result_critere.html' )
+#     context = {}
+#     dictionnaire = {}
+#     Matrix = np.array(list(csv.reader(open("media/files/data2.csv", "r"), delimiter=",")))
+#     matrix_list = Matrix[2:,1]
+#     matrix = Matrix[2:,2:].astype(float)
+#     for i in range(len(matrix_list)):
+#         for j in range(len(matrix_list)):
+#             if i < j:
+#                 dictionnaire.update({(matrix_list[i],matrix_list[j]):matrix[i][j]})
+#     donner = Save_result(name = "critere_generale", dictionnaire = dictionnaire)
+#     donner.save()
+#     print("data is upload", donner)
+#     critere  = Critere.objects.all()
+#     # sub = critere.subcritere_set.all()   
+#     if request.method == 'POST':
+#         pk_critere = request.POST.get("critere_drop_text")   
+#         cr = Critere.objects.get(pk= pk_critere) 
+#         # sub = cr.subcriters.all()
+#         list_sub = [e.name for e in cr.subcriters.all()]
+#         print("sub_critere", cr.subcriters.all())
+#         print([e.name for e in cr.subcriters.all()])
+#         # start script.py to prepar csv fille for  subcritere :
+#         list_np = np.array(list_sub)
+#         matrix = [ [ 0 for i in range(len(list_sub)) ] for j in range(len(list_sub)) ]
+#         for i in range(len(list_sub)):
+#             for j in range(len(list_sub)):
+#                 if i == j:
+#                     matrix[i][j] = 1
+#         matrix_np = np.array(matrix) 
+#         matrix_with_critere_ligne= np.vstack((list_np,matrix_np))
+#         print("matrix_critere ligne \n",matrix_with_critere_ligne)
+#         matrix_transpose = matrix_with_critere_ligne.transpose()
+#         print(matrix_transpose)
+#         list_np_1 = np.append("",list_np)
+#         print(list_np_1)
+#         matrix_with_critere_ligne_transpose= np.vstack((list_np_1,matrix_transpose))
+#         print(matrix_with_critere_ligne_transpose)
+#         pd.DataFrame(matrix_with_critere_ligne_transpose).to_csv("media/files/data2_subcritere.csv")
+        
+#     context["dictionnaire"] = dictionnaire 
+#     context["critere"] = critere  
+#     # context["sub"] = list_sub
+#     return HttpResponse(html_template.render(context, request))  
+
+def save_as_csv(query, name):
+    list_np = np.array(query) 
+    matrix = [ [ 0 for i in range(len(query)) ] for j in range(len(query)) ]
+    for i in range(len(query)):
+        for j in range(len(query)):
+            if i == j:
+                matrix[i][j] = 1
+    matrix_np = np.array(matrix)  
+    matrix_with_critere_ligne= np.vstack((list_np,matrix_np))
+    matrix_transpose = matrix_with_critere_ligne.transpose()
+    list_np = np.append("",list_np)
+    matrix_with_critere_ligne_transpose= np.vstack((list_np,matrix_transpose))
+    pd.DataFrame(matrix_with_critere_ligne_transpose).to_csv("media/files/critere_{}.csv".format(name))
+
+def from_csv_to_dict(file):
+    dictionnaire = {}
+    Matrix = np.loadtxt(file,dtype = str, skiprows=0, delimiter=',')
+    matrix_list = Matrix[0,1:]
+    matrix = Matrix[1:,1:].astype(float)
+    for i in range(len(matrix_list)):
+        for j in range(len(matrix_list)):
+            if i < j:
+                dictionnaire.update({(matrix_list[i],matrix_list[j]):matrix[i][j]})             
+    return dictionnaire 
+def from_csv_to_tuple(file, type):
+    Matrix = np.loadtxt(file,dtype = type, skiprows=0, delimiter=',')
+    tuples = tuple(Matrix)
+    return tuples    
