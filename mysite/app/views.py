@@ -57,19 +57,21 @@ def index(request):
         confirmedes.append(countrie['confirmed']) 
 
     context = {
+        'response' : data,
         'date_de_donner' : date_auj
     } 
 
 
     if request.method == 'POST':
         " this methode for print data of wilaya givin by id"
-        
+
         id = request.POST.get('wilaya')
         urls = "https://api.corona-dz.live/province/{}/latest".format(id)
         wilaya_data = requests.get(urls).json()
         result = wilaya_data[0] #json data in index 1
         final_result = result['data'] 
         context['wilaya'] = final_result[0] #json data in index 1
+        
     # pass data to templates
         
     context['males'] = males[-6:] #latest of 6 index male confirmed.
@@ -107,29 +109,15 @@ def pages(request):
         return HttpResponse(html_template.render(context, request))
 
 
-    # Home
+# Home
 def home_view(request):
-    if request.is_ajax():
-        res = request.POST.get('te') 
-        res_int = int(res)
-        print("type,",type(res_int))
-        print("play",res_int)   
-    context = {
-        'response' : 'arwah netlag 3lik',     
-    }
-    context['segment'] = 'home'
+    context  = {}
+    context['segment'] = 'home' 
 
     html_template = loader.get_template( 'home.html' )
     return HttpResponse(html_template.render(context, request)) 
 
 
-def create(request):
-    
-    
-        form = ContactForm(request.POST or None, instance= request.user.profile)
-        if form.is_valid():
-            form.save()
-        pass
 @login_required(login_url="/login/")
 def profile(request):
     context = {}
