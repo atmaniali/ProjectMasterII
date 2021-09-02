@@ -20,42 +20,67 @@ import requests
 import itertools
 import csv
 import numpy as np
+""" 
+    all data from these url : https://api.corona-dz.live/
+"""
 
+# index 
 @login_required(login_url="/login/")
 def index(request):
+    # Json file:
+
+    # Getting all cases by gender data.
     all_genders = requests.get('https://api.corona-dz.live/country/gender/all').json()
+    # Getting all amount of total confirmed cases, deaths, and recovered.
     all_country = requests.get('https://api.corona-dz.live/country/all').json()
+    # Getting latest amount of total confirmed cases, deaths, and recovered.
     data = requests.get('https://api.corona-dz.live/country/latest').json()
+    # Getting latest data for cases by age.
     latest_age = requests.get('https://api.corona-dz.live/country/age/latest').json()
+
+    # Date of latest data
     date_auj = parse_datetime(data['date']).date()
-    males = []
-    females = []
-    confirmedes = []
-    dates_all_genderes = []
+
+    # Tables for stock data from Json file:
+
+    males = []    #stock all latest confirmed gender male => from all_genders.
+    females = []    #stock all latest confirmed gender femal => from all_genders.
+    confirmedes = []    #stock all confirmedfrom country.
+    dates_all_genderes = []    #stock all date of all gender.
+
     for gnder in all_genders :
         males.append(gnder['male'])
         females.append(gnder['female'])
         dates_all_genderes.append(str(parse_datetime(gnder['date']).date()))
+
     for countrie in all_country:
-        confirmedes.append(countrie['confirmed'])    
+        confirmedes.append(countrie['confirmed']) 
+
     context = {
-        'response' : data,
         'date_de_donner' : date_auj
     } 
+
+
     if request.method == 'POST':
+        " this methode for print data of wilaya givin by id"
+        
         id = request.POST.get('wilaya')
         urls = "https://api.corona-dz.live/province/{}/latest".format(id)
         wilaya_data = requests.get(urls).json()
-        result = wilaya_data[0]
-        final_result = result['data']
-        context['wilaya'] = final_result[0]
-    context['males'] = males[-6:]
-    context['females'] = females [-6:] 
-    context['date_all'] = dates_all_genderes [-6:] 
-    context['latest_age'] = latest_age
-    context['confirmedes'] = confirmedes[-6:]
+        result = wilaya_data[0] #json data in index 1
+        final_result = result['data'] 
+        context['wilaya'] = final_result[0] #json data in index 1
+    # pass data to templates
+        
+    context['males'] = males[-6:] #latest of 6 index male confirmed.
+    context['females'] = females [-6:]  #latest of 6 index female confirmed. 
+    context['date_all'] = dates_all_genderes [-6:]  #pass all date 
+    context['latest_age'] = latest_age  #pass all age data.
+    context['confirmedes'] = confirmedes[-6:]   #pass all confirmedes data
     context['segment'] = 'index'
+
     html_template = loader.get_template( 'index.html' )
+
     return HttpResponse(html_template.render(context, request))
 
 @login_required(login_url="/login/")
