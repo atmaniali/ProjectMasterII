@@ -117,77 +117,32 @@ def home_view(request):
     html_template = loader.get_template( 'home.html' )
     return HttpResponse(html_template.render(context, request)) 
 
-
+# profile
 @login_required(login_url="/login/")
 def profile(request):
+
     context = {}
-    form = ContactForm(instance= request.user.profile)
+    # stock information of user if exist in form
+    form = ContactForm(request.POST or None, instance= request.user.profile)
+
     if request.method =='POST':
-        form = ContactForm(request.POST or None, instance= request.user.profile)
+        
         if form.is_valid():
+
             form.save()
             return redirect("app:profile")
+
         else:
-            print("request not pass ")    
+            print("request not pass ")  
+
     context['form'] = form
     context['segment'] = 'profile'
 
     html_template = loader.get_template( 'profile.html' )
     return HttpResponse(html_template.render(context, request))      
     
-
-#  hada test 
-def create_critere_model_form(request):
     
-    html_template = loader.get_template( 'haka.html' )
-    context = {
-    
-    }
-    return HttpResponse(html_template.render(context, request))     
-
-# kayn jdid 3labali
-# je c c c c         
-def create_critere_normal(request):
-    template_name = 'haka.html'
-    heading_message = 'Formset Demo'    
-    context = {}
-    if request.method == 'GET':
-        print("request.method == 'GET'", request.GET)
-        formset = CritereFormset(request.GET or None)
-    elif request.method == 'POST':
-        formset = CritereFormset(request.POST)
-        if formset.is_valid():
-            csv_file = request.POST.get('input_name')
-            for form in formset:
-                name = form.cleaned_data.get('name')
-                # save Critere instance
-                if name:
-                    
-                    Critere(name=name).save()
-                    # hada chkla 
-            if len(csv_file ) != 0 :
-                query = Critere.objects.all()
-                # query_list = Critere.objects.all().count()
-                list_critere = []
-                for i in query:
-                    list_critere.append(i.name) 
-                list_np = np.array(list_critere) 
-                matrix = [ [ 0 for i in range(len(list_np)) ] for j in range(len(list_np)) ]
-                for i in range(len(list_np)):
-                    for j in range(len(list_np)):
-                        if i == j:
-                            matrix[i][j] = 1
-                    matrix_np = np.array(matrix) 
-                    matrix_with_critere_ligne= np.vstack((list_np,matrix_np))
-                    matrix_transpose = matrix_with_critere_ligne.transpose()
-                    list_np_1 = np.append("",list_np)
-                    matrix_with_critere_ligne_transpose= np.vstack((list_np_1,matrix_transpose))
-                    pd.DataFrame(matrix_with_critere_ligne_transpose).to_csv("media/files/{}.csv".format(csv_file))        
-            return redirect('app:critere_list')
-    context['formset']=formset
-    context['heading']=heading_message
-    return render(request, template_name, context) 
-    
+         
 class CritereListView(generic.ListView):
 
     model = Critere
