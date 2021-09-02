@@ -109,11 +109,6 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link {% if 'profile' in segment %} active {% endif %}" href="{% url 'app:aimen_methode' %}">
-              <i class="ni ni-single-02 text-yellow"></i> Aimen
-            </a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link {% if 'tables' in segment %} active {% endif %}" href="{% url 'app:critere_list'%}">
               <i class="ni ni-bullet-list-67 text-info"></i> Tables
             </a>
@@ -122,11 +117,6 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'logout' %}">
               <i class="ni ni-user-run text-red"></i> Logout
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'app:chart_four' %}">
-              <i class="ni ni-user-run text-red"></i> Caert 4 
             </a>
           </li>
           <li class="nav-item">
@@ -139,19 +129,9 @@
               <i class="ni ni-user-run text-red"></i> Home
             </a>
           </li>
-           <li class="nav-item">
-            <a class="nav-link" href="{% url 'app:data_page' %}">
-              <i class="ni ni-user-run text-red"></i> Donner
-            </a>
-          </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'app:promethee_2' %}">
               <i class="ni ni-user-run text-red"></i> PROMETHEE_II
-            </a>
-          </li>
-          <li class="nav-item {% if 'api' in segment %} active {% endif %}">
-            <a class="nav-link" href="{% url 'app:api'%}">
-              <i class="ni ni-user-run text-red"></i> UI_API
             </a>
           </li>
           <li class="nav-item {% if 'api' in segment %} active {% endif %}">
@@ -169,17 +149,7 @@
               <i class="ni ni-user-run text-red"></i> LIST Criteres
             </a>
           </li>
-          <li class="nav-item {% if 'api' in segment %} active {% endif %}">
-            <a class="nav-link" href="{% url 'app:api2'%}">
-              <i class="ni ni-user-run text-red"></i> UI_API II
-            </a>
-          </li>
-          {% comment %} TODO: segam segmant {% endcomment %}
-          <li class="nav-item {% if 'api' in segment %} active {% endif %}">
-            <a class="nav-link" href="{% url 'app:teser_tableau_ta3k'%}">
-              <i class="ni ni-user-run text-red"></i> teser_tableau_ta3k
-            </a>
-          </li>
+
         </ul>
         <!-- Divider -->
         <hr class="my-3">

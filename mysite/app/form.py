@@ -7,6 +7,12 @@ from .models import Critere, Subcritere
 
 
 class ContactForm(forms.ModelForm):
+    first_name = forms.CharField(initial='Your first name')
+    last_name = forms.CharField(initial='Your last name')
+    city = forms.CharField(initial='Your city')
+    country = forms.CharField(initial='Your country')
+    adress = forms.CharField(initial='Your adress')
+    phone_number = forms.CharField(initial='Your phone number')
     class Meta:
         model = Profile
         exclude = ['user']

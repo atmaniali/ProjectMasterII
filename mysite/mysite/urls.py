@@ -25,7 +25,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),          # Django admin route
     path("", include("authentication.urls")), # Auth routes - login / register
     path("", include(("app.urls", "app"), namespace= 'app'))  ,           # UI Kits Html files
-    
+    # path('accounts/', include('allauth.urls')),
+    #Adding social auth path
+    path('social-auth/', include('social_django.urls', namespace="social")),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
