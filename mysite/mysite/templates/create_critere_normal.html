@@ -20,37 +20,39 @@
 {% if heading %}
 <h3>{{heading}}</h3>
 {% endif %}
-<form class="form-horizontal" method="POST" action="">
-    {% csrf_token %}
-    {{ formset.management_form }}
-    {% for form in formset %}
-        <div   class="row form-row spacer">
-            <div class="col-2">
-                <label>{{form.name.label}}</label>
-            </div>
-            <div class="col-4">
-                <div class="input-group">
-                    {{form.name}}
-                    <div class="input-group-append">
-                        <button class="btn btn-success add-form-row">+</button>
-                    </div>
+<div class = "container mx= 5">
+    <form class="form-horizontal" method="POST" action="">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        {% for form in formset %}
+            <div   class="row form-row spacer">
+                <div class="col-2">
+                    <label>{{form.name.label}}</label>
                 </div>
-                <br>
+                <div class="col-4">
+                    <div class="input-group">
+                        {{form.name}}
+                        <div class="input-group-append">
+                            <button class="btn btn-success add-form-row">+</button>
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="row spacer">
+            <div class="col-4 offset-2">
+                <button type="submit" class="btn btn-block btn-primary">Create</button>
+                 <br>
+                 <input type="text" name="input_name" class="form-control form-control-muted" placeholder="Name of csv file"  id="">
+                
+                <br> <br>
+                <button type= "submit" class="btn btn-block btn-primary" >Save as CSV</button>  
             </div>
         </div>
-    {% endfor %}
-    <div class="row spacer">
-        <div class="col-4 offset-2">
-            <button type="submit" class="btn btn-block btn-primary">Create</button>
-             <br>
-             <input type="text" name="input_name" class="form-control form-control-muted" placeholder="Name of csv file"  id="">
-            
-            <br> <br>
-            <button type= "submit" class="btn btn-block btn-primary" >Save as CSV</button>  
-        </div>
-    </div>
-
-</form>
+    
+    </form>
+</div>
 
 
 {% endblock content %}

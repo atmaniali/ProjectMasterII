@@ -226,7 +226,9 @@ def readMatrix(MPfiles, weightfiles):
     with numpy.printoptions(threshold=numpy.inf):
         print(np.flipud(sortedArr))
     print("Final Sort is : ")
-    print(sortedArr[:,0])  
+    print(sortedArr[:,0]) 
+    print("flot net") 
+    print(sortedArr[:,-1])
     print("*************************************-******************************************")      
     final_sorted = sortedArr[:,0]
     # print("count finale :", len(final_sorted))
@@ -252,7 +254,7 @@ def readMatrix(MPfiles, weightfiles):
 
 doc_file = '/home/ali/Documents/MasterIIproect/proethee_csv/data2.csv'
 weight_file = '/home/ali/Documents/MasterIIproect/proethee_csv/weight2.csv'
-
+# promethe
 result = readMatrix(doc_file, weight_file) 
   
 

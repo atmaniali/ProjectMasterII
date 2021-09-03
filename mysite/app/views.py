@@ -280,7 +280,6 @@ def promether_view(request) :
     return HttpResponse(html_template.render(context, request))
 
 
-import itertools
 def ahp_final(request):
 
     html_template = loader.get_template( 'ahp_final.html')
