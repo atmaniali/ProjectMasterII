@@ -136,6 +136,7 @@ SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
 
+
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 

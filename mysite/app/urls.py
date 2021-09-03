@@ -21,9 +21,9 @@ urlpatterns = [
     path('list/', views.CritereListView.as_view(), name = 'critere_list'),
     path('create_with_subcritere/', views.create_critere_with_subcritere,
      name = 'create_critere_with_subcritere'),
-    path('result/',views.show_resultat, name = "result"),
     path('promthee2/', views.promether_view, name = "promethee_2"),
     path('ahp/', views.ahp_final, name = "ahp"),
+    path('maps/', views.maps, name = 'maps'),
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),
 

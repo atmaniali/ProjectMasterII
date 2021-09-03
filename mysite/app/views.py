@@ -20,6 +20,7 @@ import requests
 import itertools
 import csv
 import numpy as np
+import folium
 
 """ 
     all data from these url : https://api.corona-dz.live/
@@ -408,7 +409,24 @@ def ahp_final(request):
         context['final'] = criteria.target_weights
         context['keys'] = keys
         context['values'] = values
-    return HttpResponse(html_template.render(context, request))    
+    return HttpResponse(html_template.render(context, request))  
+
+def maps (request):
+    template_name = "maps.html"
+    context = {}
+    ip = "193.194.88.26"
+    #
+    map = folium.Map(width = 800, height = 500, location = [35.6976541, -0.6337376], zoom_start = 8)
+    # all provinces
+    provinces = get_all_provinces()
+
+    for province in provinces:
+        for data in province['data'] : 
+            folium.Marker([province['latitude'], province['longitude']], tooltip = "click here for more", popup = "nom de wilaya {} confirmed is {}:".format(province['name'], data["confirmed"]), icon = folium.Icon(color= 'purple')).add_to(map) 
+        
+    map = map._repr_html_() 
+    context["maps"] = map
+    return render(request, template_name, context)      
 
 
 

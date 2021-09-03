@@ -3,6 +3,19 @@ import numpy
 import numpy as np
 import pandas as pd
 from django.core.files.storage import FileSystemStorage
+import requests
+
+
+
+
+def get_all_provinces():
+    provinces = requests.get('https://api.corona-dz.live/province/latest').json()
+    data = []
+    for province in provinces :
+        data.append(province['data'])
+   
+    return provinces    
+
 
 def convert_to_tuple(list):
     return tuple(list) 
