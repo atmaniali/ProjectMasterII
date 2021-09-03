@@ -12,108 +12,7 @@
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
     <div class="container-fluid">
         <div class="header-body">
-            <p style="color: white;">Date de donner : <span>{{date_de_donner}}</span></p>
-            <br>
-
-            <!-- Card stats -->
-            <div class="row">
-                <!-- Confirmed -->
-                <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Confirmed</h5>
-                                    <span class="h2 font-weight-bold mb-0">{{response.confirmed}}</span>
-
-                                </div>
-
-                                <div class="col-auto">
-                                    <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
-                                        <i class="fas fa-virus"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-success mr-2">New Confirmed {{response.newConfirmed}} <br>
-                                    Avg7Confirmed</span>
-                                <span class="text-nowrap">{{response.avg7Confirmed}}</span>
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-                <!-- Recoverd -->
-                <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Recoverd</h5>
-                                    <span class="h2 font-weight-bold mb-0">{{response.recovered}}</span>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
-                                        <i class="fas fa-chart-pie"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-danger mr-2">New recovered {{response.newRecovered}} <br>
-                                    Avg7Confirmed</span>
-                                <span class="text-nowrap">{{response.avg7Recovered}}</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Deaths -->
-                <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Deaths</h5>
-                                    <span class="h2 font-weight-bold mb-0">{{response.deaths}}</span>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
-                                        <i class="fas fa-chart-pie"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-danger mr-2">New Deaths {{response.newDeaths}} <br> Avg7Deaths</span>
-                                <span class="text-nowrap">{{response.avg7Deaths}}</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Treatment -->
-                <div class="col-xl-3 col-lg-6">
-                    <div class="card card-stats mb-4 mb-xl-0">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col">
-                                    <h5 class="card-title text-uppercase text-muted mb-0">Treatment</h5>
-                                    <span class="h2 font-weight-bold mb-0">{{response.treatment}}</span>
-                                </div>
-                                <div class="col-auto">
-                                    <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
-                                        <i class="fas fa-virus"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-success mr-2">New Treatment {{response.newTreatment}} <br>
-                                    Avg7Treatment</span>
-                                <span class="text-nowrap">{{response.avg7Treatment}}</span>
-                            </p>
-                        </div>
-                        <!--  -->
-
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </div>
 </div>
@@ -125,11 +24,11 @@
     {% csrf_token %}
     <div class="row spacer">
         <div class="col-2">
-            <label>{{bookform.name.label}}</label>
+            <label>{{critereform.name.label}}</label>
         </div>
         <div class="col-4">
             <div class="input-group">
-                {{bookform.name}}
+                {{critereform.name}}
             </div>
             <br>
         </div>

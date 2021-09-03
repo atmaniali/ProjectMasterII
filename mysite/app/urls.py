@@ -17,18 +17,11 @@ urlpatterns = [
     path('profile', views.profile, name='profile'),
     # home.html
     path('', views.home_view, name='home'),
-    
-    # test_ahp/
-    # path('test_ahp/', views.create_critere_model_form, name = 'test_ahp'),
     path('create_normal/', views.create_critere_normal, name = 'create_critere_normal'),
     path('list/', views.CritereListView.as_view(), name = 'critere_list'),
     path('create_with_subcritere/', views.create_critere_with_subcritere,
      name = 'create_critere_with_subcritere'),
-    
-    
-    path('haka/', views.save_critere_as_csv, name = 'haka'),
     path('result/',views.show_resultat, name = "result"),
-
     path('promthee2/', views.promether_view, name = "promethee_2"),
     path('ahp/', views.ahp_final, name = "ahp"),
     # Matches any html file

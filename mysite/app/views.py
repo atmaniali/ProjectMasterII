@@ -20,6 +20,7 @@ import requests
 import itertools
 import csv
 import numpy as np
+
 """ 
     all data from these url : https://api.corona-dz.live/
 """
@@ -207,15 +208,18 @@ class CritereListView(generic.ListView):
     template_name = 'tables.html' 
     paginate_by = 5  
     ordering = ['-created_at']
+
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        # Add in a QuerySet of all the books
+        # Add in a QuerySet of all the subcriteres
         context['subcritere_list'] = Subcritere.objects.all()
         return context
+
     def post(self, request, *args, **kwargs):
         if request.is_ajax():
             if request.POST.get('te') :
+                # te is id pass with ajax
                 id  = int(request.POST.get('te')) 
                 objet = get_object_or_404(Critere, id = id)
                 # objet.delete()
@@ -228,183 +232,56 @@ class CritereListView(generic.ListView):
         return render(request, self.template_name)    
 
 def create_critere_with_subcritere(request):
+
     template_name = 'create_with_subcritere.html'
+
     if request.method == 'GET':
-        print("get \t \n",request.GET)
+
         critereform = CritereModelForm(request.GET or None)
+
         formset = SubcritereFormset(queryset=Subcritere.objects.none())
+
     elif request.method == 'POST':
-        print("post \t \n",request.POST)
+
         critereform = CritereModelForm(request.POST)
-        print("critereform ", critereform )
+        
         formset = SubcritereFormset(request.POST)
-        print("formset", formset)
+        
         if critereform.is_valid() and formset.is_valid():
-            print("*********************************************")
-            # first save this book, as its reference will be used in `Author`
+            
+            # first save this critere, as its reference will be used in `subcritere`
             critere = critereform.save()
             for form in formset:
-                # so that `book` instance can be attached.
+                # so that `critere` instance can be attached.
                 subcritere = form.save(commit=False)
                 subcritere.critere = critere
                 subcritere.save()
             return redirect('app:critere_list')
     return render(request, template_name, {
-        'bookform': critereform,
+        'critereform': critereform,
         'formset': formset,
     }) 
-
-
-import numpy as np
-import pandas as pd
-# TODO: delete   view
-def save_critere_as_csv(request):
-    print('a')
-    """ A view that streams a large CSV file."""
-    context = {} 
-    
-    query = Critere.objects.all()
-    # query_list = Critere.objects.all().count()
-    list_critere = []
-    for i in query:
-        list_critere.append(i.name) 
-    list_np = np.array(list_critere) 
-    matrix = [ [ 0 for i in range(len(list_np)) ] for j in range(len(list_np)) ]
-    for i in range(len(list_np)):
-        for j in range(len(list_np)):
-            if i == j:
-                matrix[i][j] = 1
-    matrix_np = np.array(matrix) 
-    matrix_with_critere_ligne= np.vstack((list_np,matrix_np))
-    matrix_transpose = matrix_with_critere_ligne.transpose()
-    list_np = np.append("",list_np)
-    matrix_with_critere_ligne_transpose= np.vstack((list_np,matrix_transpose))    
-    if request.method == 'POST':
-        print(request.POST)
-        print("request", request.POST)
-        name = request.POST.get('input_name')
-        print("name", name)
-        data = pd.DataFrame(matrix_with_critere_ligne_transpose).to_csv("mysite/media/files/{}.csv".format(name)) 
-        print("c bon", data) 
-        return redirect("app:create_critere_normal")
-
-    # context['segment'] = '#'
-    html_template = loader.get_template( 'app:critere_list' )
-    return HttpResponse(html_template.render(context, request)) 
-
-
-import csv 
-def convert_to_tuple(list):
-    return tuple(list)   
-def show_resultat(request):
-    html_template = loader.get_template( 'result_critere.html' )
-    context = {}
-    dictionnaire = {}
-    Matrix = np.array(list(csv.reader(open("media/files/data2.csv", "r"), delimiter=",")))
-    matrix_list = Matrix[2:,1]
-    matrix = Matrix[2:,2:].astype(float)
-    for i in range(len(matrix_list)):
-        for j in range(len(matrix_list)):
-            if i < j:
-                dictionnaire.update({(matrix_list[i],matrix_list[j]):matrix[i][j]})
-    donner = Save_result(name = "critere_generale", dictionnaire = dictionnaire)
-    donner.save()
-    print("data is upload", donner)
-    critere  = Critere.objects.all()
-    # sub = critere.subcritere_set.all()   
-    if request.method == 'POST':
-        pk_critere = request.POST.get("critere_drop_text")   
-        cr = Critere.objects.get(pk= pk_critere) 
-        # sub = cr.subcriters.all()
-        list_sub = [e.name for e in cr.subcriters.all()]
-        print("sub_critere", cr.subcriters.all())
-        print([e.name for e in cr.subcriters.all()])
-        # start script.py to prepar csv fille for  subcritere :
-        list_np = np.array(list_sub)
-        matrix = [ [ 0 for i in range(len(list_sub)) ] for j in range(len(list_sub)) ]
-        for i in range(len(list_sub)):
-            for j in range(len(list_sub)):
-                if i == j:
-                    matrix[i][j] = 1
-        matrix_np = np.array(matrix) 
-        matrix_with_critere_ligne= np.vstack((list_np,matrix_np))
-        print("matrix_critere ligne \n",matrix_with_critere_ligne)
-        matrix_transpose = matrix_with_critere_ligne.transpose()
-        print(matrix_transpose)
-        list_np_1 = np.append("",list_np)
-        print(list_np_1)
-        matrix_with_critere_ligne_transpose= np.vstack((list_np_1,matrix_transpose))
-        print(matrix_with_critere_ligne_transpose)
-        pd.DataFrame(matrix_with_critere_ligne_transpose).to_csv("media/files/data2_subcritere.csv")
-        
-    context["dictionnaire"] = dictionnaire 
-    context["critere"] = critere  
-    # context["sub"] = list_sub
-    return HttpResponse(html_template.render(context, request))   
-
-def save_as_csv(query, name):
-    list_np = np.array(query) 
-    matrix = [ [ 0 for i in range(len(query)) ] for j in range(len(query)) ]
-    for i in range(len(query)):
-        for j in range(len(query)):
-            if i == j:
-                matrix[i][j] = 1
-    matrix_np = np.array(matrix)  
-    matrix_with_critere_ligne= np.vstack((list_np,matrix_np))
-    matrix_transpose = matrix_with_critere_ligne.transpose()
-    list_np = np.append("",list_np)
-    matrix_with_critere_ligne_transpose= np.vstack((list_np,matrix_transpose))
-    pd.DataFrame(matrix_with_critere_ligne_transpose).to_csv("media/files/critere_{}.csv".format(name))
-
-def from_csv_to_dict(file):
-    dictionnaire = {}
-    Matrix = np.loadtxt(file,dtype = str, skiprows=0, delimiter=',')
-    matrix_list = Matrix[0,1:]
-    matrix = Matrix[1:,1:].astype(float)
-    for i in range(len(matrix_list)):
-        for j in range(len(matrix_list)):
-            if i < j:
-                dictionnaire.update({(matrix_list[i],matrix_list[j]):matrix[i][j]})             
-    return dictionnaire 
-def from_csv_to_tuple(file, type):
-    Matrix = np.loadtxt(file,dtype = type, skiprows=0, delimiter=',')
-    tuples = tuple(Matrix)
-    return tuples    
-
-def tester_chkla_ta3i(request):
-    """ in this function  i want to show result from models and csv file """
-    # 
-    # first we need to load csv file & turn it to dictionnaire
-    dict = {}
-    context= {}
-    critere = Critere.objects.all()
-    list_critere = []
-    for i in critere:
-        list_critere.append(i.name) 
-    print(critere,"\n",list_critere)    
-    save_as_csv(list_critere,"cri")
-    file = "media/files/data2.csv"
-    dict = from_csv_to_dict(file)
-    print(dict)
-        
-    html_template = loader.get_template( 'tester_chkla_ta3i.html' )
-    return HttpResponse(html_template.render(context, request)) 
-
-# HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH          
+            
 def promether_view(request) :
+
     context = {}
+
     if request.method == 'POST':
         doc_file=request.FILES.get('myfile')
         weight_file = request.FILES.get('myfile1')
-        mat = np.loadtxt(doc_file,dtype = str, skiprows=0, delimiter=',')
-        print("matric",mat)        
+        mat = np.loadtxt(doc_file,dtype = str, skiprows=0, delimiter=',')      
         context['mat'] = mat  
         result = readMatrix(doc_file, weight_file) 
         context['result'] = result  
+
     html_template = loader.get_template( 'promethee_2_page.html' )
+
     return HttpResponse(html_template.render(context, request))
+
+
 import itertools
 def ahp_final(request):
+
     html_template = loader.get_template( 'ahp_final.html')
     context = {}
     if request.method == 'POST':
@@ -523,7 +400,6 @@ def ahp_final(request):
         print("final criteria \n", criteria.target_weights)
         keys = []
         values = []
-        # TODO: result doesn't work
         result = criteria.target_weights
         # print(criteria.target_weights)
         for key, val in result.items():
