@@ -65,19 +65,19 @@ def index(request):
         'date_de_donner' : date_auj
     } 
 
-
+    id = 31
     if request.method == 'POST':
         " this methode for print data of wilaya givin by id"
-
         id = request.POST.get('wilaya')
-        urls = "https://api.corona-dz.live/province/{}/latest".format(id)
-        wilaya_data = requests.get(urls).json()
-        result = wilaya_data[0] #json data in index 1
-        final_result = result['data'] 
-        context['wilaya'] = final_result[0] #json data in index 1
+        
+    urls = "https://api.corona-dz.live/province/{}/latest".format(id)
+    wilaya_data = requests.get(urls).json()
+    result = wilaya_data[0] #json data in index 1
+    final_result = result['data'] 
         
     # pass data to templates
         
+    context['wilaya'] = final_result[0] #json data in index 1
     context['males'] = males[-6:] #latest of 6 index male confirmed.
     context['females'] = females [-6:]  #latest of 6 index female confirmed. 
     context['date_all'] = dates_all_genderes [-6:]  #pass all date 
