@@ -5,6 +5,8 @@ Copyright (c) 2019 - present AppSeed.us
 from django.views import generic
 from django.views.generic import ListView
 from datetime import datetime
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.contrib.auth.decorators import login_required
 from django.forms.widgets import DateTimeBaseInput
 from django.shortcuts import render, get_object_or_404, redirect

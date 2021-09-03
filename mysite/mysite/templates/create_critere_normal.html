@@ -20,7 +20,7 @@
 {% if heading %}
 <h3>{{heading}}</h3>
 {% endif %}
-<div class = "container mx= 5">
+<div class = "container ">
     <form class="form-horizontal" method="POST" action="">
         {% csrf_token %}
         {{ formset.management_form }}

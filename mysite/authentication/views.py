@@ -13,6 +13,8 @@ from django.forms.utils import ErrorList
 from django.http import HttpResponse
 from .forms import LoginForm, SignUpForm
 
+
+
 def login_view(request):
     form = LoginForm(request.POST or None)
 

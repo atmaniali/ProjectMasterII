@@ -11,7 +11,7 @@
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
     <div class="container-fluid">
         <div class="header-body">
-            <p style="color: white;">Date de donner : <span>{{date_de_donner}}</span></p>
+            <p style="color: white;">Date de donner : <span class="font-weight-bold">{{date_de_donner}}</span></p>
             <br>
             
             <!-- Card stats -->
@@ -36,7 +36,7 @@
                             <p class="mt-3 mb-0 text-muted text-sm">
                                 <span class="text-success mr-2">New Confirmed : <span class="font-weight-bold">{{response.newConfirmed}}</span>  <br>
                                     Avg7Confirmed</span>
-                                <span class="text-nowrap">{{response.avg7Confirmed}}</span>
+                                <span class="text-nowrap font-weight-bold">{{response.avg7Confirmed}}</span>
                             </p>
                         </div>
                     </div>
@@ -58,9 +58,9 @@
                                 </div>
                             </div>
                             <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-danger mr-2">New recovered {{response.newRecovered}} <br>
+                                <span class="text-danger mr-2">New recovered <span class="font-weight-bold">{{response.newRecovered}}</span> <br>
                                     Avg7Confirmed</span>
-                                <span class="text-nowrap">{{response.avg7Recovered}}</span>
+                                <span class="text-nowrap font-weight-bold">{{response.avg7Recovered}}</span>
                             </p>
                         </div>
                     </div>
@@ -81,8 +81,8 @@
                                 </div>
                             </div>
                             <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-danger mr-2">New Deaths {{response.newDeaths}} <br> Avg7Deaths</span>
-                                <span class="text-nowrap">{{response.avg7Deaths}}</span>
+                                <span class="text-danger mr-2">New Deaths <span class="font-weight-bold">{{response.newDeaths}}</span> <br> Avg7Deaths</span>
+                                <span class="text-nowrap font-weight-bold">{{response.avg7Deaths}}</span>
                             </p>
                         </div>
                     </div>
@@ -103,9 +103,9 @@
                                 </div>
                             </div>
                             <p class="mt-3 mb-0 text-muted text-sm">
-                                <span class="text-success mr-2">New Treatment {{response.newTreatment}} <br>
+                                <span class="text-success mr-2">New Treatment <span class="font-weight-bold">{{response.newTreatment}}</span> <br>
                                     Avg7Treatment</span>
-                                <span class="text-nowrap">{{response.avg7Treatment}}</span>
+                                <span class="text-nowrap font-weight-bold">{{response.avg7Treatment}}</span>
                             </p>
                         </div>
                         <!--  -->
@@ -523,8 +523,54 @@
         {% csrf_token %} 
         <label for="">Choisir une wilaya : </label>
         <select name="wilaya" id="my_select" class="form-control form-control" >
-            <option value="31">Oran</option>
+            <option value="1">Adrar</option>
+            <option value="2">Chlef</option>
+            <option value="3">Lagouate</option>
+            <option value="4">Oum El Bouaghi</option>
+            <option value="5">Batna</option>
+            <option value="6">Béjaïa</option>
+            <option value="7">Biskra </option>
+            <option value="8">Béchar </option>
+            <option value="9">Blida</option>
+            <option value="10">Bouira</option>
+            <option value="11">Tamanrasset </option>
+            <option value="12">Tébessa</option>
+            <option value="13">Tlemcen</option>
+            <option value="14">Tiaret</option>
+            <option value="15">Tizi Ouzou</option>
             <option value="16">Alger</option>
+            <option value="17">Djelfa</option>
+            <option value="18">Jijel</option>
+            <option value="19">Sétif</option>
+            <option value="20">Saïda</option>
+            <option value="21">Skikda</option>
+            <option value="22">Sidi Bel Abbès</option>
+            <option value="23">Annaba</option>
+            <option value="24">Guelma</option>
+            <option value="25">Constantine</option>
+            <option value="26">Médéa</option>
+            <option value="27">Mostaganem</option>
+            <option value="28">M'Sila</option>
+            <option value="29">Mascara</option>
+            <option value="30">Ouargla</option>
+            <option value="31">Oran</option>
+            <option value="32">ElBayadh</option>
+            <option value="33">Illizi </option>
+            <option value="34">Bordj Bou Arreridj</option>
+            <option value="35">Boumerdès</option>
+            <option value="36">El Tarf</option>
+            <option value="37">Tindouf</option>
+            <option value="38">Tissemsilt</option>
+            <option value="39">El Oued </option>
+            <option value="40">Khenchela</option>
+            <option value="41">Souk Ahras</option>
+            <option value="42">Oum El Bouaghi</option>
+            <option value="43">Alger</option>
+            <option value="44">Oran</option>
+            <option value="45">Constantine</option>
+            <option value="46">Médéa</option>
+            <option value="47">Mostaganem</option>
+            <option value="48">M'Sila</option>
         </select>
             <br>
         <button  type="submit" class="btn btn-outline-primary" id="selbutt">Submit</button>    
@@ -550,9 +596,9 @@
                         </div>
                     </div>
                     <p class="mt-3 mb-0 text-muted text-sm">
-                        <span class="text-success mr-2">New Confirmed {{wilaya.newConfirmed}} <br>
+                        <span class="text-success mr-2">New Confirmed <span class=" font-weight-bold">{{wilaya.newConfirmed}}</span> <br>
                             Avg7Confirmed</span>
-                        <span class="text-nowrap">{{wilaya.avg7Confirmed}}</span>
+                        <span class="text-nowrap font-weight-bold">{{wilaya.avg7Confirmed}}</span>
                     </p>
                 </div>
             </div>
@@ -574,9 +620,9 @@
                         </div>
                     </div>
                     <p class="mt-3 mb-0 text-muted text-sm">
-                        <span class="text-danger mr-2">New recovered {{wilaya.newRecovered}} <br>
+                        <span class="text-danger mr-2">New recovered <span class="font-weight-bold">{{wilaya.newRecovered}}</span> <br>
                             Avg7Confirmed</span>
-                        <span class="text-nowrap">{{wilaya.avg7Recovered}}</span>
+                        <span class="text-nowrap font-weight-bold">{{wilaya.avg7Recovered}}</span>
                     </p>
                 </div>
             </div>
@@ -597,8 +643,8 @@
                         </div>
                     </div>
                     <p class="mt-3 mb-0 text-muted text-sm">
-                        <span class="text-danger mr-2">New Deaths {{wilaya.newDeaths}} <br> Avg7Deaths</span>
-                        <span class="text-nowrap">{{wilaya.avg7Deaths}}</span>
+                        <span class="text-danger mr-2">New Deaths <span class="font-weight-bold">{{wilaya.newDeaths}}</span> <br> Avg7Deaths</span>
+                        <span class="text-nowrap font-weight-bold">{{wilaya.avg7Deaths}}</span>
                     </p>
                 </div>
             </div>
