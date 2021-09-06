@@ -12,8 +12,6 @@ class AdminUser(admin.ModelAdmin):
         
 admin.site.register(Profile),
 admin.site.register(Upload_csv),
-# Show sub creteria in django admine/
-
 admin.site.register(Resultat),
 admin.site.register(Critere),
 admin.site.register(Subcritere),
