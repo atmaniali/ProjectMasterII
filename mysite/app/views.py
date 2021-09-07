@@ -233,6 +233,7 @@ class CritereListView(generic.ListView):
                print('oki')     
                   
         return render(request, self.template_name)    
+      
 
 def create_critere_with_subcritere(request):
 
@@ -274,8 +275,11 @@ def promether_view(request) :
         weight_file = request.FILES.get('myfile1')
         mat = np.loadtxt(doc_file,dtype = str, skiprows=0, delimiter=',')      
         context['mat'] = mat  
-        result = readMatrix(doc_file, weight_file) 
-        context['result'] = result  
+        result_alter , poursen = readMatrix(doc_file, weight_file) 
+        result_poursen = get_weight(poursen)
+
+        context['result'] = result_alter  
+        context ['zero'] = result_poursen
 
     html_template = loader.get_template( 'promethee_2_page.html' )
 

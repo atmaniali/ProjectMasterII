@@ -229,6 +229,13 @@ def readMatrix(MPfiles, weightfiles):
     print(sortedArr[:,0]) 
     print("flot net") 
     print(sortedArr[:,-1])
+    type_tali = sortedArr[:,-1]
+    listing = list(type_tali)
+    risting = type_tali.tolist()
+    print(listing)
+    print(risting)
+    print([float(x) for x in risting])
+    final_float = [float(x) for x in risting]
     print("*************************************-******************************************")      
     final_sorted = sortedArr[:,0]
     # print("count finale :", len(final_sorted))
@@ -241,7 +248,8 @@ def readMatrix(MPfiles, weightfiles):
     # print("type  list", type(list_np[0]))
     print("*****testing******")
     hh = final_sorted.tolist()
-    print("hh",hh)
+    # hh_1 = hh.remove(' ')
+    # print("hh",hh_1)
     liza = []
     hay_3liya = []
     zero = 1
@@ -250,7 +258,7 @@ def readMatrix(MPfiles, weightfiles):
             liza.append(i)
             hay_3liya.append(zero)
             zero = zero+1
-    return liza 
+    return liza , final_float 
 
 doc_file = '/home/ali/Documents/MasterIIproect/proethee_csv/data2.csv'
 weight_file = '/home/ali/Documents/MasterIIproect/proethee_csv/weight2.csv'
@@ -286,3 +294,17 @@ def from_csv_to_tuple(file, type):
     Matrix = np.loadtxt(file,dtype = type, skiprows=0, delimiter=',')
     tuples = tuple(Matrix)
     return tuples    
+def get_weight(liste):
+    listes = []
+    liste.remove(0.0)
+    maxList = max(liste)
+    z = [maxList + x for x in liste]
+    sumes = sum(z)
+    for x in z:
+        listes.append((x*100)/sumes)
+    return listes
+# 1.1291917964816092
+print("#### / ### / ")   
+li =  [-0.007684481167234497, -0.09392203101888297, -0.12096867072395978, -0.25046135785523804, 0.0, 0.19073859164491294, 0.2822979491204023]
+meth = get_weight(li)
+print(meth)

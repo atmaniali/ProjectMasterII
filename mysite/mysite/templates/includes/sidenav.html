@@ -90,7 +90,7 @@
         <!-- Navigation -->
         <ul class="navbar-nav">
           <li class="nav-item">
-          <a class=" nav-link {% if 'index' in segment %} active {% endif %}" href="{% url 'app:index' %}"> <i class="fal fa-analytics text-prim"></i> Annalyse viruse
+          <a class=" nav-link {% if 'index' in segment %} active {% endif %}" href="{% url 'app:index' %}"> <i class="fas fa-file-medical-alt text-blue-500"></i> Annalyse viruse
             </a>
           </li>
           <li class="nav-item">
@@ -121,7 +121,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'app:ahp' %}">
-              <i class="ni ni-user-run text-red"></i> AHP  f 
+              <i class="fas fa-sitemap text-red"></i> AHP  f 
             </a>
           </li>
           <li class="nav-item">
@@ -131,22 +131,22 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'app:promethee_2' %}">
-              <i class="ni ni-user-run text-red"></i> PROMETHEE_II
+              <i class="fas fa-chart-bar text-red"></i> PROMETHEE_II
             </a>
           </li>
           <li class="nav-item {% if 'api' in segment %} active {% endif %}">
             <a class="nav-link" href="{% url 'app:create_critere_normal'%}">
-              <i class="ni ni-user-run text-red"></i> Critere
+              <i class="fas fa-clipboard-list text-primary"></i> Critere
             </a>
           </li>
           <li class="nav-item {% if 'api' in segment %} active {% endif %}">
             <a class="nav-link" href="{% url 'app:create_critere_with_subcritere'%}">
-              <i class="ni ni-user-run text-red"></i> Critere with subcritere
+              <i class="far fa-copy text-red"></i> Critere with subcritere
             </a>
           </li>
           <li class="nav-item {% if 'api' in segment %} active {% endif %}">
             <a class="nav-link" href="{% url 'app:critere_list'%}">
-              <i class="ni ni-user-run text-red"></i> LIST Criteres
+              <i class="fas fa-columns text-red"></i> LIST Criteres
             </a>
           </li>
 
