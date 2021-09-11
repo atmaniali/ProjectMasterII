@@ -23,6 +23,7 @@ import itertools
 import csv
 import numpy as np
 import folium
+from django.contrib import messages
 
 """ 
     all data from these url : https://api.corona-dz.live/
@@ -408,12 +409,17 @@ def ahp_final(request):
         values = []
         result = criteria.target_weights
         # print(criteria.target_weights)
+        
         for key, val in result.items():
             keys.append(key)
             values.append(val)
         context['final'] = criteria.target_weights
         context['keys'] = keys
         context['values'] = values
+    x = ['Moderna', 'AstraZeneca', 'Sinovac', 'Janssen', 'Pfizer', 'sputnik']
+    y = [0.279, 0.208, 0.153, 0.138, 0.122, 0.099]
+    context['x'] = x
+    context['y'] = y
     return HttpResponse(html_template.render(context, request))  
 
 def maps (request):
@@ -432,6 +438,98 @@ def maps (request):
     map = map._repr_html_() 
     context["maps"] = map
     return render(request, template_name, context)      
+
+
+# Methode I
+
+def creating (request) : 
+    
+    context = {}
+    template_name = "creating.html"
+    heading_message = 'Create Alternatives and Critere '      
+    if request.method == 'GET':
+        formset = AlternativeModelFormset(request.GET or None)
+        formset2 = CritereModelFormset(request.GET or None)
+    elif request.method == 'POST':
+        formset = AlternativeModelFormset(request.POST)
+        formset2 = CritereModelFormset(request.POST)
+        if 'alternative' in request.POST:
+            if formset.is_valid():
+                for form in formset:
+                    print("form",form) 
+                    if form.cleaned_data.get('name'):
+                        form.save()
+                    
+                    return redirect('app:creating')    
+        if 'critere' in request.POST:                
+            if formset2.is_valid():
+                for form2 in formset2:
+                    name = form2.cleaned_data.get('name')  
+                    if name:
+                        Critere(name = name).save()          
+                # once all alternatives are saved, redirect to alternative list view
+                return redirect('app:creating')
+                
+    return render(request, template_name, {
+        'formset': formset,
+        'formset2': formset2,
+        'heading': heading_message,
+    }) 
+
+
+def shows(request):
+    template_name = "show.html"
+    context = {}
+    x = 0
+    y = 0
+    # All
+    criters = Critere.objects.all()
+    alternatives = Alternative.objects.all()
+    if 'check_box' in request.POST:
+        
+        print(request.POST)
+        crits = request.POST.getlist('crits')
+        alti = request.POST.getlist('alts')
+        if len(crits) != 0 and len(alti) != 0:
+            x = len(crits)
+            y = len(alti)  
+            print("taille x: {} y : {}".format(x,y))
+            messages.success(request,"succes")
+            mat = get_matrix(crits, alti)
+            context["matrix"] = mat
+        elif len(crits) == 0:
+            messages.error(request, "check critere one or more !")
+        elif len(alti) == 0 :
+            messages.error(request, "check Altirnative one or more !")    
+    
+    elif 'tabl'  in request.POST:
+        # print(request.POST)  
+        tab = request.POST.getlist("cells")
+        tab_np = np.array(tab)
+        # print("from table", len(alti), len(crits))   
+        # tabl_np = tab_np.reshape(len(alti),len(crits))
+        # print (tabl_np)
+        # tl = request.POST.get('tl')
+        # print('\n tl \n', tl)
+        # mat = request.POST.get('tabl')  
+        # print("type of \n", mat)
+        # print(type(mat)) 
+    table = [
+    ['', 'Foo', 'Bar', 'Barf'],
+    ['Spam', 101, 102, 103],
+    ['Eggs', 201, 202, 203],] 
+    test = ['test','yes','no','yes']
+    print("X:",x)  
+    
+    
+    #
+    # print("matr", mat)
+    context["criters"] = criters
+    context["alternatives"] = alternatives
+    context['table'] = table
+    
+       
+    return render(request, template_name, context)
 
 
 

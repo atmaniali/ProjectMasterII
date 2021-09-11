@@ -24,6 +24,9 @@ urlpatterns = [
     path('promthee2/', views.promether_view, name = "promethee_2"),
     path('ahp/', views.ahp_final, name = "ahp"),
     path('maps/', views.maps, name = 'maps'),
+    #methode I
+    path('creating/', views.creating, name ='creating'),
+    path('show/', views.shows, name = 'show'),
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),
 

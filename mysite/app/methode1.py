@@ -1,27 +1,59 @@
-from django.conf import settings
-import numpy
-import numpy as np
-import pandas as pd
-from django.core.files.storage import FileSystemStorage
-import requests
-import csv 
 import random 
+import numpy as np  
+import pandas as pd  
+import numpy
 
 
+def slicing(matrix):
+    matrix = np.array(matrix)
+    mat_header  = matrix[0]  
+    mat_body = matrix[1:]  
+    test = ['test']
+    rend = random.choices(['yes','no'], k=len(mat_header)-1)
+    test.extend(rend)
+    print(test)
+    mat_header = np.vstack([mat_header,test])
+    matrix = np.vstack([mat_header,mat_body])
+    return matrix
+
+tab =  [
+    ['', 'Foo', 'Bar', 'Barf'],
+    ['Spam', 101, 102, 103],
+    ['Eggs', 201, 202, 203],] 
+tab = np.array(tab)    
+# s = slicing(tab) 
+# print("final", s) 
+# df = pd.DataFrame(s, index = False) 
+# # df.reset_index(drop=True, inplace=True) 
+# print(df)
+# df.to_csv("/home/ali/Documents/MasterIIproect/proethee_csv/data3.csv",mode = 'w', index=False)
+
+def numpy_to_csv(matrix):
+    matrix = np.array(matrix)
+    rows = matrix[0,1:]
+    colmns = matrix[1:,0]
+    body=matrix[1:,1:]
+    df = pd.DataFrame(data=body, index=colmns, columns=rows)
+    # df.to_csv("/home/ali/Documents/MasterIIproect/proethee_csv/data4.csv")
+    print(rows)
+    print(colmns)
+    print(body)
+    print(df)
+wigh = [0.33, 0.33, 0.33]
+# numpy_to_csv(tab)  
+import csv 
+def weight_to_csv(weights):
+    urls = "/home/ali/Documents/MasterIIproect/proethee_csv/weights3.csv"
+    with open(urls, 'w') as f:
+       write = csv.writer(f)
+       write.writerow(weights) 
+    # weights = np.array(weights)
+    # print(weights)
+    # np.savetxt("/home/ali/Documents/MasterIIproect/proethee_csv/weights3.csv", weights, delimiter=",")
+
+# weight_to_csv(wigh)
 
 
-def get_all_provinces():
-    provinces = requests.get('https://api.corona-dz.live/province/latest').json()
-    data = []
-    for province in provinces :
-        data.append(province['data'])
-   
-    return provinces    
-
-
-def convert_to_tuple(list):
-    return tuple(list) 
-# PROMETHEE_II
 def all_alternatives(Alternatives):
     Alternative_possibilities = []
     for i in range(len(Alternatives)):
@@ -265,83 +297,17 @@ def readMatrix(MPfiles, weightfiles):
 doc_file = '/home/ali/Documents/MasterIIproect/proethee_csv/data2.csv'
 weight_file = '/home/ali/Documents/MasterIIproect/proethee_csv/weight2.csv'
 # promethe
-result = readMatrix(doc_file, weight_file) 
-  
+# result = readMatrix(doc_file, weight_file) 
+MPfiles = "/home/ali/Documents/MasterIIproect/proethee_csv/data4.csv"
+weightfiles = "/home/ali/Documents/MasterIIproect/proethee_csv/weights3.csv"
+# MPfiles = "/home/ali/Documents/MasterIIproect/proethee_csv/data2.csv"
+# weightfiles = "/home/ali/Documents/MasterIIproect/proethee_csv/weight2.csv"
+def matmat(MPfiles, weightfiles):
+    print("matmat")
+    Matrix = np.loadtxt(MPfiles,dtype = str, skiprows=0, delimiter=',')
+    array_Matrix  = np.array(Matrix)
+    print(array_Matrix[0,1:])
+    array_weights = np.loadtxt(weightfiles, delimiter=',', dtype=float)
+    print('array_weights \n', array_weights.shape)  
 
-def save_as_csv(query, name):
-    list_np = np.array(query) 
-    matrix = [ [ 0 for i in range(len(query)) ] for j in range(len(query)) ]
-    for i in range(len(query)):
-        for j in range(len(query)):
-            if i == j:
-                matrix[i][j] = 1
-    matrix_np = np.array(matrix)  
-    matrix_with_critere_ligne= np.vstack((list_np,matrix_np))
-    matrix_transpose = matrix_with_critere_ligne.transpose()
-    list_np = np.append("",list_np)
-    matrix_with_critere_ligne_transpose= np.vstack((list_np,matrix_transpose))
-    pd.DataFrame(matrix_with_critere_ligne_transpose).to_csv("media/files/critere_{}.csv".format(name))
-
-def from_csv_to_dict(file):
-    dictionnaire = {}
-    Matrix = np.loadtxt(file,dtype = str, skiprows=0, delimiter=',')
-    matrix_list = Matrix[0,1:]
-    matrix = Matrix[1:,1:].astype(float)
-    for i in range(len(matrix_list)):
-        for j in range(len(matrix_list)):
-            if i < j:
-                dictionnaire.update({(matrix_list[i],matrix_list[j]):matrix[i][j]})             
-    return dictionnaire 
-def from_csv_to_tuple(file, type):
-    Matrix = np.loadtxt(file,dtype = type, skiprows=0, delimiter=',')
-    tuples = tuple(Matrix)
-    return tuples    
-def get_weight(liste):
-    listes = []
-    liste.remove(0.0)
-    maxList = max(liste)
-    z = [maxList + x for x in liste]
-    sumes = sum(z)
-    for x in z:
-        listes.append((x*100)/sumes)
-    return listes
-# 1.1291917964816092
-print("#### / ### / ")   
-li =  [-0.007684481167234497, -0.09392203101888297, -0.12096867072395978, -0.25046135785523804, 0.0, 0.19073859164491294, 0.2822979491204023]
-meth = get_weight(li)
-print(meth)
-"""create matrix from 2 vectors x for row and y for colomns"""
-def get_matrix(x, y):
-    x.insert(0,"")
-    zeros = np.zeros((len(y),len(x)-1))
-    mat = np.vstack([y,zeros.transpose()]).transpose()
-    matrix = np.vstack([x,mat])
-    return matrix
- 
-""" add a list to matrix and return matrix for prometheeII"""   
-def slicing(matrix):
-    matrix = np.array(matrix)
-    mat_header  = matrix[0]  
-    mat_body = matrix[1:]  
-    test = ['test']
-    rend = random.choices(['yes','no'], k=len(mat_header)-1)
-    test.extend(rend)
-    # print(test)
-    mat_header = np.vstack([mat_header,test])
-    matrix = np.vstack([mat_header,mat_body])
-""" turn numpy table into csv file"""
-def numpy_to_csv(matrix):
-    matrix = np.array(matrix)
-    urls = "/home/ali/Documents/MasterIIproect/proethee_csv/data4.csv"
-    rows = matrix[0,1:]
-    colmns = matrix[1:,0]
-    body=matrix[1:,1:]
-    df = pd.DataFrame(data=body, index=colmns, columns=rows)
-    df.to_csv(urls)  
-
-""" turn weight to csv """     
-def weight_to_csv(weights):
-    urls = "/home/ali/Documents/MasterIIproect/proethee_csv/weights3.csv"
-    with open(urls, 'w') as f:
-       write = csv.writer(f)
-       write.writerow(weights)  
+matmat(MPfiles, weightfiles)    

@@ -74,7 +74,9 @@ class Critere(models.Model):
     def get_subcriters(self):
         return ', '.join(self.subcriters.all().values_list('name', flat=True)) 
     def get_pk(self):
-        return self.pk       
+        return self.pk  
+    def get_name(self):
+        return self.name         
     
         
 class Subcritere(models.Model):
@@ -98,6 +100,8 @@ class Alternative(models.Model):
     nom_vaccin = models.CharField(max_length=200)
     def __str__(self) :
         return self.nom_vaccin
+    def get_name(self):
+          return self.nom_vaccin  
 
 class Save_result(models.Model):
     name= models.CharField(max_length=200)

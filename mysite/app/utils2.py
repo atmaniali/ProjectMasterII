@@ -43,8 +43,10 @@ fatigue_file = "/home/ali/Documents/MasterIIproect/ahp_csv_all/fatigue.csv"
 # csv_to_dictionaire
 critere_filecsv = from_csv_to_dict(critere_file)
 caracteristique_vaccin_filecsv = from_csv_to_dict(caracteristique_vaccin_file)
+print('-*-', caracteristique_vaccin_filecsv)
 posologie_filecsv = from_csv_to_dict(posologie_file)
 cout_filecsv = from_csv_to_dict(cout_file)
+print("cout", cout_filecsv)
 effets_secondaire_filecsv = from_csv_to_dict(effets_secondaire_file)
 # csv_to_tuple
 alternatives_filecsv = from_csv_to_tuple(alternatives_file,str)
@@ -65,7 +67,9 @@ fatigue_filecsv = from_csv_to_tuple(fatigue_file,float)
 # start methode 
 critere_comparison = critere_filecsv
 criteria = ahpy.Compare('Criteria', critere_comparison, precision=3)
+print("**** aya ****")
 print("criteria \n",criteria.target_weights)
+print("*** endAya ***")
 caracterisiqueVaccin_comparison = caracteristique_vaccin_filecsv
 posologie_comparisons = posologie_filecsv
 cout_comparisons = cout_filecsv
@@ -133,7 +137,23 @@ print("final criteria \n", criteria.target_weights)
 keys = []
 values = []
 result = criteria.target_weights
-# print(criteria.target_weights)
+print(criteria.target_weights)
 for key, val in result.items():
     keys.append(key)
     values.append(val)
+reportcrit = criteria.report(show=True)
+# print("********************** ********** *** * *")    
+# print("\n")
+# report_cara = caracteristique_vacc.report(show=True)
+# print("\n")
+# # report_poso = posologie.report(show=True)
+# # print("\n")
+# report_cou = cout.report(show=True)
+# print("\n")
+# report_eff = effait_sec.report(show=True)
+# print("********************** ********** *** * *")    
+print("\n")
+report = criteria.report(show=True)
+
+
+

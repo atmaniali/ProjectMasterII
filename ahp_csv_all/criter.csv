@@ -1,6 +1,6 @@
                        ,Carachterisique Vaccin ,Posologie ,Cout ,Effets Secondaire
 Carachterisique Vaccin ,1                      ,3         ,5    ,1
-Posologie              ,0.33                   ,1         ,3    ,0.2
-Cout                   ,0.2                    ,0.33       ,1    ,3
-Effet Secondaire       ,1                      ,5         ,0.33  ,1
+Posologie              ,2                      ,1         ,3    ,2
+Cout                   ,2                      ,2         ,1    ,3
+Effet Secondaire       ,1                      ,5         ,2    ,1
 

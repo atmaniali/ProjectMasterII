@@ -46,53 +46,75 @@ class ContactForm(forms.ModelForm):
 # here i want to creat autoatique forms
 #  start agin Sun, 11 ,21
 
-class CritereForm(forms.Form):
-    name = forms.CharField(
-        label='Critere Name',
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Enter Critere Name here'
-        })
-    )
+# class CritereForm(forms.Form):
+#     name = forms.CharField(
+#         label='Critere Name',
+#         widget=forms.TextInput(attrs={
+#             'class': 'form-control',
+#             'placeholder': 'Enter Critere Name here'
+#         })
+#     )
+# CritereFormset = formset_factory(CritereForm, extra=5)    
 
-class CritereModelForm(forms.ModelForm):
+# class CritereModelForm(forms.ModelForm):
 
-    class Meta:
-        model = Critere
-        fields = '__all__'
-        labels = {
-            'name': 'Critere Name'
-        }
-        widgets = {
-            'name': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter Critere Name here'
-                }
-            )
-        }
-CritereFormset = formset_factory(CritereForm) 
-CHOICE = Critere.objects.all()
-CritereModelFormset = modelformset_factory(
-    Critere,
-    fields=('name', ),
-    # fields=('name',),
-    extra=1,
-    widgets={
-        'name': forms.TextInput(attrs={
+#     class Meta:
+#         model = Critere
+#         fields = '__all__'
+#         labels = {
+#             'name': 'Critere Name'
+#         }
+#         widgets = {
+#             'name': forms.TextInput(attrs={
+#                 'class': 'form-control',
+#                 'placeholder': 'Enter Critere Name here'
+#                 }
+#             )
+#         }
+# CritereFormset = formset_factory(CritereForm) 
+# CHOICE = Critere.objects.all()
+# CritereModelFormset = modelformset_factory(
+#     Critere,
+#     fields=('name', ),
+#     # fields=('name',),
+#     extra=5,
+#     widgets={
+#         'name': forms.TextInput(attrs={
+#             'class': 'form-control',
+#             'placeholder': 'Enter Critere Name here'
+#             }
+#         )
+#     }
+# )   
+# SubcritereFormset = modelformset_factory(
+#     Subcritere,
+#     fields=('name', ),
+#     extra=1,
+#     widgets={'name': forms.TextInput(attrs={
+#             'class': 'form-control',
+#             'placeholder': 'Enter Subcritere Name here'
+#         })
+#     }
+# )
+
+
+AlternativeModelFormset = modelformset_factory(
+    Alternative,
+    fields=('nom_vaccin', ),
+    extra=5,
+    widgets={'nom_vaccin': forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'Enter Critere Name here'
-            }
-        )
-    }
-)   
-SubcritereFormset = modelformset_factory(
-    Subcritere,
-    fields=('name', ),
-    extra=1,
-    widgets={'name': forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Enter Subcritere Name here'
+            'placeholder': 'Enter Vaccin Name here'
         })
     }
 )
-
+CritereModelFormset = modelformset_factory(
+    Critere,
+    fields=('name', ),
+    extra=5,
+    widgets={'name': forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter Critere Name here'
+        })
+    }
+)

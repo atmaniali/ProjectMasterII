@@ -1,5 +1,5 @@
               ,NBrDose ,Age ,Delais ,Temps d'effet
 NBrDose       ,1       ,2   ,5      ,3
-Age           ,0.5     ,1   ,2      ,2
-Delais        ,0.33    ,0.5 ,1      ,0.5
-Temps d'effet ,0.33    ,2   ,0.2    ,1
+Age           ,2       ,1   ,2      ,2
+Delais        ,2       ,2   ,1      ,2
+Temps d'effet ,2       ,2   ,2      ,1

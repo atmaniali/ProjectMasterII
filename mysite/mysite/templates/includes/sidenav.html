@@ -6,8 +6,8 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <!-- Brand -->
-      <a class="navbar-brand pt-0" href="/">
-        <img src="/static/assets/img/brand/blue.png" class="navbar-brand-img" alt="...">
+      <a class="navbar-brand " href="/">
+        <img src="/static/assets/img/logo/blue.png" class="navbar-brand-img" style="width: 185px;height: 75px; object-fit: cover;" >
       </a>
       <!-- User -->
       <ul class="nav align-items-center d-md-none">
@@ -65,7 +65,7 @@
           <div class="row">
             <div class="col-6 collapse-brand">
               <a href="./index.html">
-                <img src="/static/assets/img/brand/blue.png">
+                <img src="/static/assets/img/logo/blue.png" style="width: 185px;height: 75px; object-fit: cover;">
               </a>
             </div>
             <div class="col-6 collapse-close">
@@ -96,6 +96,16 @@
           <li class="nav-item">
             <a class="nav-link {% if 'icons' in segment %} active {% endif %}" href="/icons.html">
               <i class="ni ni-planet text-blue"></i> Icons
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if 'icons' in segment %} active {% endif %}" href="#">
+              <i class="ni ni-planet text-blue"></i> Methodes I
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if 'icons' in segment %} active {% endif %}" href="{% url 'app:creating' %}">
+              <i class="ni ni-planet text-blue"></i> ADD
             </a>
           </li>
           <li class="nav-item">
