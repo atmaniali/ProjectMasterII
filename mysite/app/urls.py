@@ -27,6 +27,12 @@ urlpatterns = [
     #methode I
     path('creating/', views.creating, name ='creating'),
     path('show/', views.shows, name = 'show'),
+    path('listes/', views.listes, name = 'listes'),
+    #methode II
+    path('creating_sub/', views.creating_sub, name ='creating_sub'),
+    path('show_sub/', views.show_sub, name = 'show_sub'),
+
+
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),
 

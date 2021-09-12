@@ -537,6 +537,70 @@ def shows(request):
        
     return render(request, template_name, context)
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+def listes(request):
+    template_name = "listes.html"
+    context = {}
+    criters = Critere.objects.all().order_by('pk')
+    paginator_crit = Paginator(criters, 5)
+    page = "request.GET.get('page', 1)"
+    try:
+        crits_paginater = paginator_crit.page(page)
+    except PageNotAnInteger:
+        crits_paginater = paginator_crit.page(1)
+    except EmptyPage:
+        crits_paginater = paginator_crit.page(paginator_crit.num_pages)
+    alternatives = Alternative.objects.all()
+    paginator_alti = Paginator(alternatives, 5)
+
+    context["criteres"] = criters
+    context['altirnatives'] = alternatives
+    context["paginator_crit"] = crits_paginater
+    context['paginator_alti'] = paginator_alti 
+
+    return render(request, template_name, context)
+
+def creating_sub(request):
+    template_name = "creating_sub.html"
+    context = {}
+    return render(request, template_name, context)
+
+def list_str_to_int(lists):
+    for i in range(len(lists)):
+        lists[i] = int(lists[i])
+    return lists    
+
+"""take list of objects query and return id in list"""
+def get_id_critere(lists):
+    z = []
+    for li in lists:
+        b = Critere.objects.get(name = li)
+        x = b.id
+        z.append(x)
+    return(z)    
+
+
+def show_sub(request):  
+    template_name = "show_sub.html"  
+    context = {}
+    criters = Critere.objects.all()
+    if 'check_box' in request.POST:
+        crits = request.POST.getlist('crits')
+        if len(crits) != 0:
+            messages.success(request,"succes")
+            tab = list_str_to_int(crits)
+            alternatives = Alternative.objects.all()
+            context["alternatives"] = alternatives
+
+        elif len(crits) == 0:
+            messages.error(request, "check critere one or more !")
+  
+    
+
+    context["criters"] = criters
+    return render(request, template_name, context)      
+
+
 
 
 

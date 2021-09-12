@@ -103,11 +103,52 @@
               <i class="ni ni-planet text-blue"></i> Methodes I
             </a>
           </li>
+          <!-- UL -->
+          <ul>
+            <li class="nav-item">
+              <a class="nav-link {% if 'icons' in segment %} active {% endif %}" href="{% url 'app:creating' %}">
+                <i class="ni ni-planet text-blue"></i> ADD
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'icons' in segment %} active {% endif %}" href="{% url 'app:show' %}">
+                <i class="ni ni-planet text-blue"></i> Show
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'icons' in segment %} active {% endif %}" href="{% url 'app:listes' %}">
+                <i class="ni ni-planet text-blue"></i> List
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'app:promethee_2' %}">
+                <i class="fas fa-chart-bar text-red"></i> PROMETHEE_II
+              </a>
+            </li>
+          </ul>
           <li class="nav-item">
-            <a class="nav-link {% if 'icons' in segment %} active {% endif %}" href="{% url 'app:creating' %}">
-              <i class="ni ni-planet text-blue"></i> ADD
+            <a class="nav-link" href="#">
+              <i class="fas fa-chart-bar text-red"></i> Methode II
             </a>
           </li>
+          <ul>
+            <li class="nav-item">
+              <a class="nav-link {% if 'icons' in segment %} active {% endif %}" href="{% url 'app:creating_sub' %}">
+                <i class="ni ni-planet text-blue"></i> ADD
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'icons' in segment %} active {% endif %}" href="{% url 'app:show_sub' %}">
+                <i class="ni ni-planet text-blue"></i> Show
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'app:ahp' %}">
+                <i class="fas fa-sitemap text-red"></i> AHP  
+              </a>
+            </li>
+          </ul>
+          
           <li class="nav-item">
             <a class="nav-link {% if 'maps' in segment %} active {% endif %}" href="{% url 'app:maps' %}">
               <i class="ni ni-pin-3 text-orange"></i> Maps
@@ -129,21 +170,13 @@
               <i class="ni ni-user-run text-red"></i> Logout
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'app:ahp' %}">
-              <i class="fas fa-sitemap text-red"></i> AHP  f 
-            </a>
-          </li>
+          
           <li class="nav-item">
             <a class="nav-link" href="{% url 'app:home' %}">
               <i class="fas fa-home fa-lg text-blue"></i> Home
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'app:promethee_2' %}">
-              <i class="fas fa-chart-bar text-red"></i> PROMETHEE_II
-            </a>
-          </li>
+          
           <li class="nav-item {% if 'api' in segment %} active {% endif %}">
             <a class="nav-link" href="{% url 'app:create_critere_normal'%}">
               <i class="fas fa-clipboard-list text-primary"></i> Critere

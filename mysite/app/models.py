@@ -102,6 +102,8 @@ class Alternative(models.Model):
         return self.nom_vaccin
     def get_name(self):
           return self.nom_vaccin  
+    def get_pk(self):
+        return self.pk      
 
 class Save_result(models.Model):
     name= models.CharField(max_length=200)

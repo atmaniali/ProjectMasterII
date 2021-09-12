@@ -1,0 +1,173 @@
+{% extends 'layouts/base.html' %} 
+{% load crispy_forms_tags %}
+{% block title %} Listes {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+{% block content %}
+<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+    <div class="container-fluid">
+        <div class="header-body">
+            
+            
+        </div>
+    </div>
+
+</div>
+<div >
+    <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <h3 class="mb-0">Card tables: <strong> Criteres</strong></h3>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush" id="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Users</th>
+                    <th scope="col">ID's</th>
+                    <th scope="col">Critere</th>
+                    <th scope="col">Dates</th>
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for critere in criteres %}
+                  <tr>
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <a href="#" class="avatar rounded-circle mr-3">
+                          <img alt="Image placeholder" src="/static/assets/img/avatar/avatar_masque.png">
+                        </a>
+                        <div class="media-body">
+                          <span class="mb-0 text-sm">{{ critere.user}}</span>
+                        </div>
+                      </div>
+                    </th>
+                    <td id="pk">
+                      {{critere.get_pk}}
+                    </td>
+                    <td>
+                      {{critere.name}}
+                    </td>
+                    {% comment %} TODO: i need options in tables {% endcomment %}
+                    <td > 
+                      <span class="mb-0 text-sm">{{critere.created_at}}</span>
+                      <div class="text-right">
+                        <div class="dropdown">
+                          <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                            <a class="dropdown-item" id="delete" type="button" href="{% url 'app:critere_list' %}">Delete</a>
+                            <a class="dropdown-item" id="update" type="button" href="{% url 'app:critere_list' %}">Update</a>
+                            <a class="dropdown-item" id="teste" type="button" href="{% url 'app:critere_list' %}">Tesdter</a>
+
+                          </div>
+                        </div>
+                      </div>
+                      
+                    </td>
+                    
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            <!-- {% if crits_paginater.has_other_pages %}
+            <ul class="pagination">
+              {% if crits_paginater.has_previous %}
+                <li><a href="?page={{ crits_paginater.previous_page_number }}">&laquo;</a></li>
+              {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+              {% endif %}
+              {% for i in crits_paginater.paginator.page_range %}
+                {% if crits_paginater.number == i %}
+                  <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                  <li><a href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+              {% endfor %}
+              {% if crits_paginater.has_next %}
+                <li><a href="?page={{ crits_paginater.next_page_number }}">&raquo;</a></li>
+              {% else %}
+                <li class="disabled"><span>&raquo;</span></li>
+              {% endif %}
+            </ul>
+          {% endif %} -->
+
+          </div>
+        </div>
+      </div>
+      <hr>
+
+      <div class="row mt-5">
+        <div class="col">
+          <div class="card bg-default shadow">
+            <div class="card-header bg-transparent border-0">
+              <h3 class="text-white mb-0">Card tables: <strong> Altirnatives</strong> </h3>
+            </div>
+            
+            <div class="table-responsive">
+              <table class="table align-items-center table-dark table-flush">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Users</th>
+                    <th scope="col">ID's</th>
+                    <th scope="col">Alternative</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for altirnative in altirnatives %}
+                  <tr>
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <a href="#" class="avatar rounded-circle mr-3">
+                          <img alt="Image placeholder" src="/static/assets/img/avatar/avatar_masque.png">
+                        </a>
+                        <div class="media-body">
+                          <span class="mb-0 text-sm">{{ request.user.username }}</span>
+                        </div>
+                      </div>
+                    </th>
+                    
+                    <td>
+                        <span class="mb-0 text-sm">{{altirnative.get_pk}}</span>
+                    </td>
+                    <td > 
+                      <span class="mb-0 text-sm">{{altirnative.nom_vaccin}}</span> 
+                      <div class="text-right">
+                        <div class="dropdown">
+                          <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                            <a class="dropdown-item" href="#">Delete</a>
+                            <a class="dropdown-item" href="#">Update</a>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+
+
+    
+    
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+
+{% block javascripts %}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+{% endblock javascripts %}
