@@ -15,6 +15,7 @@
 
 </div>
 <div class = "container">
+    <!-- Checkbox -->
     <form action="" method="post">
         {% csrf_token %}
         <h2>Criteres</h2>
@@ -43,7 +44,6 @@
         
     </form> 
 
-    
     {% if messages %}
       {% for message in messages %}
       <!-- messages succes -->
@@ -57,11 +57,28 @@
             </button>
           </div>
 
-         <!-- Tables of criteres alternatives -->
-          <div>
-            <form action="" method="post">
-                {% csrf_token %}
-                <div class = "table-responsive">
+         
+         <!-- messages err -->
+          {% elif message.tags == 'error'%}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+            <span class="alert-text"><strong>{{ message }}</strong> </span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+          {% endif %}
+      {% endfor %}
+    {% endif %} 
+
+    <!-- Tables of criteres alternatives -->
+    <div class ="">
+        <form action="" method="post">
+            {% csrf_token %}
+
+
+            <div class = "table-responsive">
+                <!-- Table critere -->
                 <table class = "table" name = "tl" border="1" id="exportMe">
                     {% for row in matrix %}
                         <tr>
@@ -83,28 +100,46 @@
                             </div>    
                         {% endfor %}
                         </tr>
-                    {% endfor %}
-                    
+                    {% endfor %}    
                 </table>
             </div>
-                 <button type="submit" id="" class="btn btn-info my-1" name="tabl">
-                Secondary</button> 
-            </form>
-          </div>
-
-         <!-- messages err -->
-          {% elif message.tags == 'error'%}
-          <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <span class="alert-icon"><i class="ni ni-like-2"></i></span>
-            <span class="alert-text"><strong>{{ message }}</strong> </span>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-          {% endif %}
-      {% endfor %}
-    {% endif %} 
-    <hr>
+            <hr>
+            <!-- Table weight -->
+            <p>Weight should be 1 or less</p>
+            <div class = "table-responsive">
+                <table class = "table" name = "tl"  id="exportMe">
+                    {% for row in weights %}
+                        <tr>
+                            {% for cel in row %}
+                                <div class = "row">
+                                    {% if forloop.first or forloop.parentloop.first %} 
+                                    <div class="col">
+                                        <th> 
+                                            <input type="text" class="form-control" disabled id="{{forloop.counter0}} {{cel}}" name="weights" value={{cel}}>
+                                        </th>
+                                    </div>
+                                    {% else %} 
+                                    <div class="col">
+                                        <td>
+                                            <input type="number" step="0.1" min="0" max="1" class="form-control" id="" name="weights" value={{cel}}>
+                                        </td>  
+                                    </div>  
+                                    {% endif %}
+                                </div>    
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+             <button type="submit" id="" class="btn btn-info my-1" name="tabl">
+            Secondary</button> 
+        </form>
+      </div>
+      {% if messages %}
+        {% for message in messages %}
+            <li>{{message}}</li>
+        {% endfor %}
+      {% endif %}
     
     
 {% endblock content %}

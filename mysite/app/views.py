@@ -480,8 +480,6 @@ def creating (request) :
 def shows(request):
     template_name = "show.html"
     context = {}
-    x = 0
-    y = 0
     # All
     criters = Critere.objects.all()
     alternatives = Alternative.objects.all()
@@ -492,41 +490,49 @@ def shows(request):
         alti = request.POST.getlist('alts')
         if len(crits) != 0 and len(alti) != 0:
             x = len(crits)
-            y = len(alti)  
-            print("taille x: {} y : {}".format(x,y))
+            y = len(alti)
+            taille = Taille.objects.create(rows = x, colmn = y)  
+            taille.save()
             messages.success(request,"succes")
             mat = get_matrix(crits, alti)
+            wei = get_list(crits)
             context["matrix"] = mat
+            context["weights"] = wei
         elif len(crits) == 0:
             messages.error(request, "check critere one or more !")
         elif len(alti) == 0 :
             messages.error(request, "check Altirnative one or more !")    
     
-    elif 'tabl'  in request.POST:
-        # print(request.POST)  
+    elif 'tabl'  in request.POST: 
         tab = request.POST.getlist("cells")
-        tab_np = np.array(tab)
-        # print("from table", len(alti), len(crits))   
-        # tabl_np = tab_np.reshape(len(alti),len(crits))
-        # print (tabl_np)
-        # tl = request.POST.get('tl')
-        # print('\n tl \n', tl)
-        # mat = request.POST.get('tabl')  
-        # print("type of \n", mat)
-        # print(type(mat)) 
-    table = [
-    ['', 'Foo', 'Bar', 'Barf'],
-    ['Spam', 101, 102, 103],
-    ['Eggs', 201, 202, 203],] 
-    test = ['test','yes','no','yes']
-    print("X:",x)  
+        weight = request.POST.getlist("weights")
+        weight_numpy = np.array(weight).astype(float)
+        summs = np.sum(weight_numpy)
+        taille = Taille.objects.all().last()   
+        tab_np = np.array(tab)  
+        x = taille.colmn+1
+        y = taille.rows+1
+        tabl_np = np.reshape(tab_np,(x, y))
+        matrix = slicing(tabl_np)
+        if summs <= 0:
+            messages.info(request,"weight should be > 0")
+        elif summs > 1:
+            messages.info(request,"weight should be > 0")
+        else :   
+            messages.success(request, "success")   
+            weight_to_csv(weight_numpy,"name_weight")
+        numpy_to_csv(matrix, "name")
+        
+    # table = [
+    # ['', 'Foo', 'Bar', 'Barf'],
+    # ['Spam', 101, 102, 103],
+    # ['Eggs', 201, 202, 203],] 
+    # test = ['test','yes','no','yes']
+      
     
-    
-    #
-    # print("matr", mat)
     context["criters"] = criters
     context["alternatives"] = alternatives
-    context['table'] = table
+    # context['table'] = table
     
        
     return render(request, template_name, context)

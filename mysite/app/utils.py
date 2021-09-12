@@ -317,6 +317,10 @@ def get_matrix(x, y):
     mat = np.vstack([y,zeros.transpose()]).transpose()
     matrix = np.vstack([x,mat])
     return matrix
+def get_list(x):
+    zeros = np.zeros(len(x))
+    matrix = np.vstack([x,zeros])
+    return matrix    
  
 """ add a list to matrix and return matrix for prometheeII"""   
 def slicing(matrix):
@@ -329,10 +333,11 @@ def slicing(matrix):
     # print(test)
     mat_header = np.vstack([mat_header,test])
     matrix = np.vstack([mat_header,mat_body])
+    return matrix
 """ turn numpy table into csv file"""
-def numpy_to_csv(matrix):
+def numpy_to_csv(matrix, name):
     matrix = np.array(matrix)
-    urls = "/home/ali/Documents/MasterIIproect/proethee_csv/data4.csv"
+    urls = "/home/ali/Documents/MasterIIproect/proethee_csv/{}.csv".format(name)
     rows = matrix[0,1:]
     colmns = matrix[1:,0]
     body=matrix[1:,1:]
@@ -340,8 +345,8 @@ def numpy_to_csv(matrix):
     df.to_csv(urls)  
 
 """ turn weight to csv """     
-def weight_to_csv(weights):
-    urls = "/home/ali/Documents/MasterIIproect/proethee_csv/weights3.csv"
+def weight_to_csv(weights, names):
+    urls = "/home/ali/Documents/MasterIIproect/proethee_csv/{}.csv".format(names)
     with open(urls, 'w') as f:
        write = csv.writer(f)
        write.writerow(weights)  

@@ -110,6 +110,17 @@ class Save_result(models.Model):
     def __str__(self):
         return self.name
 
+class Taille(models.Model):
+    rows = models.IntegerField() 
+    colmn =   models.IntegerField()   
+    def __str__(self) :
+        return str(self.rows )
+    def get_pk(self):
+        return self.pk    
+
+# class weights(models.Model):
+#     weight = models.CharField(max_length = 200)
+#     value  = models.IntegerField()
 
     
         

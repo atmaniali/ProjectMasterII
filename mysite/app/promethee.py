@@ -4,35 +4,7 @@ import pandas as pd
 import numpy
 import csv
 
-
-# prometheeII
-def csv_to_numpy_array(matrix,weights):
-    Matrix = np.loadtxt(matrix,dtype = str, skiprows=0, delimiter=',')
-    array_Matrix  = np.array(Matrix)
-    array_weights = np.loadtxt(weights, delimiter=',', dtype=float)
-    return array_Matrix, array_weights
-
-def promethe_II(matrix,weights):
-    Matrix, Weights = csv_to_numpy_array(matrix,weights)
-    print(Matrix)
-    Alternative_matix = Matrix[2:,1:].astype(np.single)
-    print('Alternative_matix \n',Alternative_matix)
-    labels = Matrix[0,1:]
-    print('labels \n',labels)
-    Alternatives = Matrix[2:,0]
-    print('Names \n',Alternatives)
-    maximisation = Matrix[1,1:]
-    print('Beneficial or Not  \n',maximisation)
-
-# Methodes or promethee
-"""create matrix from 2 vectors x for row and y for colomns"""
-def get_matrix(x, y):
-    x.insert(0,"")
-    zeros = np.zeros((len(y),len(x)-1))
-    mat = np.vstack([y,zeros.transpose()]).transpose()
-    matrix = np.vstack([x,mat])
-    return matrix
- 
+# Or Prome
 """ add a list to matrix and return matrix for prometheeII"""   
 def slicing(matrix):
     matrix = np.array(matrix)
@@ -62,6 +34,34 @@ def weight_to_csv(weights):
        write = csv.writer(f)
        write.writerow(weights)  
 
+# prometheeII
+def csv_to_numpy_array(matrix,weights):
+    Matrix = np.loadtxt(matrix,dtype = str, skiprows=0, delimiter=',')
+    array_Matrix  = np.array(Matrix)
+    array_weights = np.loadtxt(weights, delimiter=',', dtype=float)
+    return array_Matrix, array_weights
+
+def promethe_II(matrix,weights):
+    Matrix, Weights = csv_to_numpy_array(matrix,weights)
+    print(Matrix)
+    Alternative_matix = Matrix[2:,1:].astype(np.single)
+    print('Alternative_matix \n',Alternative_matix)
+    labels = Matrix[0,1:]
+    print('labels \n',labels)
+    Alternatives = Matrix[2:,0]
+    print('Names \n',Alternatives)
+    maximisation = Matrix[1,1:]
+    print('Beneficial or Not  \n',maximisation)
+
+# Methodes or promethee
+"""create matrix from 2 vectors x for row and y for colomns"""
+def get_matrix(x, y):
+    x.insert(0,"")
+    zeros = np.zeros((len(y),len(x)-1))
+    mat = np.vstack([y,zeros.transpose()]).transpose()
+    matrix = np.vstack([x,mat])
+    return matrix
+
 # Variables
 mat = "/home/ali/Documents/MasterIIproect/proethee_csv/data4.csv"
 wei = "/home/ali/Documents/MasterIIproect/proethee_csv/weights3.csv"
@@ -72,7 +72,9 @@ table = [
     ['Spam', 101, 102, 103],
     ['Eggs', 201, 202, 203],] 
 
-# promethe_II(mat,wei)  #New csv  
-# # promethe_II(mat1,wei1)  #Worck   
-mat = slicing(table) 
-print(mat)
+# Execution
+# mat = slicing(table) 
+# print(mat)
+# numpy_to_csv(mat)
+promethe_II(mat,wei)  #New csv  
+# promethe_II(mat1,wei1)  #Worck   
