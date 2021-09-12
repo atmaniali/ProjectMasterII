@@ -158,6 +158,94 @@
           </div>
         </div>
       </div>
+      <hr>
+      <!-- Alternatives -->
+      <div class="row">
+        <div class="col">
+          <div class="card shadow">
+            <div class="card-header border-0">
+              <h3 class="mb-0">Card tables: <strong> Alternative</strong></h3>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush" id="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Users</th>
+                    <th scope="col">ID's</th>
+                    <th scope="col">Alternative</th>
+                    <th scope="col">Critere</th>
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for sub in subcriters %}
+                  <tr>
+                    <th scope="row">
+                      <div class="media align-items-center">
+                        <a href="#" class="avatar rounded-circle mr-3">
+                          <img alt="Image placeholder" src="/static/assets/img/avatar/avatar_masque.png">
+                        </a>
+                        <div class="media-body">
+                          <span class="mb-0 text-sm">{{ sub.user}}</span>
+                        </div>
+                      </div>
+                    </th>
+                    <td id="pk">
+                      {{sub.get_pk}}
+                    </td>
+                    <td>
+                      {{sub.name}}
+                    </td>
+                    {% comment %} TODO: i need options in tables {% endcomment %}
+                    <td > 
+                      <span class="mb-0 text-sm">{{sub.critere.name}}</span>
+                      <div class="text-right">  
+                        <div class="dropdown">
+                          <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                            <a class="dropdown-item" id="delete" type="button" href="{% url 'app:critere_list' %}">Delete</a>
+                            <a class="dropdown-item" id="update" type="button" href="{% url 'app:critere_list' %}">Update</a>
+                            <a class="dropdown-item" id="teste" type="button" href="{% url 'app:critere_list' %}">Tesdter</a>
+
+                          </div>
+                        </div>
+                      </div>
+                      
+                    </td>
+                    
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            <!-- {% if crits_paginater.has_other_pages %}
+            <ul class="pagination">
+              {% if crits_paginater.has_previous %}
+                <li><a href="?page={{ crits_paginater.previous_page_number }}">&laquo;</a></li>
+              {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+              {% endif %}
+              {% for i in crits_paginater.paginator.page_range %}
+                {% if crits_paginater.number == i %}
+                  <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                {% else %}
+                  <li><a href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+              {% endfor %}
+              {% if crits_paginater.has_next %}
+                <li><a href="?page={{ crits_paginater.next_page_number }}">&raquo;</a></li>
+              {% else %}
+                <li class="disabled"><span>&raquo;</span></li>
+              {% endif %}
+            </ul>
+          {% endif %} -->
+
+          </div>
+        </div>
+      </div>
+
 </div>
 
 

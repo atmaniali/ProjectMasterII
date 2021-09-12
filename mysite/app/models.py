@@ -95,7 +95,8 @@ class Subcritere(models.Model):
         return self.name
     def get_pk(self):
         return self.pk     
-        
+    def get_name(self):
+        return self.name 
 class Alternative(models.Model):
     nom_vaccin = models.CharField(max_length=200)
     def __str__(self) :

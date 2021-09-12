@@ -551,10 +551,12 @@ def listes(request):
     except EmptyPage:
         crits_paginater = paginator_crit.page(paginator_crit.num_pages)
     alternatives = Alternative.objects.all()
+    subcriters = Subcritere.objects.all()
     paginator_alti = Paginator(alternatives, 5)
 
     context["criteres"] = criters
     context['altirnatives'] = alternatives
+    context["subcriters"] = subcriters
     context["paginator_crit"] = crits_paginater
     context['paginator_alti'] = paginator_alti 
 
@@ -565,19 +567,44 @@ def creating_sub(request):
     context = {}
     return render(request, template_name, context)
 
+"""list str to list int"""
 def list_str_to_int(lists):
     for i in range(len(lists)):
         lists[i] = int(lists[i])
     return lists    
 
-"""take list of objects query and return id in list"""
-def get_id_critere(lists):
+"""take list of int and turn in queryset"""
+def get_queryset(lists):
     z = []
     for li in lists:
-        b = Critere.objects.get(name = li)
-        x = b.id
-        z.append(x)
-    return(z)    
+        b = Critere.objects.get(pk = li)
+        z.append(b)
+    return(z)  
+
+"""get all subcritere """  
+def get_sub_crit(lists):
+    crrr = []
+    for li in lists:
+        cr = Critere.objects.get(pk = li)
+        crr = cr.subcriters.all()
+        crrr.append(crr)
+    return(crrr)
+
+"""test query set if vide""" 
+def get_taille(lists):
+    necr = []
+    for li in lists:
+        if li.count()!= 0:
+            necr.append(li)
+    return necr 
+
+""" get query to name"""
+def get_name_sub(listes):
+    tabs = []
+    for i in listes:
+        for j in i:
+            tabs.append(j.name)
+    return tabs    
 
 
 def show_sub(request):  
@@ -589,8 +616,14 @@ def show_sub(request):
         if len(crits) != 0:
             messages.success(request,"succes")
             tab = list_str_to_int(crits)
+            criters_2 = get_queryset(tab)
+            sub = get_sub_crit(tab)
+            sub_cris = get_taille(sub)
+            sub_cri = get_name_sub(sub_cris)
             alternatives = Alternative.objects.all()
             context["alternatives"] = alternatives
+            context["cri_2"] = criters_2
+            context["sub_cris"]= sub_cri
 
         elif len(crits) == 0:
             messages.error(request, "check critere one or more !")

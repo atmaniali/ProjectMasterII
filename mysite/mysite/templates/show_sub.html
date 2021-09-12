@@ -60,6 +60,27 @@
                             
                         {% endfor %}
                         </fieldset> 
+                        <!-- Criteres -->
+                        <p>Check one or more critere</p>
+                        <fieldset name = "cri_2"> 
+                        {% for criter_2 in cri_2 %} 
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCriCheck{{criter_2.id}}" value={{criter_2.get_name}} name="crits_2">
+                                <label class="custom-control-label" for="customCriCheck{{criter_2.id}}">{{criter_2.get_name}}</label>
+                            </div>
+                        {% endfor %}
+                        </fieldset>
+                        <!-- Subcritere -->
+                        <p>Check one or more subcritere</p>
+                        <fieldset name = "sub_cri"> 
+                        {% for sub_cri in sub_cris %} 
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCriCheck{{sub_cri}}" value={{sub_cri}} name="sub_cri">
+                                <label class="custom-control-label" for="customCriCheck{{criter_2.id}}">{{sub_cri}}</label>
+                            </div>
+                        {% endfor %}
+                        </fieldset>
+                        <button type="submit" class="btn btn-success my-2" name="check_box_all">Success</button> 
                     </form>
                 </div>
 
