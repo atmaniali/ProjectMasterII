@@ -522,14 +522,7 @@ def shows(request):
             messages.success(request, "success")   
             weight_to_csv(weight_numpy,"name_weight")
         numpy_to_csv(matrix, "name")
-        
-    # table = [
-    # ['', 'Foo', 'Bar', 'Barf'],
-    # ['Spam', 101, 102, 103],
-    # ['Eggs', 201, 202, 203],] 
-    # test = ['test','yes','no','yes']
       
-    
     context["criters"] = criters
     context["alternatives"] = alternatives
     # context['table'] = table
@@ -581,6 +574,7 @@ def get_queryset(lists):
         z.append(b)
     return z 
 
+# deg get_name(lists):
 
 
 """turn criter and subcriter"""  
@@ -593,9 +587,12 @@ def get_cri_et_sub(lists):
         if len(z) ==0:
             z = ''     
         case= {'critere':i.name, 'subcritere': z}
-        d.append(case)
-         
-    return d   
+        d.append(case)     
+    return d 
+def get_names(lists):
+    for i in lists:
+        Traveille.objects.create(name = i.name)
+               
 
 
 def show_sub(request):  
@@ -609,9 +606,11 @@ def show_sub(request):
             messages.success(request,"succes")
             tab = list_str_to_int(crits)
             criters_2 = get_queryset(tab)
-            # print(criters_2)
+            
             cri_sub = get_cri_et_sub(criters_2)
+            get_names(criters_2)
             print("cri_sub", cri_sub)
+            
             alternatives = Alternative.objects.all()
             context["alternatives"] = alternatives
             context["cri_2"] = criters_2
@@ -620,15 +619,16 @@ def show_sub(request):
         elif len(crits) == 0:
             messages.error(request, "check critere one or more !")
     elif 'check_box_all' in request.POST:
-        alts = request.POST.getlist('i_sub')
-        crits = request.POST.getlist('crits')
-
-        print("alts", alts)  
-        print("criteres", crits) 
-            
-  
-    
-
+        subs = request.POST.getlist('i_sub')
+        cr= []
+        crits = Traveille.objects.all()
+        for i in crits:
+            cr.append(i.name)
+        mat_cri = get_matrix_ahp(cr, cr)
+        mat_sub = get_matrix_ahp(subs, subs)
+        context['mat_cri'] = mat_cri
+        context['mat_sub'] = mat_sub
+        
     context["criters"] = criters
     return render(request, template_name, context)      
 

@@ -317,6 +317,14 @@ def get_matrix(x, y):
     mat = np.vstack([y,zeros.transpose()]).transpose()
     matrix = np.vstack([x,mat])
     return matrix
+
+def get_matrix_ahp(x, y):
+    zeros = np.zeros((len(y),len(x)))
+    mat = np.vstack([y,zeros.transpose()]).transpose()
+    x.insert(0,"")
+    matrix = np.vstack([x,mat])
+    return matrix
+
 def get_list(x):
     zeros = np.zeros(len(x))
     matrix = np.vstack([x,zeros])

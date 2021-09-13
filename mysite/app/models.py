@@ -120,10 +120,11 @@ class Taille(models.Model):
         return str(self.rows )
     def get_pk(self):
         return self.pk    
+class Traveille(models.Model):
+    name = models.CharField(max_length=200)
+    def __str__(self):
+        return self.name
 
-# class weights(models.Model):
-#     weight = models.CharField(max_length = 200)
-#     value  = models.IntegerField()
 
 
     

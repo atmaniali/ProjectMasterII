@@ -106,6 +106,69 @@
             {% endfor %}
         {% endif %} 
     </div>
+    <!-- Tables -->
+    <div>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class = "table-responsive">
+                <!-- Table critere -->
+                <table class = "table" name = "Crites" border="1" id="exportMe">
+                    {% for row in mat_cri %}
+                        <tr>
+                        {% for cell in row %}
+                            <div class = "row">
+                                {% if forloop.first or forloop.parentloop.first %} 
+                                <div class="col">
+                                    <th> 
+                                        <input type="text" class="form-control" READONLY id="{{forloop.counter0}} {{cell}}" name="cells" value={{cell}}>
+                                    </th>
+                                </div>
+                                {% else %} 
+                                <div class="col">
+                                    <td>
+                                        <input type="number" class="form-control" id="" name="cells" value={{ cell }}>
+                                    </td>  
+                                </div>  
+                                {% endif %}
+                            </div>    
+                        {% endfor %}
+                        </tr>
+                    {% endfor %}    
+                </table>
+            </div>
+
+            <div class = "table-responsive">
+                <!-- Table Soucritere -->
+                <table class = "table" name = "subcri" border="1" id="exportMe">
+                    {% for row in mat_sub %}
+                        <tr>
+                        {% for cell in row %}
+                            <div class = "row">
+                                {% if forloop.first or forloop.parentloop.first %} 
+                                <div class="col">
+                                    <th> 
+                                        <input type="text" class="form-control" READONLY id="{{forloop.counter0}} {{cell}}" name="cells" value={{cell}}>
+                                    </th>
+                                </div>
+                                {% else %} 
+                                <div class="col">
+                                    <td>
+                                        <input type="number" class="form-control" id="" name="cells" value={{ cell }}>
+                                    </td>  
+                                </div>  
+                                {% endif %}
+                            </div>    
+                        {% endfor %}
+                        </tr>
+                    {% endfor %}    
+                </table>
+            </div>
+
+        </div>
+        <button type="submit" id="" class="btn btn-info my-1" name="tabl">
+       Secondary</button>
+        </form>
+    </div>
        
 </div>  
 {% endblock content %}
