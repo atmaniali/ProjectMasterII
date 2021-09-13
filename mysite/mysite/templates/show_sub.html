@@ -64,21 +64,21 @@
                         <h2>Critere</h2>
                         {% for i in sub_cris %} 
                         {% if i.subcritere.0 != "" %} 
-                        <p>Check one or more {{i.critere}}</p>
+                        <p>Check one or more <span name = 'crr_name'> {{i.critere}}</span></p>
                             <fieldset name="Crit">
-                                {% if i.subcritere.1 and i.subcritere.1 != "" %}
+                                {% if i.subcritere %}
                                     {% for j in i.subcritere %}
-                                    {% if j != "" %}
+                                    
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customAltCheck{{alternative.id}}" value={{j}} name="alts">
-                                        <label class="custom-control-label" for="customAltCheck{{alternative.id}}">{{j}}</label>
+                                        <input type="checkbox" class="custom-control-input" id="check{{j}}" value={{j}} name="i_sub">
+                                        <label class="custom-control-label" for="check{{j}}">{{j}}</label>
                                     </div>
-                                    {% endif %}
+                                    
                                     {% endfor %}
                                 {% else %}    
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="customAltCheck{{alternative.id}}" value={{i.subcritere.0}} name="alts">
-                                    <label class="custom-control-label" for="customAltCheck{{alternative.id}}">{{i.subcritere.0}}</label>
+                                    <input type="checkbox" class="custom-control-input" id="check{{i.subcritere.0}}" value={{i.subcritere.0}} name="i_sub" >
+                                    <label class="custom-control-label" for="check{{i.subcritere.0}}">{{i.subcritere.0}}</label>
                                 </div>
                                 {% endif %}
                             </fieldset> 
@@ -86,12 +86,12 @@
                         {% endfor %}
                            
                         <button type="submit" class="btn btn-success my-2" name="check_box_all">Success</button> 
-                    </form>
-                    {% for i in sub_cris %}
-                            {{i}}
-                        {% endfor %} 
+                    </form>   
+                     
                 </div>
-
+                {% for i in sub_cris %} 
+                    {{i}}
+                {% endfor %} 
                 
                 <!-- messages err -->
                 {% elif message.tags == 'error'%}

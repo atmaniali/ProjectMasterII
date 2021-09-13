@@ -601,6 +601,7 @@ def get_cri_et_sub(lists):
 def show_sub(request):  
     template_name = "show_sub.html"  
     context = {}
+    sub_cris = None
     criters = Critere.objects.all()
     if 'check_box' in request.POST:
         crits = request.POST.getlist('crits')
@@ -608,15 +609,23 @@ def show_sub(request):
             messages.success(request,"succes")
             tab = list_str_to_int(crits)
             criters_2 = get_queryset(tab)
-            print(criters_2)
+            # print(criters_2)
             cri_sub = get_cri_et_sub(criters_2)
+            print("cri_sub", cri_sub)
             alternatives = Alternative.objects.all()
             context["alternatives"] = alternatives
             context["cri_2"] = criters_2
             context["sub_cris"]= cri_sub
-
+            sub_cris = sub_cris
         elif len(crits) == 0:
             messages.error(request, "check critere one or more !")
+    elif 'check_box_all' in request.POST:
+        alts = request.POST.getlist('i_sub')
+        crits = request.POST.getlist('crits')
+
+        print("alts", alts)  
+        print("criteres", crits) 
+            
   
     
 
