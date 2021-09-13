@@ -9,10 +9,17 @@ from .models import *
 class AdminUser(admin.ModelAdmin):
     class Meta:
         model = Profile
+class CritereAdmin(admin.ModelAdmin):
+    list_display = ['name','created_at',]  
+    search_fields = ['name','created_at',]   
+class SubcritereAdmin(admin.ModelAdmin):
+    list_display = ['name','created_at','critere']  
+    search_fields = ['name','created_at','critere__name'] 
+
         
 admin.site.register(Profile),
 admin.site.register(Upload_csv),
 admin.site.register(Resultat),
-admin.site.register(Critere),
-admin.site.register(Subcritere),
+admin.site.register(Critere, CritereAdmin),
+admin.site.register(Subcritere, SubcritereAdmin),
 admin.site.register(Alternative),

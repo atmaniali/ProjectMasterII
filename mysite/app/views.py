@@ -579,7 +579,7 @@ def get_queryset(lists):
     for li in lists:
         b = Critere.objects.get(pk = li)
         z.append(b)
-    return(z)  
+    return z 
 
 """get all subcritere """  
 def get_sub_crit(lists):
@@ -604,7 +604,18 @@ def get_name_sub(listes):
     for i in listes:
         for j in i:
             tabs.append(j.name)
-    return tabs    
+    return tabs 
+
+"""turn criter and subcriter"""  
+def get_cri_et_sub(lists):
+    d = []
+    for i in lists:
+        z = i.get_subcriters()
+        if len(z) ==0:
+            z = ''
+        case= {'critere':i.name, 'subcritere': z}
+        d.append(case) 
+    return d   
 
 
 def show_sub(request):  
@@ -617,13 +628,12 @@ def show_sub(request):
             messages.success(request,"succes")
             tab = list_str_to_int(crits)
             criters_2 = get_queryset(tab)
-            sub = get_sub_crit(tab)
-            sub_cris = get_taille(sub)
-            sub_cri = get_name_sub(sub_cris)
+            print(criters_2)
+            cri_sub = get_cri_et_sub(criters_2)
             alternatives = Alternative.objects.all()
             context["alternatives"] = alternatives
             context["cri_2"] = criters_2
-            context["sub_cris"]= sub_cri
+            context["sub_cris"]= cri_sub
 
         elif len(crits) == 0:
             messages.error(request, "check critere one or more !")

@@ -1,0 +1,10 @@
+{
+    {
+        critere: "nom crit",
+        sub: ["dd","ff"]
+    },
+    {
+        critere: "nom crit",
+        sub: ["dd","ff"]
+    }
+}

@@ -125,5 +125,6 @@ class Taille(models.Model):
 #     weight = models.CharField(max_length = 200)
 #     value  = models.IntegerField()
 
+
     
         

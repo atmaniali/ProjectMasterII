@@ -1,0 +1,5 @@
+kharj ga3 critere  (yes)
+sauvegardihm ()
+mn kol critere khrj subcritere ()
+affichihm checkbox ()
+save result ()

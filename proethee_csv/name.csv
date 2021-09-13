@@ -1,5 +1,4 @@
-,Age,NBr
-test,yes,yes
-AstraZeneca,0.0,0.0
-Sinovac,0.0,0.0
-sputnik,0.0,0.0
+,posologie,cout,Age
+test,no,yes,no
+AstraZeneca,1,0.0,2
+Sinovac,2,1,2
