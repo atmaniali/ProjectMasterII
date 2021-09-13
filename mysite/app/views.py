@@ -581,40 +581,20 @@ def get_queryset(lists):
         z.append(b)
     return z 
 
-"""get all subcritere """  
-def get_sub_crit(lists):
-    crrr = []
-    for li in lists:
-        cr = Critere.objects.get(pk = li)
-        crr = cr.subcriters.all()
-        crrr.append(crr)
-    return(crrr)
 
-"""test query set if vide""" 
-def get_taille(lists):
-    necr = []
-    for li in lists:
-        if li.count()!= 0:
-            necr.append(li)
-    return necr 
-
-""" get query to name"""
-def get_name_sub(listes):
-    tabs = []
-    for i in listes:
-        for j in i:
-            tabs.append(j.name)
-    return tabs 
 
 """turn criter and subcriter"""  
 def get_cri_et_sub(lists):
-    d = []
+    d = []    
     for i in lists:
-        z = i.get_subcriters()
+        s = i.get_subcriters()
+        z = s.split(',')
+        print(z)
         if len(z) ==0:
-            z = ''
+            z = ''     
         case= {'critere':i.name, 'subcritere': z}
-        d.append(case) 
+        d.append(case)
+         
     return d   
 
 

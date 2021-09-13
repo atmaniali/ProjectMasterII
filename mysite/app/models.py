@@ -81,7 +81,7 @@ class Critere(models.Model):
         
 class Subcritere(models.Model):
 
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique = True)
     created_at = models.DateTimeField(auto_now_add=True, null=  True)
     critere = models.ForeignKey(
         Critere,
@@ -98,7 +98,7 @@ class Subcritere(models.Model):
     def get_name(self):
         return self.name 
 class Alternative(models.Model):
-    nom_vaccin = models.CharField(max_length=200)
+    nom_vaccin = models.CharField(max_length=200, unique= True)
     def __str__(self) :
         return self.nom_vaccin
     def get_name(self):
