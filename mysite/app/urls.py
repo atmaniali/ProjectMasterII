@@ -31,8 +31,6 @@ urlpatterns = [
     #methode II
     path('creating_sub/', views.creating_sub, name ='creating_sub'),
     path('show_sub/', views.show_sub, name = 'show_sub'),
-
-
     # Matches any html file
     re_path(r'^.*\.*', views.pages, name='pages'),
 

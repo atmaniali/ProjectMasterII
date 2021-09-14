@@ -1,4 +1,4 @@
-,posologie,cout,Age
-test,no,yes,no
-AstraZeneca,1,0.0,2
-Sinovac,2,1,2
+,Age,NBr,Efficacite
+test,yes,no,yes
+AstraZeneca,0.1,0.3,0.4
+Moderna,0.1,0.2,0.4

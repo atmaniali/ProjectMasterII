@@ -46,14 +46,14 @@ class ContactForm(forms.ModelForm):
 # here i want to creat autoatique forms
 #  start agin Sun, 11 ,21
 
-# class CritereForm(forms.Form):
-#     name = forms.CharField(
-#         label='Critere Name',
-#         widget=forms.TextInput(attrs={
-#             'class': 'form-control',
-#             'placeholder': 'Enter Critere Name here'
-#         })
-#     )
+class CritereForm(forms.Form):
+    name = forms.CharField(
+        label='Critere Name',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter Critere Name here'
+        })
+    )
 # CritereFormset = formset_factory(CritereForm, extra=5)    
 
 # class CritereModelForm(forms.ModelForm):
@@ -118,3 +118,12 @@ CritereModelFormset = modelformset_factory(
         })
     }
 )
+
+class CritereCritere(forms.ModelForm):
+    name = forms.CharField(        
+    )       
+    class Meta:
+        model = Critere
+        exclude = ('user',)     
+
+        

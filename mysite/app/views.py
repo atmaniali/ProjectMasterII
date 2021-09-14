@@ -2,6 +2,7 @@
 """
 Copyright (c) 2019 - present AppSeed.us
 """
+from typing import ContextManager
 from django.views import generic
 from django.views.generic import ListView
 from datetime import datetime
@@ -146,65 +147,7 @@ def profile(request):
     html_template = loader.get_template( 'profile.html' )
     return HttpResponse(html_template.render(context, request))      
     
-    
-       
-def create_critere_normal(request):
-    """create multiple critere and show in tables"""
-
-    template_name = 'create_critere_normal.html'
-    heading_message = 'Create critere'    
-    context = {}
-
-    if request.method == 'GET':
-
-        formset = CritereFormset(request.GET or None)
-
-    elif request.method == 'POST':
-        formset = CritereFormset(request.POST)
-        if formset.is_valid():
-            # recupirer le nom de fichier
-            csv_file = request.POST.get('input_name')
-            for form in formset:
-                name = form.cleaned_data.get('name')
-                # save Critere instance
-                if name:    
-                    Critere(name=name).save()
-            # if non text cauz err
-            if len(csv_file ) != 0 :
-
-                # get all critere.
-                query = Critere.objects.all()
-                # stock critere name.
-                list_critere = []
-
-                for i in query:
-                    list_critere.append(i.name) 
-                # turn into ndarray   
-                list_np = np.array(list_critere) 
-                # matrix null
-                matrix = [ [ 0 for i in range(len(list_np)) ] for j in range(len(list_np)) ]
-
-                for i in range(len(list_np)):
-                    for j in range(len(list_np)):
-                        # diagonale
-                        if i == j:
-                            matrix[i][j] = 1
-
-                    matrix_np = np.array(matrix) 
-
-                    # add critere name in matrix
-                    matrix_with_critere_ligne= np.vstack((list_np,matrix_np))
-
-                    matrix_transpose = matrix_with_critere_ligne.transpose()
-                    list_np_1 = np.append("",list_np) #append first element "".
-                    matrix_with_critere_ligne_transpose= np.vstack((list_np_1,matrix_transpose))
-                    #turn into data frame.
-                    pd.DataFrame(matrix_with_critere_ligne_transpose).to_csv("media/files/{}.csv".format(csv_file))        
-            return redirect('app:critere_list')
-    context['formset']=formset
-    context['heading']=heading_message
-    return render(request, template_name, context) 
-    
+      
 class CritereListView(generic.ListView):
 
     model = Critere
@@ -236,37 +179,7 @@ class CritereListView(generic.ListView):
         return render(request, self.template_name)    
       
 
-def create_critere_with_subcritere(request):
 
-    template_name = 'create_with_subcritere.html'
-
-    if request.method == 'GET':
-
-        critereform = CritereModelForm(request.GET or None)
-
-        formset = SubcritereFormset(queryset=Subcritere.objects.none())
-
-    elif request.method == 'POST':
-
-        critereform = CritereModelForm(request.POST)
-        
-        formset = SubcritereFormset(request.POST)
-        
-        if critereform.is_valid() and formset.is_valid():
-            
-            # first save this critere, as its reference will be used in `subcritere`
-            critere = critereform.save()
-            for form in formset:
-                # so that `critere` instance can be attached.
-                subcritere = form.save(commit=False)
-                subcritere.critere = critere
-                subcritere.save()
-            return redirect('app:critere_list')
-    return render(request, template_name, {
-        'critereform': critereform,
-        'formset': formset,
-    }) 
-            
 def promether_view(request) :
 
     context = {}
@@ -277,6 +190,7 @@ def promether_view(request) :
         mat = np.loadtxt(doc_file,dtype = str, skiprows=0, delimiter=',')      
         context['mat'] = mat  
         result_alter , poursen = readMatrix(doc_file, weight_file) 
+        print (poursen)
         result_poursen = get_weight(poursen)
 
         context['result'] = result_alter  
@@ -427,7 +341,7 @@ def maps (request):
     context = {}
     ip = "193.194.88.26"
     #
-    map = folium.Map(width = 800, height = 500, location = [35.6976541, -0.6337376], zoom_start = 8)
+    map = folium.Map(width = 800, height = 500, location = [35.6976541, -0.6337376], zoom_start = 7)
     # all provinces
     provinces = get_all_provinces()
 
@@ -568,14 +482,13 @@ def list_str_to_int(lists):
 
 """take list of int and turn in queryset"""
 def get_queryset(lists):
-    z = []
+    listes = []
     for li in lists:
         b = Critere.objects.get(pk = li)
-        z.append(b)
-    return z 
+        listes.append(b)
+    return listes
 
 # deg get_name(lists):
-
 
 """turn criter and subcriter"""  
 def get_cri_et_sub(lists):
@@ -633,8 +546,25 @@ def show_sub(request):
     return render(request, template_name, context)      
 
 
+def add_critere(request):
+    template_name = "addcritere.html"
+    context = {}
+    form = CritereCritere(request.POST or None)
+    if request.method == 'POST':
+        print(request.POST)
+        print(request.user.id)
+        if form.is_valid():
+            critere = form.save(commit = False)
+            critere.user = request.user 
+            critere.save()   
+            return redirect('app:critere_list')
+           
+    context['form'] = form      
+    return render(request, template_name, context)    
 
 
+
+ 
 
 
    

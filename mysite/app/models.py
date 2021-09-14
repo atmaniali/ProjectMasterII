@@ -61,6 +61,7 @@ class Resultat(models.Model):
 class Critere(models.Model):
     name = models.CharField(max_length=200, null=  True, unique = True)
     created_at = models.DateTimeField(auto_now_add=True, null=  True)
+    user = models.ForeignKey(User, related_name='criters', on_delete = models.CASCADE , null= True)
     # updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -87,6 +88,7 @@ class Subcritere(models.Model):
         Critere,
         related_name='subcriters', on_delete=models.SET_NULL,
         null=True)
+    user = models.ForeignKey(User, related_name='sub_users', on_delete = models.CASCADE , null= True)    
 
     class Meta:
         db_table = 'subcritere'
@@ -99,6 +101,7 @@ class Subcritere(models.Model):
         return self.name 
 class Alternative(models.Model):
     nom_vaccin = models.CharField(max_length=200, unique= True)
+    user = models.ForeignKey(User, related_name='alternaves', on_delete = models.CASCADE , null= True)
     def __str__(self) :
         return self.nom_vaccin
     def get_name(self):

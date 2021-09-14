@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'sslserver',
     #social-auth-app-django
     'social_django', # add this
+    'widget_tweaks',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -14,12 +14,14 @@
     </div>
 
 </div>
-<div class = "container">
+<br>
+<div class = "container-fluid" style ="margin-left: auto;margin-right: auto;display: block;">
+    <div class="col-xl-8 mb-5 mb-xl-0">
     <!-- Checkbox -->
     <form action="" method="post">
         {% csrf_token %}
         <h2>Criteres</h2>
-        <p>Select one or more critere</p>
+        <p>choisir les critéres de selection a prendre en compte</p>
         <fieldset name = "criters"> 
         {% for criter in criters %} 
             <div class="custom-control custom-checkbox">
@@ -28,9 +30,11 @@
             </div>
         {% endfor %}
         </fieldset>
-
+    </div>
+        <br>    
+    <div class="col-xl-8 mb-5 mb-xl-0">
         <h2>Alternatives</h2>
-        <p>Select one or more alternatives</p>
+        <p>selectioner les vaccins a comparer</p>
         <fieldset name="altes">
         {% for alternative in alternatives %} 
             <div class="custom-control custom-checkbox">
@@ -40,16 +44,17 @@
             
         {% endfor %}
         </fieldset>
-        <button type="submit" class="btn btn-success my-2" name="check_box">Success</button>
-        
+        <br></div>  
+        <button type="submit" class="btn btn-success my-2" name="check_box" style ="width:70%;margin-left: auto;margin-right: auto;display: block;margin-top: 2%;margin-bottom: 2%;">suivat</button>
+      
     </form> 
-
+<br>
     {% if messages %}
       {% for message in messages %}
       <!-- messages succes -->
           {% if message.tags == 'success'%}
-          
-          <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <!-- ALERT -->
+          <div class="alert alert-success alert-dismissible fade show" role="alert" style = "opacity:0.5;border: 5px;width :100%;">
             <span class="alert-icon"><i class="ni ni-like-2"></i></span>
             <span class="alert-text"><strong>{{ message }}</strong></span>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -57,6 +62,74 @@
             </button>
           </div>
 
+          <!-- Tables of criteres alternatives -->
+            <div class ="">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class = "table-responsive">
+                        <!-- Table critere -->
+                        <table class = "table" name = "tl" border="1" id="exportMe">
+                            {% for row in matrix %}
+                                <tr>
+                                {% for cell in row %}
+                                    <div class = "row">
+                                        {% if forloop.first or forloop.parentloop.first %} 
+                                        <div class="col">
+                                            <th> 
+                                                <input type="text" class="form-control" READONLY id="{{forloop.counter0}} {{cell}}" name="cells" value={{cell}}>
+                                            </th>
+                                        </div>
+                                        {% else %} 
+                                        <div class="col">
+                                            <td>
+                                                <input type="number" class="form-control" step="0.1" min="0" id="" name="cells" value={{ cell }}>
+                                            </td>  
+                                        </div>  
+                                        {% endif %}
+                                    </div>    
+                                {% endfor %}
+                                </tr>
+                            {% endfor %}    
+                        </table>
+                    </div>
+                    <hr>
+                    <!-- Table weight -->
+                    <p>les poids doivent étre entre 0 et 1 </p>
+                    <div class = "table-responsive">
+                        <table class = "table" name = "tl"  id="exportMe">
+                            {% for row in weights %}
+                                <tr>
+                                    {% for cel in row %}
+                                        <div class = "row">
+                                            {% if forloop.first or forloop.parentloop.first %} 
+                                            <div class="col">
+                                                <th> 
+                                                    <input type="text" class="form-control" disabled id="{{forloop.counter0}} {{cel}}" name="weights" value={{cel}}>
+                                                </th>
+                                            </div>
+                                            {% else %} 
+                                            <div class="col">
+                                                <td>
+                                                    <input type="number" step="0.1" min="0" max="1" class="form-control" id="" name="weights" value={{cel}}>
+                                                </td>  
+                                            </div>  
+                                            {% endif %}
+                                        </div>    
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div> <br>
+                    <button type="submit" id="" class="btn btn-info my-1" name="tabl"  style ="width:70%;margin-left: auto;margin-right: auto;display: block;margin-top: 5%;margin-bottom: 15%;">
+                    Terminer</button> 
+                </form>
+                <br><br><br>
+            </div>
+            {% if messages %}
+                {% for message in messages %}
+                
+                {% endfor %}
+            {% endif %}
          
          <!-- messages err -->
           {% elif message.tags == 'error'%}
@@ -70,76 +143,7 @@
           {% endif %}
       {% endfor %}
     {% endif %} 
-
-    <!-- Tables of criteres alternatives -->
-    <div class ="">
-        <form action="" method="post">
-            {% csrf_token %}
-            <div class = "table-responsive">
-                <!-- Table critere -->
-                <table class = "table" name = "tl" border="1" id="exportMe">
-                    {% for row in matrix %}
-                        <tr>
-                        {% for cell in row %}
-                            <div class = "row">
-                                {% if forloop.first or forloop.parentloop.first %} 
-                                <div class="col">
-                                    <th> 
-                                        <input type="text" class="form-control" READONLY id="{{forloop.counter0}} {{cell}}" name="cells" value={{cell}}>
-                                    </th>
-                                </div>
-                                {% else %} 
-                                <div class="col">
-                                    <td>
-                                        <input type="number" class="form-control" id="" name="cells" value={{ cell }}>
-                                    </td>  
-                                </div>  
-                                {% endif %}
-                            </div>    
-                        {% endfor %}
-                        </tr>
-                    {% endfor %}    
-                </table>
-            </div>
-            <hr>
-            <!-- Table weight -->
-            <p>Weight should be 1 or less</p>
-            <div class = "table-responsive">
-                <table class = "table" name = "tl"  id="exportMe">
-                    {% for row in weights %}
-                        <tr>
-                            {% for cel in row %}
-                                <div class = "row">
-                                    {% if forloop.first or forloop.parentloop.first %} 
-                                    <div class="col">
-                                        <th> 
-                                            <input type="text" class="form-control" disabled id="{{forloop.counter0}} {{cel}}" name="weights" value={{cel}}>
-                                        </th>
-                                    </div>
-                                    {% else %} 
-                                    <div class="col">
-                                        <td>
-                                            <input type="number" step="0.1" min="0" max="1" class="form-control" id="" name="weights" value={{cel}}>
-                                        </td>  
-                                    </div>  
-                                    {% endif %}
-                                </div>    
-                            {% endfor %}
-                        </tr>
-                    {% endfor %}
-                </table>
-            </div>
-             <button type="submit" id="" class="btn btn-info my-1" name="tabl">
-            Secondary</button> 
-        </form>
-      </div>
-      {% if messages %}
-        {% for message in messages %}
-            <li>{{message}}</li>
-        {% endfor %}
-      {% endif %}
-    
-    
+    <br>   
 {% endblock content %}
 
 <!-- Specific JS goes HERE -->
