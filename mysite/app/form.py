@@ -15,36 +15,7 @@ class ContactForm(forms.ModelForm):
     phone_number = forms.CharField(initial='Your phone number')
     class Meta:
         model = Profile
-        exclude = ['user']
-        
-
-# class Effets_secondairesForm(forms.ModelForm):
-#     class  Meta:
-#        model = Effets_secondaires
-#        fields = '__all__'   
-
-# class VaccinsForm(forms.ModelForm):
-#     class  Meta:
-#        model = Vaccins
-#        fields = ['nom_vaccin',]
-
-# class CoutForm(forms.ModelForm):
-#     class  Meta:
-#        model = Cout
-#        fields = '__all__' 
-
-# class PosologieForm(forms.ModelForm):
-#     class  Meta:
-#        model = Posologie
-#        fields = '__all__' 
-
-# class CharacteristiquesForm(forms.ModelForm):
-#     class  Meta:
-#        model = Characteristiques
-#        fields = '__all__'        
-# Models Form 
-# here i want to creat autoatique forms
-#  start agin Sun, 11 ,21
+        exclude = ['user']       
 
 class CritereForm(forms.Form):
     name = forms.CharField(
@@ -54,49 +25,6 @@ class CritereForm(forms.Form):
             'placeholder': 'Enter Critere Name here'
         })
     )
-# CritereFormset = formset_factory(CritereForm, extra=5)    
-
-# class CritereModelForm(forms.ModelForm):
-
-#     class Meta:
-#         model = Critere
-#         fields = '__all__'
-#         labels = {
-#             'name': 'Critere Name'
-#         }
-#         widgets = {
-#             'name': forms.TextInput(attrs={
-#                 'class': 'form-control',
-#                 'placeholder': 'Enter Critere Name here'
-#                 }
-#             )
-#         }
-# CritereFormset = formset_factory(CritereForm) 
-# CHOICE = Critere.objects.all()
-# CritereModelFormset = modelformset_factory(
-#     Critere,
-#     fields=('name', ),
-#     # fields=('name',),
-#     extra=5,
-#     widgets={
-#         'name': forms.TextInput(attrs={
-#             'class': 'form-control',
-#             'placeholder': 'Enter Critere Name here'
-#             }
-#         )
-#     }
-# )   
-# SubcritereFormset = modelformset_factory(
-#     Subcritere,
-#     fields=('name', ),
-#     extra=1,
-#     widgets={'name': forms.TextInput(attrs={
-#             'class': 'form-control',
-#             'placeholder': 'Enter Subcritere Name here'
-#         })
-#     }
-# )
-
 
 AlternativeModelFormset = modelformset_factory(
     Alternative,

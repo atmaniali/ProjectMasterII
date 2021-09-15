@@ -347,7 +347,7 @@ def maps (request):
 
     for province in provinces:
         for data in province['data'] : 
-            folium.Marker([province['latitude'], province['longitude']], tooltip = "click here for more", popup = "nom de wilaya {} confirmed is {}:".format(province['name'], data["confirmed"]), icon = folium.Icon(color= 'purple')).add_to(map) 
+            folium.Marker([province['latitude'], province['longitude']], tooltip = "click here for more", popup = "nom de wilaya: {} confirmed is: {}".format(province['name'], data["confirmed"]), icon = folium.Icon(color= 'purple')).add_to(map) 
         
     map = map._repr_html_() 
     context["maps"] = map
@@ -356,40 +356,6 @@ def maps (request):
 
 # Methode I
 
-def creating (request) : 
-    
-    context = {}
-    template_name = "creating.html"
-    heading_message = 'Create Alternatives and Critere '      
-    if request.method == 'GET':
-        formset = AlternativeModelFormset(request.GET or None)
-        formset2 = CritereModelFormset(request.GET or None)
-    elif request.method == 'POST':
-        formset = AlternativeModelFormset(request.POST)
-        formset2 = CritereModelFormset(request.POST)
-        if 'alternative' in request.POST:
-            if formset.is_valid():
-                for form in formset:
-                    print("form",form) 
-                    if form.cleaned_data.get('name'):
-                        form.save()
-                    
-                    return redirect('app:creating')    
-        if 'critere' in request.POST:                
-            if formset2.is_valid():
-                for form2 in formset2:
-                    name = form2.cleaned_data.get('name')  
-                    if name:
-                        Critere(name = name).save()          
-                # once all alternatives are saved, redirect to alternative list view
-                return redirect('app:creating')
-                
-    return render(request, template_name, {
-        'formset': formset,
-        'formset2': formset2,
-        'heading': heading_message,
-    }) 
-
 
 def shows(request):
     template_name = "show.html"
@@ -397,36 +363,51 @@ def shows(request):
     # All
     criters = Critere.objects.all()
     alternatives = Alternative.objects.all()
-    if 'check_box' in request.POST:
-        
-        print(request.POST)
+    if 'check_box' in request.POST:    
+        # get List of Critere Alternative cheking
         crits = request.POST.getlist('crits')
         alti = request.POST.getlist('alts')
+
         if len(crits) != 0 and len(alti) != 0:
             x = len(crits)
             y = len(alti)
+            # Save taille of list for create matrix
             taille = Taille.objects.create(rows = x, colmn = y)  
             taille.save()
+
             messages.success(request,"succes")
+            # Create matrix de perfermance
             mat = get_matrix(crits, alti)
+            # Create list of weight
             wei = get_list(crits)
+
             context["matrix"] = mat
             context["weights"] = wei
+
         elif len(crits) == 0:
             messages.error(request, "check critere one or more !")
         elif len(alti) == 0 :
             messages.error(request, "check Altirnative one or more !")    
-    
+    # get MP and weight
     elif 'tabl'  in request.POST: 
+        # get  list of rows
         tab = request.POST.getlist("cells")
+        # get list of weight
         weight = request.POST.getlist("weights")
+
         weight_numpy = np.array(weight).astype(float)
+
         summs = np.sum(weight_numpy)
-        taille = Taille.objects.all().last()   
-        tab_np = np.array(tab)  
+
+        taille = Taille.objects.all().last()  
+
+        tab_np = np.array(tab) 
+
         x = taille.colmn+1
         y = taille.rows+1
+
         tabl_np = np.reshape(tab_np,(x, y))
+
         matrix = slicing(tabl_np)
         if summs <= 0:
             messages.info(request,"weight should be > 0")
@@ -439,16 +420,16 @@ def shows(request):
       
     context["criters"] = criters
     context["alternatives"] = alternatives
-    # context['table'] = table
-    
-       
     return render(request, template_name, context)
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 def listes(request):
+
     template_name = "listes.html"
     context = {}
+
     criters = Critere.objects.all().order_by('pk')
+
     paginator_crit = Paginator(criters, 5)
     page = "request.GET.get('page', 1)"
     try:
@@ -469,10 +450,6 @@ def listes(request):
 
     return render(request, template_name, context)
 
-def creating_sub(request):
-    template_name = "creating_sub.html"
-    context = {}
-    return render(request, template_name, context)
 
 """list str to list int"""
 def list_str_to_int(lists):
@@ -496,12 +473,12 @@ def get_cri_et_sub(lists):
     for i in lists:
         s = i.get_subcriters()
         z = s.split(',')
-        print(z)
         if len(z) ==0:
             z = ''     
         case= {'critere':i.name, 'subcritere': z}
         d.append(case)     
     return d 
+""" store names """    
 def get_names(lists):
     for i in lists:
         Traveille.objects.create(name = i.name)
@@ -514,12 +491,14 @@ def show_sub(request):
     sub_cris = None
     criters = Critere.objects.all()
     if 'check_box' in request.POST:
+        # list of critere id
         crits = request.POST.getlist('crits')
+
         if len(crits) != 0:
             messages.success(request,"succes")
             tab = list_str_to_int(crits)
             criters_2 = get_queryset(tab)
-            
+            # get dectionnaire of criteria and sub criteria
             cri_sub = get_cri_et_sub(criters_2)
             get_names(criters_2)
             print("cri_sub", cri_sub)
@@ -537,6 +516,7 @@ def show_sub(request):
         crits = Traveille.objects.all()
         for i in crits:
             cr.append(i.name)
+        crits.delete()    
         mat_cri = get_matrix_ahp(cr, cr)
         mat_sub = get_matrix_ahp(subs, subs)
         context['mat_cri'] = mat_cri
