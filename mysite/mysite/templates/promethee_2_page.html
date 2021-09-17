@@ -18,43 +18,95 @@
     <div class = "container">
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <label for="exampleFormControlFile1">Promethee II Matrice de perfermance</label>
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="customFileLang" accept=".csv" name="myfile">
-                <label class="custom-file-label" for="customFileLang">Select file</label>
-            </div>
-            <label for="exampleFormControlFile1">Promethee II Weight:</label>
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="customFileLang" accept=".csv" name="myfile1">
-                <label class="custom-file-label" for="customFileLang">Select file</label>
-                <br>
+            <div class="row">
+                <div class="  col-8">
+                    <label for="exampleFormControlFile1 ">Promethee II Matrice de perfermance:</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFileLang" accept=".csv" name="myfile" required>
+                        <label class="custom-file-label" for="customFileLang">Select file</label>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <label for="exampleFormControlFile1">Promethee II Weight:</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFileLang" accept=".csv" name="myfile1" required>
+                        <label class="custom-file-label" for="customFileLang">Select file</label>
+                        <br>
+                    </div>
+                </div>
+                
             </div>
             <br>
-            <div class="custom-file" style="margin-top: 20px;">
-                <button class="btn btn-primary" type="submit">Upload CSV</button>
+            <div class = "position-absolute" style="right: 360px">
+                <button class="btn btn-default" type="submit" name = 'envoyer'>Envoyer</button>
+                <button class="btn btn-primary" type="submit" name = 'annuler'>Annuler</button>
             </div>
         </form>
     </div>
 
     <br>
-    
-    {{hh}}
-    <hr>
-    resu
-    {{result}}
-    <hr>
-    zero
-    {{zero}}
-    <br>
-    {{mat.as_table}}
-    <br>
-    <div class = 'container'>
-        <div class="card">
-            <div class="card-body">
-                <canvas id="myChart" width="400" height="400"></canvas>
+    <div class="row mt-5">
+        <div class="col">
+          <div class="card bg-default shadow">
+            <div class="card-header bg-transparent border-0">
+              <h3 class="text-white mb-0">Tableau <strong> Altérnatives</strong> </h3>
             </div>
+            
+            <div class="table-responsive">
+                <table class="table align-items-center table-dark table-flush">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Alternatives</th>
+                      <th scope="col">Pourcentages 100%</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for key, value in dict.items  %}
+                    <tr>
+                      <th scope="row">
+                        <div class="media align-items-center">
+                          <div class="media-body">
+                            <span class="mb-0 text-sm">{{ forloop.counter0 }}</span>
+                          </div>
+                        </div>
+                      </th>
+                      
+                      <td>
+                          <span class="mb-0 text-sm">{{key}}</span>
+                      </td>
+                      <td>
+                        <span class="mb-0 text-sm">{{value}}</span>
+                    </td>
+                  </tr>
+                  {% empty %}
+                  <tr>
+                      <td colspan="7" class="text-center bg-Secondary">
+                          <span class="mb-0 text-sm">No Alternative</span>
+                      </td>
+                  </tr>    
+                  {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            
           </div>
-    </div>
+        </div>
+      </div>
+  
+    <br>
+    
+    {% if result %}
+        <div class = 'container'>
+            <div class="card">
+                <div class="card-body">
+                    <canvas id="myChart" class="bg-secandary" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+        
+    {% endif %}      
+   
     
 </div>
 {% include "includes/footer.html" %}
@@ -73,14 +125,14 @@
             labels: {{result | safe}},
             datasets: [{
                 label: '# of Votes',
-                data: {{zero | safe}},
+                data: {{poursentage | safe}},
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
                 ],
                 borderColor: [
                     'rgba(255, 99, 132, 1)',
@@ -94,13 +146,46 @@
             }]
         },
         options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Chart Vaccins avec la methode Promethee 2'
+                },
+                legend: {
+                display: true,
+                position:'bottom',
+                labels: {
+                    color: 'rgb(255, 99, 132)',
+                    font: {
+                        size: 14
+                    }
+                },
+                title:{
+                    display: true,
+                    font: {
+                        size: 14
+                    },
+                    text:'Votes Alternative'
+                }
+            }
+            
+            },
+            
             responsive: true,
             maintainAspectRatio: false,
             scales: {
+                x:{
+                    grid:{display:false}
+                },
                 y: {
-                    beginAtZero: true
-                    
+                    beginAtZero: true,
+                    grid:{display:false}    
                 }
+                
+            },
+            animation : {
+               duration:6000,
+               easing: 'easeInOutBounce'
             }
         }
     });

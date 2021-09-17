@@ -343,18 +343,26 @@ def slicing(matrix):
     matrix = np.vstack([mat_header,mat_body])
     return matrix
 """ turn numpy table into csv file"""
-def numpy_to_csv(matrix, name):
+from app.models import Upload_csv
+def numpy_to_csv(matrix, names,user,weights, names_wei):
     matrix = np.array(matrix)
-    urls = "/home/ali/Documents/MasterIIproect/proethee_csv/{}.csv".format(name)
+    urls = "media/files/promethee_csv{}.csv".format(names)
+    urls_weith = "media/files/weight_csv{}.csv".format(names)
     rows = matrix[0,1:]
     colmns = matrix[1:,0]
-    body=matrix[1:,1:]
+    body=matrix[1:,1:]  
     df = pd.DataFrame(data=body, index=colmns, columns=rows)
-    df.to_csv(urls)  
-
-""" turn weight to csv """     
-def weight_to_csv(weights, names):
-    urls = "/home/ali/Documents/MasterIIproect/proethee_csv/{}.csv".format(names)
-    with open(urls, 'w') as f:
+    df.to_csv(urls)
+    with open(urls_weith, 'w') as f:
        write = csv.writer(f)
-       write.writerow(weights)  
+       write.writerow(weights)
+
+    a = Upload_csv.objects.create(user = user,name = names,weight_names = names_wei, path_weight = urls_weith) 
+    print("a", a)          
+""" turn weight to csv """     
+# def weight_to_csv(weights, names, user):
+#     urls_weith = "media/files/weight_csv{}.csv".format(names)
+#     with open(urls_weith, 'w') as f:
+#        write = csv.writer(f)
+#        write.writerow(weights)  
+#     Upload_csv.objects.create(user = user,name = names, path = urls)    

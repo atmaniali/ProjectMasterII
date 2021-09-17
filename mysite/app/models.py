@@ -44,9 +44,12 @@ class Profile(models.Model):
 
 class Upload_csv(models.Model):
     user = models.ForeignKey(Profile, related_name= 'upload_csv', on_delete= models.CASCADE)
-    file_csv = models.FileField(upload_to='media/files/', null= True, default='default.csv')
+    name = models.CharField(max_length = 200, blank = True)
+    path = models.FileField(upload_to='media/files/', null= True, default='default.csv')
+    weight_names = models.CharField(max_length = 200, blank = True)
+    path_weight = models.FileField(upload_to='media/files/', null= True, default='default_weight.csv')
     def __str__(self):
-        return self.file_csv
+        return self.name
     
 
 
@@ -127,6 +130,16 @@ class Traveille(models.Model):
     name = models.CharField(max_length=200)
     def __str__(self):
         return self.name
+class Promethee_file(models.Model):
+    name = models.CharField(max_length  = 200)
+    files = models.FileField(db_index=True, upload_to='uploads/')  
+    def __str__(self): 
+        return self.name 
+class AHP_file(models.Model):
+    name = models.CharField(max_length  = 200)
+    files = models.FileField(db_index=True, upload_to='ahp/')  
+    def __str__(self): 
+        return self.name             
 
 
 

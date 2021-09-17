@@ -1,4 +1,4 @@
-,Age,NBr,Efficacite
-test,yes,no,yes
-AstraZeneca,0.1,0.3,0.4
-Moderna,0.1,0.2,0.4
+,NBr,Efficacite
+test,yes,no
+AstraZeneca,0.0,0.0
+Moderna,0.0,0.0

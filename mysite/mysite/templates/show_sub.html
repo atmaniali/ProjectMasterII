@@ -14,6 +14,7 @@
     </div>
 
 </div>
+
 <div class = "container">
 
     <!-- CheckBox -->
@@ -30,7 +31,7 @@
                 </div>
             {% endfor %}
             </fieldset>
-            <button type="submit" class="btn btn-success my-2" name="check_box">Success</button>    
+            <button type="submit" class="btn btn-default my-2 position-absolute" name="check_box" style="right: 10px">Suivant</button>    
         </form> 
         {% if messages %}
             {% for message in messages %}
@@ -38,14 +39,14 @@
                 {% if message.tags == 'success'%}
                 
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                    <span class="alert-icon"><i class="fas fa-check text-secondary"></i></span>
                     <span class="alert-text"><strong>{{ message }}</strong></span>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
 
-                <div class = "py-3">
+                <div class = "my-3">
                     <form action="" method="post">
                         {% csrf_token %}
                         <!-- Alternatives-->
@@ -61,7 +62,7 @@
                         {% endfor %}
                         </fieldset> 
                         <!-- Criteres -->
-                        <h2>Critere</h2>
+                        <h2>Sous Critere</h2>
                         {% for i in sub_cris %} 
                         {% if i.subcritere.0 != "" %} 
                         <p>Check one or more <span name = 'crr_name'> {{i.critere}}</span></p>
@@ -84,19 +85,22 @@
                             </fieldset> 
                         {% endif %}   
                         {% endfor %}
-                           
-                        <button type="submit" class="btn btn-success my-2" name="check_box_all">Success</button> 
-                    </form>   
-                     
+                         <div class = "position-absolute" style="right: 5px">
+                            <button type="submit" class="btn btn-primary my-2" name="check_box_all_cancel">Annuler</button> 
+                            <button type="submit" class="btn btn-successbtn btn-default my-2" name="check_box_all">Suivant</button>
+                         </div>  
+                        
+                    </form> 
+                   
+                    
                 </div>
-                {% for i in sub_cris %} 
-                    {{i}}
-                {% endfor %} 
+                <br>
+                <br>
                 
                 <!-- messages err -->
                 {% elif message.tags == 'error'%}
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <span class="alert-icon"><i class="fas fa-exclamation-triangle text-secondary"></i></span>
                     <span class="alert-text"><strong>{{ message }}</strong> </span>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -105,72 +109,84 @@
                 {% endif %}
             {% endfor %}
         {% endif %} 
-    </div>
-    <!-- Tables -->
-    <div>
-        <form action="" method="post">
-            {% csrf_token %}
-            <div class = "table-responsive">
-                <!-- Table critere -->
-                <table class = "table" name = "Crites" border="1" id="exportMe">
-                    {% for row in mat_cri %}
-                        <tr>
-                        {% for cell in row %}
-                            <div class = "row">
-                                {% if forloop.first or forloop.parentloop.first %} 
-                                <div class="col">
-                                    <th> 
-                                        <input type="text" class="form-control" READONLY id="{{forloop.counter0}} {{cell}}" name="cells" value={{cell}}>
-                                    </th>
-                                </div>
-                                {% else %} 
-                                <div class="col">
-                                    <td>
-                                        <input type="number" class="form-control" id="" name="cells" value={{ cell }}>
-                                    </td>  
-                                </div>  
-                                {% endif %}
-                            </div>    
-                        {% endfor %}
-                        </tr>
-                    {% endfor %}    
-                </table>
-            </div>
-
-            <div class = "table-responsive">
-                <!-- Table Soucritere -->
-                <table class = "table" name = "subcri" border="1" id="exportMe">
-                    {% for row in mat_sub %}
-                        <tr>
-                        {% for cell in row %}
-                            <div class = "row">
-                                {% if forloop.first or forloop.parentloop.first %} 
-                                <div class="col">
-                                    <th> 
-                                        <input type="text" class="form-control" READONLY id="{{forloop.counter0}} {{cell}}" name="cells" value={{cell}}>
-                                    </th>
-                                </div>
-                                {% else %} 
-                                <div class="col">
-                                    <td>
-                                        <input type="number" class="form-control" id="" name="cells" value={{ cell }}>
-                                    </td>  
-                                </div>  
-                                {% endif %}
-                            </div>    
-                        {% endfor %}
-                        </tr>
-                    {% endfor %}    
-                </table>
-            </div>
-
-        </div>
-        <button type="submit" id="" class="btn btn-info my-1" name="tabl">
-       Secondary</button>
-        </form>
-    </div>
+    </div> 
+</div>
        
-</div>  
+<div class="container">
+        
+    {% if messages %} 
+        {% for message in messages %}
+            {% if message.tags == 'success' and yes %} 
+                <div class="mt-3" >
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class = "table-responsive">
+                            <h3 class = "text-center">Table Alternative:</h3>
+                            <!-- Table critere -->
+                            <table class = "table" name = "Crites" border="1" id="exportMe">
+                                {% for row in mat_cri %}
+                                    <tr>
+                                    {% for cell in row %}
+                                        <div class = "row">
+                                            {% if forloop.first or forloop.parentloop.first %} 
+                                            <div class="col">
+                                                <th> 
+                                                    <input type="text" class="form-control" READONLY id="{{forloop.counter0}} {{cell}}" name="cells" value={{cell}}>
+                                                </th>
+                                            </div>
+                                            {% else %} 
+                                            <div class="col">
+                                                <td>
+                                                    <input type="number" class="form-control" id="" name="cells" value={{ cell }}>
+                                                </td>  
+                                            </div>  
+                                            {% endif %}
+                                        </div>    
+                                    {% endfor %}
+                                    </tr>
+                                {% endfor %}    
+                            </table>
+                        </div>
+                        <div class = "table-responsive mt-3">
+                            <h3 class="text-center">Table Sous-critére:</h3>
+                            <!-- Table Soucritere -->
+                            <table class = "table" name = "subcri" border="1" id="exportMe">
+                                {% for row in mat_sub %}
+                                    <tr>
+                                    {% for cell in row %}
+                                        <div class = "row">
+                                            {% if forloop.first or forloop.parentloop.first %} 
+                                            <div class="col">
+                                                <th> 
+                                                    <input type="text" class="form-control" READONLY id="{{forloop.counter0}} {{cell}}" name="cells" value={{cell}}>
+                                                </th>
+                                            </div>
+                                            {% else %} 
+                                            <div class="col">
+                                                <td>
+                                                    <input type="number" class="form-control" id="" name="cells" value={{ cell }}>
+                                                </td>  
+                                            </div>  
+                                            {% endif %}
+                                        </div>    
+                                    {% endfor %}
+                                    </tr>
+                                {% endfor %}    
+                            </table>
+                        </div>
+                        <div class = "position-absolute my-2" style="right: 10px">
+                            <button type="submit" id="" class="btn btn-primary my-1" name="tablcancel_cr">
+                                    Annuler</button>    
+                            <button type="submit" id="" class="btn btn-default my-1" name="tabl">
+                                Terminer</button>
+                        </div>
+                        </form>
+                    </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+   
+</div>
 {% endblock content %}
 
 <!-- Specific JS goes HERE -->

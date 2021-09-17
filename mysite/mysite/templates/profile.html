@@ -146,7 +146,7 @@
                     </div>
                     
                       <div>
-                        <button  class="btn btn-lg btn-primary"  type="submit" style = "width : 150px">Save</button>
+                        <button  class="btn btn-lg btn-default"  type="submit" style = "width : 150px">Save</button>
                         
                       </div>
                     </div>
@@ -161,6 +161,27 @@
                     </div>
                   </div> -->
               </form>
+              {% if messages %}
+                  {% for message in messages %}
+                    {% if message.tags == 'success'%}
+                      <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <span class="alert-icon"><i class="fas fa-check text-secondary"></i></span>
+                        <span class="alert-text"><strong>{{ message }}</strong></span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% elif message.tags == 'error'%}
+                      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                          <span class="alert-icon"><i class="fas fa-exclamation-triangle text-secondary"></i></span>
+                          <span class="alert-text"><strong>{{ message }}</strong> </span>
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                    {% endif %}  
+                  {% endfor %}
+              {% endif %}
             </div>
           </div>
         </div>

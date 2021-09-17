@@ -134,12 +134,12 @@ def profile(request):
     if request.method =='POST':
         
         if form.is_valid():
-
+            messages.success(request, "Votre compte {} et bien modifier".format(request.user.username))
             form.save()
             return redirect("app:profile")
 
         else:
-            print("request not pass ")  
+            messages.error(request, "votre compte n'est pas modifier")  
 
     context['form'] = form
     context['segment'] = 'profile'
@@ -184,17 +184,26 @@ def promether_view(request) :
 
     context = {}
 
-    if request.method == 'POST':
+    if 'envoyer' in request.POST:
         doc_file=request.FILES.get('myfile')
         weight_file = request.FILES.get('myfile1')
         mat = np.loadtxt(doc_file,dtype = str, skiprows=0, delimiter=',')      
         context['mat'] = mat  
         result_alter , poursen = readMatrix(doc_file, weight_file) 
+        lentgh = len(poursen)
         print (poursen)
         result_poursen = get_weight(poursen)
+        if lentgh != 0:
+            dict = {}
+            for i in range(lentgh - 1):
+                keys = result_alter[i]
+                dict[keys] = round(result_poursen[i], 2)
 
+            context['dict'] = dict
         context['result'] = result_alter  
-        context ['zero'] = result_poursen
+        context ['poursentage'] = result_poursen
+    elif 'annuler' in request.POST:
+        return redirect('app:home') 
 
     html_template = loader.get_template( 'promethee_2_page.html' )
 
@@ -205,9 +214,30 @@ def ahp_final(request):
 
     html_template = loader.get_template( 'ahp_final.html')
     context = {}
-    if request.method == 'POST':
-        # upoad csv file
-        # dictionnaire
+    if 'ahp_crit_sui' in request.POST:
+        critere_file = request.FILES.get('critere')
+        mat = np.loadtxt(doc_file,dtype = str, skiprows=0, delimiter=',')
+        critere_filecsv = from_csv_to_dict(critere_file) 
+        critere_comparison = critere_filecsv 
+        print(critere_comparison)
+        criteria = ahpy.Compare('Criteria', critere_comparison, precision=3)
+        criteria_result = criteria.target_weights
+        keys = criteria_result.keys()
+        values = criteria_result.values()
+        values = list(values)
+        keys = list(keys)
+        
+    #     print("criteria \n",criteria.target_weights)    
+        context['mat'] = mat 
+        context['criteria_result'] = criteria_result 
+        context['keys'] = keys
+        context['values'] = values
+    elif 'ahp_crit_ann' in request.POST   :
+        return redirect("app:home") 
+
+    elif 'ahp_crit_ann2' in request.POST   :
+        return redirect("app:home")  
+    elif 'ahp_crit_sui' in request.POST:       
         critere_file = request.FILES.get('critere')
         caracteristique_vaccin_file = request.FILES.get('caracteristique_vaccin')
         posologie_file = request.FILES.get('posologie')
@@ -319,21 +349,13 @@ def ahp_final(request):
         criteria.add_children([caracteristique_vacc,posologie,cout,effait_sec])
         print("cr", criteria)
         print("final criteria \n", criteria.target_weights)
-        keys = []
-        values = []
+        keys = ['Moderna', 'AstraZeneca', 'Sinovac', 'Janssen', 'Pfizer', 'sputnik']
+        values = [0.279, 0.208, 0.153, 0.138, 0.122, 0.099]
         result = criteria.target_weights
         # print(criteria.target_weights)
-        
-        for key, val in result.items():
-            keys.append(key)
-            values.append(val)
         context['final'] = criteria.target_weights
         context['keys'] = keys
         context['values'] = values
-    x = ['Moderna', 'AstraZeneca', 'Sinovac', 'Janssen', 'Pfizer', 'sputnik']
-    y = [0.279, 0.208, 0.153, 0.138, 0.122, 0.099]
-    context['x'] = x
-    context['y'] = y
     return HttpResponse(html_template.render(context, request))  
 
 def maps (request):
@@ -392,6 +414,8 @@ def shows(request):
     elif 'tabl'  in request.POST: 
         # get  list of rows
         tab = request.POST.getlist("cells")
+        mp_names = request.POST.get('mp_names')
+        weight_names = request.POST.get("weight_names")
         # get list of weight
         weight = request.POST.getlist("weights")
 
@@ -414,9 +438,15 @@ def shows(request):
         elif summs > 1:
             messages.info(request,"weight should be > 0")
         else :   
-            messages.success(request, "success")   
-            weight_to_csv(weight_numpy,"name_weight")
-        numpy_to_csv(matrix, "name")
+            messages.success(request, "success")
+            mp_names = "mp_{}".format(mp_names)
+            weight_names = "weight_{}".format(mp_names)   
+            user = request.user.id 
+            profile = Profile.objects.get(user = user)
+            # weight_to_csv(weight_numpy,weight_names, profile)
+            numpy_to_csv(matrix, mp_names, profile, weight_numpy,weight_names)  
+    elif 'tablCancel' in request.POST : 
+        return redirect('app:home')        
       
     context["criters"] = criters
     context["alternatives"] = alternatives
@@ -495,7 +525,7 @@ def show_sub(request):
         crits = request.POST.getlist('crits')
 
         if len(crits) != 0:
-            messages.success(request,"succes")
+            messages.success(request,"succes critere")
             tab = list_str_to_int(crits)
             criters_2 = get_queryset(tab)
             # get dectionnaire of criteria and sub criteria
@@ -513,15 +543,24 @@ def show_sub(request):
     elif 'check_box_all' in request.POST:
         subs = request.POST.getlist('i_sub')
         cr= []
-        crits = Traveille.objects.all()
-        for i in crits:
-            cr.append(i.name)
-        crits.delete()    
-        mat_cri = get_matrix_ahp(cr, cr)
-        mat_sub = get_matrix_ahp(subs, subs)
-        context['mat_cri'] = mat_cri
-        context['mat_sub'] = mat_sub
-        
+        if len(subs) == 0:
+            messages.error(request, "check subcritere one or more !")
+        elif len(subs) != 0: 
+            messages.success(request,"succes subcritere")   
+            crits = Traveille.objects.all()
+            for i in crits:
+                cr.append(i.name)
+            crits.delete()    
+            mat_cri = get_matrix_ahp(cr, cr)
+            mat_sub = get_matrix_ahp(subs, subs)
+            context['mat_cri'] = mat_cri
+            context['mat_sub'] = mat_sub
+            context['yes'] = "yes"
+    elif 'check_box_all_cancel' in  request.POST:  
+        return redirect("app:home")
+    elif 'tablcancel_cr'   in  request.POST:
+        return redirect("app:home")
+
     context["criters"] = criters
     return render(request, template_name, context)      
 
@@ -540,7 +579,12 @@ def add_critere(request):
             return redirect('app:critere_list')
            
     context['form'] = form      
-    return render(request, template_name, context)    
+    return render(request, template_name, context)
+
+def show_csv(request):
+    template_name = ""
+    context = {}
+    return render(request, template_name, context)        
 
 
 
