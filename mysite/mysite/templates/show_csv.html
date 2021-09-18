@@ -33,6 +33,11 @@
             </form> 
          </div>
     </div>
+    <div>
+        {% if url %}
+            <a href="{% url '{{obj.path}}' %">link</a>
+        {% endif %}
+    </div>
     
 </div>
 

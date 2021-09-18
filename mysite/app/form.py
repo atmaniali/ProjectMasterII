@@ -52,6 +52,11 @@ class CritereCritere(forms.ModelForm):
     )       
     class Meta:
         model = Critere
-        exclude = ('user',)     
+        exclude = ('user',) 
+
+
+
+        
+
 
         

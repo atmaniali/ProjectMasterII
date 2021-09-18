@@ -225,9 +225,7 @@ def ahp_final(request):
         keys = criteria_result.keys()
         values = criteria_result.values()
         values = list(values)
-        keys = list(keys)
-        
-    #     print("criteria \n",criteria.target_weights)    
+        keys = list(keys)   
         context['mat'] = mat 
         context['criteria_result'] = criteria_result 
         context['keys'] = keys
@@ -237,125 +235,125 @@ def ahp_final(request):
 
     elif 'ahp_crit_ann2' in request.POST   :
         return redirect("app:home")  
-    elif 'ahp_crit_sui' in request.POST:       
-        critere_file = request.FILES.get('critere')
-        caracteristique_vaccin_file = request.FILES.get('caracteristique_vaccin')
-        posologie_file = request.FILES.get('posologie')
-        cout_file = request.FILES.get('cout')
-        effets_secondaire_file = request.FILES.get('effets_secondaire')
-        # tuple
-        alternatives_file = request.FILES.get('alternatives')
-        type_file = request.FILES.get('type')
-        efficacite_file = request.FILES.get('efficacite')
-        nbr_dose_file = request.FILES.get('nbr_dose')
-        age_file = request.FILES.get('age')
-        delais_file = request.FILES.get('delais')
-        temps_effet_file = request.FILES.get('temps_effet')
-        conservation_file = request.FILES.get('conservation')
-        prix_file = request.FILES.get('prix')
-        sen_au_point_file = request.FILES.get('sen_au_point')
-        doul_au_point_file = request.FILES.get('doul_au_point')
-        cephales_file = request.FILES.get('cephales')
-        hyperthermie_file = request.FILES.get('hyperthermie')
-        nausees_file = request.FILES.get('nausees')
-        fatigue_file = request.FILES.get('fatigue')
-        # csv_to_dictionaire
-        critere_filecsv = from_csv_to_dict(critere_file)
-        caracteristique_vaccin_filecsv = from_csv_to_dict(caracteristique_vaccin_file)
-        posologie_filecsv = from_csv_to_dict(posologie_file)
-        cout_filecsv = from_csv_to_dict(cout_file)
-        effets_secondaire_filecsv = from_csv_to_dict(effets_secondaire_file)
-        # csv_to_tuple
-        alternatives_filecsv = from_csv_to_tuple(alternatives_file,str)
-        type_filecsv = from_csv_to_tuple(type_file,float)
-        efficacite_filecsv = from_csv_to_tuple(efficacite_file,float)
-        nbr_dose_filecsv = from_csv_to_tuple(nbr_dose_file,float)
-        age_filecsv = from_csv_to_tuple(age_file,float)
-        delais_filecsv = from_csv_to_tuple(delais_file,float)
-        temps_effet_filecsv  = from_csv_to_tuple(temps_effet_file,float)
-        conservation_filecsv = from_csv_to_tuple(conservation_file,float)
-        prix_filecsv = from_csv_to_tuple(prix_file,float)
-        sen_au_point_filecsv = from_csv_to_tuple(sen_au_point_file,float)
-        doul_au_point_filecsv = from_csv_to_tuple(doul_au_point_file,float)
-        cephales_filecsv = from_csv_to_tuple(cephales_file,float)
-        hyperthermie_filecsv = from_csv_to_tuple(hyperthermie_file,float)
-        nausees_filecsv = from_csv_to_tuple(nausees_file,float)
-        fatigue_filecsv = from_csv_to_tuple(fatigue_file,float)
-        # start methode 
-        critere_comparison = critere_filecsv
-        criteria = ahpy.Compare('Criteria', critere_comparison, precision=3)
-        print("criteria \n",criteria.target_weights)
-        caracterisiqueVaccin_comparison = caracteristique_vaccin_filecsv
-        posologie_comparisons = posologie_filecsv
-        cout_comparisons = cout_filecsv
-        effets_secondaire_comparisons = effets_secondaire_filecsv
-        vaccins = alternatives_filecsv
-        vaccin_pairs = list(itertools.combinations(vaccins, 2))
-        type_values = type_filecsv
-        type_comparisons = dict(zip(vaccin_pairs, type_values))
-        effecacite_values = efficacite_filecsv
-        effecacite_comparisons = dict(zip(vaccin_pairs, effecacite_values))
-        nbr_dose_values = nbr_dose_filecsv
-        nbr_dose_comparisons = dict(zip(vaccin_pairs, nbr_dose_values))
-        age_values = age_filecsv 
-        age_comparisons = dict(zip(vaccin_pairs, age_values))
-        delais_values = delais_filecsv
-        delais_comparisons = dict(zip(vaccin_pairs, delais_values))
-        temps_effet_values = temps_effet_filecsv
-        temps_effet_comparisons = dict(zip(vaccin_pairs, temps_effet_values))
-        conservation_values = conservation_filecsv
-        conservation_comparisons = dict(zip(vaccin_pairs, conservation_values))
-        prix_values = prix_filecsv 
-        prix_comparisons = dict(zip(vaccin_pairs, prix_values))
-        sapi_values = sen_au_point_filecsv
-        sapi_comparisons = dict(zip(vaccin_pairs, sapi_values))
-        dapi_values = doul_au_point_filecsv 
-        dapi_comparisons = dict(zip(vaccin_pairs, dapi_values))
-        print("dapi_comparisons \n",dapi_comparisons)
-        cephalees_values = cephales_filecsv
-        cephalees_comparisons = dict(zip(vaccin_pairs, cephalees_values))
-        hyperthermie_values = hyperthermie_filecsv
-        hyperthermie_comparisons = dict(zip(vaccin_pairs, hyperthermie_values))
-        nausées_values = nausees_filecsv
-        nausées_comparisons = dict(zip(vaccin_pairs, nausées_values))
-        fatigue_values = fatigue_filecsv 
-        fatigue_comparisons = dict(zip(vaccin_pairs, fatigue_values))
-        caracteristique_vacc = ahpy.Compare('CarachterisiqueVaccin', caracterisiqueVaccin_comparison, precision=3)
-        posologie = ahpy.Compare('Posologie', posologie_comparisons, precision=3)
-        print("posologie \n",posologie.target_weights)
-        cout = ahpy.Compare('Cout', cout_comparisons, precision=3)
-        effait_sec = ahpy.Compare('EffetsSecondaire', effets_secondaire_comparisons, precision=3)
-        type_s = ahpy.Compare('Type', type_comparisons, precision=3)
-        efficacite = ahpy.Compare('Efficacite', effecacite_comparisons, precision=3)
-        nbr_dose = ahpy.Compare('NBrDose', nbr_dose_comparisons, precision=3)
-        age = ahpy.Compare('Age', age_comparisons, precision=3)
-        delais = ahpy.Compare('Delais', delais_comparisons, precision=3)
-        temp_eff = ahpy.Compare('Temps_d_effet', temps_effet_comparisons, precision=3)
-        conservation = ahpy.Compare('Conservation', conservation_comparisons, precision=3)
-        prix = ahpy.Compare('Prix', prix_comparisons, precision=3)
-        sapi = ahpy.Compare('sensibilité_au_point_injection', sapi_comparisons, precision=3)
-        dapi = ahpy.Compare('douleur_au_point_injection', dapi_comparisons, precision=3)
-        cephalees = ahpy.Compare('céphalées', cephalees_comparisons, precision=3)
-        hyperthermie = ahpy.Compare('hyperthermie', hyperthermie_comparisons, precision=3)
-        nausees = ahpy.Compare('nausées', nausées_comparisons, precision=3)
-        fatigue = ahpy.Compare('fatigue', fatigue_comparisons, precision=3)
-        print("fatigue \n", fatigue.target_weights)
-        print("fatigue type \n", type(fatigue.target_weights))
-       # link all comparte object in hearchy
-        caracteristique_vacc.add_children([type_s,efficacite])
-        posologie.add_children([nbr_dose,age,delais,temp_eff])
-        cout.add_children([conservation,prix])
-        effait_sec.add_children([sapi,dapi,cephalees,hyperthermie,nausees,fatigue])
-        criteria.add_children([caracteristique_vacc,posologie,cout,effait_sec])
-        print("cr", criteria)
-        print("final criteria \n", criteria.target_weights)
+    elif 'ahp_crit_sui2' in request.POST: 
+        test = ['yes','yes']
         keys = ['Moderna', 'AstraZeneca', 'Sinovac', 'Janssen', 'Pfizer', 'sputnik']
         values = [0.279, 0.208, 0.153, 0.138, 0.122, 0.099]
-        result = criteria.target_weights
-        # print(criteria.target_weights)
-        context['final'] = criteria.target_weights
-        context['keys'] = keys
-        context['values'] = values
+        context['x'] = keys
+        context['y'] = values  
+        context['test']  = test  
+    #     critere_file = request.FILES.get('critere')
+    #     caracteristique_vaccin_file = request.FILES.get('caracteristique_vaccin')
+    #     posologie_file = request.FILES.get('posologie')
+    #     cout_file = request.FILES.get('cout')
+    #     effets_secondaire_file = request.FILES.get('effets_secondaire')
+    #     # tuple
+    #     alternatives_file = request.FILES.get('alternatives')
+    #     type_file = request.FILES.get('type')
+    #     efficacite_file = request.FILES.get('efficacite')
+    #     nbr_dose_file = request.FILES.get('nbr_dose')
+    #     age_file = request.FILES.get('age')
+    #     delais_file = request.FILES.get('delais')
+    #     temps_effet_file = request.FILES.get('temps_effet')
+    #     conservation_file = request.FILES.get('conservation')
+    #     prix_file = request.FILES.get('prix')
+    #     sen_au_point_file = request.FILES.get('sen_au_point')
+    #     doul_au_point_file = request.FILES.get('doul_au_point')
+    #     cephales_file = request.FILES.get('cephales')
+    #     hyperthermie_file = request.FILES.get('hyperthermie')
+    #     nausees_file = request.FILES.get('nausees')
+    #     fatigue_file = request.FILES.get('fatigue')
+    #     # csv_to_dictionaire
+    #     critere_filecsv = from_csv_to_dict(critere_file)
+    #     caracteristique_vaccin_filecsv = from_csv_to_dict(caracteristique_vaccin_file)
+    #     posologie_filecsv = from_csv_to_dict(posologie_file)
+    #     cout_filecsv = from_csv_to_dict(cout_file)
+    #     effets_secondaire_filecsv = from_csv_to_dict(effets_secondaire_file)
+    #     # csv_to_tuple
+    #     alternatives_filecsv = from_csv_to_tuple(alternatives_file,str)
+    #     type_filecsv = from_csv_to_tuple(type_file,float)
+    #     efficacite_filecsv = from_csv_to_tuple(efficacite_file,float)
+    #     nbr_dose_filecsv = from_csv_to_tuple(nbr_dose_file,float)
+    #     age_filecsv = from_csv_to_tuple(age_file,float)
+    #     delais_filecsv = from_csv_to_tuple(delais_file,float)
+    #     temps_effet_filecsv  = from_csv_to_tuple(temps_effet_file,float)
+    #     conservation_filecsv = from_csv_to_tuple(conservation_file,float)
+    #     prix_filecsv = from_csv_to_tuple(prix_file,float)
+    #     sen_au_point_filecsv = from_csv_to_tuple(sen_au_point_file,float)
+    #     doul_au_point_filecsv = from_csv_to_tuple(doul_au_point_file,float)
+    #     cephales_filecsv = from_csv_to_tuple(cephales_file,float)
+    #     hyperthermie_filecsv = from_csv_to_tuple(hyperthermie_file,float)
+    #     nausees_filecsv = from_csv_to_tuple(nausees_file,float)
+    #     fatigue_filecsv = from_csv_to_tuple(fatigue_file,float)
+    #     # start methode 
+    #     critere_comparison = critere_filecsv
+    #     criteria = ahpy.Compare('Criteria', critere_comparison, precision=3)
+    #     print("criteria \n",criteria.target_weights)
+    #     caracterisiqueVaccin_comparison = caracteristique_vaccin_filecsv
+    #     posologie_comparisons = posologie_filecsv
+    #     cout_comparisons = cout_filecsv
+    #     effets_secondaire_comparisons = effets_secondaire_filecsv
+    #     vaccins = alternatives_filecsv
+    #     vaccin_pairs = list(itertools.combinations(vaccins, 2))
+    #     type_values = type_filecsv
+    #     type_comparisons = dict(zip(vaccin_pairs, type_values))
+    #     effecacite_values = efficacite_filecsv
+    #     effecacite_comparisons = dict(zip(vaccin_pairs, effecacite_values))
+    #     nbr_dose_values = nbr_dose_filecsv
+    #     nbr_dose_comparisons = dict(zip(vaccin_pairs, nbr_dose_values))
+    #     age_values = age_filecsv 
+    #     age_comparisons = dict(zip(vaccin_pairs, age_values))
+    #     delais_values = delais_filecsv
+    #     delais_comparisons = dict(zip(vaccin_pairs, delais_values))
+    #     temps_effet_values = temps_effet_filecsv
+    #     temps_effet_comparisons = dict(zip(vaccin_pairs, temps_effet_values))
+    #     conservation_values = conservation_filecsv
+    #     conservation_comparisons = dict(zip(vaccin_pairs, conservation_values))
+    #     prix_values = prix_filecsv 
+    #     prix_comparisons = dict(zip(vaccin_pairs, prix_values))
+    #     sapi_values = sen_au_point_filecsv
+    #     sapi_comparisons = dict(zip(vaccin_pairs, sapi_values))
+    #     dapi_values = doul_au_point_filecsv 
+    #     dapi_comparisons = dict(zip(vaccin_pairs, dapi_values))
+    #     print("dapi_comparisons \n",dapi_comparisons)
+    #     cephalees_values = cephales_filecsv
+    #     cephalees_comparisons = dict(zip(vaccin_pairs, cephalees_values))
+    #     hyperthermie_values = hyperthermie_filecsv
+    #     hyperthermie_comparisons = dict(zip(vaccin_pairs, hyperthermie_values))
+    #     nausées_values = nausees_filecsv
+    #     nausées_comparisons = dict(zip(vaccin_pairs, nausées_values))
+    #     fatigue_values = fatigue_filecsv 
+    #     fatigue_comparisons = dict(zip(vaccin_pairs, fatigue_values))
+    #     caracteristique_vacc = ahpy.Compare('CarachterisiqueVaccin', caracterisiqueVaccin_comparison, precision=3)
+    #     posologie = ahpy.Compare('Posologie', posologie_comparisons, precision=3)
+    #     print("posologie \n",posologie.target_weights)
+    #     cout = ahpy.Compare('Cout', cout_comparisons, precision=3)
+    #     effait_sec = ahpy.Compare('EffetsSecondaire', effets_secondaire_comparisons, precision=3)
+    #     type_s = ahpy.Compare('Type', type_comparisons, precision=3)
+    #     efficacite = ahpy.Compare('Efficacite', effecacite_comparisons, precision=3)
+    #     nbr_dose = ahpy.Compare('NBrDose', nbr_dose_comparisons, precision=3)
+    #     age = ahpy.Compare('Age', age_comparisons, precision=3)
+    #     delais = ahpy.Compare('Delais', delais_comparisons, precision=3)
+    #     temp_eff = ahpy.Compare('Temps_d_effet', temps_effet_comparisons, precision=3)
+    #     conservation = ahpy.Compare('Conservation', conservation_comparisons, precision=3)
+    #     prix = ahpy.Compare('Prix', prix_comparisons, precision=3)
+    #     sapi = ahpy.Compare('sensibilité_au_point_injection', sapi_comparisons, precision=3)
+    #     dapi = ahpy.Compare('douleur_au_point_injection', dapi_comparisons, precision=3)
+    #     cephalees = ahpy.Compare('céphalées', cephalees_comparisons, precision=3)
+    #     hyperthermie = ahpy.Compare('hyperthermie', hyperthermie_comparisons, precision=3)
+    #     nausees = ahpy.Compare('nausées', nausées_comparisons, precision=3)
+    #     fatigue = ahpy.Compare('fatigue', fatigue_comparisons, precision=3)
+    #     print("fatigue \n", fatigue.target_weights)
+    #     print("fatigue type \n", type(fatigue.target_weights))
+    #    # link all comparte object in hearchy
+    #     caracteristique_vacc.add_children([type_s,efficacite])
+    #     posologie.add_children([nbr_dose,age,delais,temp_eff])
+    #     cout.add_children([conservation,prix])
+    #     effait_sec.add_children([sapi,dapi,cephalees,hyperthermie,nausees,fatigue])
+    #     criteria.add_children([caracteristique_vacc,posologie,cout,effait_sec])
+    #     print("cr", criteria)
+    #     print("final criteria \n", criteria.target_weights)
+        
     return HttpResponse(html_template.render(context, request))  
 
 def maps (request):
@@ -415,7 +413,7 @@ def shows(request):
         # get  list of rows
         tab = request.POST.getlist("cells")
         mp_names = request.POST.get('mp_names')
-        weight_names = request.POST.get("weight_names")
+        
         # get list of weight
         weight = request.POST.getlist("weights")
 
@@ -438,13 +436,11 @@ def shows(request):
         elif summs > 1:
             messages.info(request,"weight should be > 0")
         else :   
-            messages.success(request, "success")
-            mp_names = "mp_{}".format(mp_names)
-            weight_names = "weight_{}".format(mp_names)   
+            messages.success(request, "success")   
             user = request.user.id 
             profile = Profile.objects.get(user = user)
             # weight_to_csv(weight_numpy,weight_names, profile)
-            numpy_to_csv(matrix, mp_names, profile, weight_numpy,weight_names)  
+            numpy_to_csv(matrix, mp_names, profile, weight_numpy)  
     elif 'tablCancel' in request.POST : 
         return redirect('app:home')        
       
@@ -591,9 +587,14 @@ def show_csv(request):
         obj = Upload_csv.objects.get(pk = id)
         mp_path = obj.path
         weight_path = obj.path_weight
-        Matrix = np.loadtxt(mp_path,dtype = str, skiprows=0, delimiter=',')
-        Mat = np.loadtxt(Mat,dtype = str, skiprows=0, delimiter=',')
-        print("object", obj.path)
+        context['url'] = obj       
+        # Matrix = np.loadtxt(mp_path,dtype = str, skiprows=0, delimiter=',')
+        # Mat = np.loadtxt(weight_path,dtype = str, skiprows=0, delimiter=',')
+        # array_Matrix  = np.array(Matrix)
+        # array_Mat  = np.array(Mat)
+        # context['array_Matrix'] = array_Matrix
+        # context['array_Mat'] = array_Mat
+        
     return render(request, template_name, context)        
 
 
