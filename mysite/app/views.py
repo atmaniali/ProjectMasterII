@@ -582,8 +582,15 @@ def add_critere(request):
     return render(request, template_name, context)
 
 def show_csv(request):
-    template_name = ""
+    template_name = "show_csv.html"
     context = {}
+    csv_f = Upload_csv.objects.all()
+    context["csv"] = csv_f
+    if request.method  == "POST":
+        id = request.POST.get("csv_name")
+
+        object = Upload_csv.objects.get(pk = id)
+        print("object", object)
     return render(request, template_name, context)        
 
 
