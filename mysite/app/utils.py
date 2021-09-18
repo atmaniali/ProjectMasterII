@@ -346,7 +346,7 @@ def slicing(matrix):
 from app.models import Upload_csv
 def numpy_to_csv(matrix, names,user,weights):
     matrix = np.array(matrix)
-    urls = "media/promethee_csv{}.csv".format(names)
+    urls = "media/promethee/promethee_csv{}.csv".format(names)
     urls_weith = "media/promethee/weight_csv{}.csv".format(names)
     rows = matrix[0,1:]
     colmns = matrix[1:,0]
