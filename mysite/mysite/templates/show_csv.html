@@ -1,0 +1,46 @@
+{% extends 'layouts/base.html' %} 
+{% load crispy_forms_tags %}
+{% block title %} Shows {% endblock title %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+{% block content %}
+<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+    <div class="container-fluid">
+        <div class="header-body">
+            
+            
+        </div>
+    </div>
+
+</div>
+<div class = "container">
+    <div class = 'row'>
+        <div class ='col-8'>
+            <form action="" method="post">
+                {% csrf_token %}
+             <div class="form-group">
+                 <label for="exampleFormControlSelect1">Example select</label>
+                 <select class="form-control" id="exampleFormControlSelect1" name="csv_name">
+                   {% for nam in csv %}
+                     <option value= {{nam.id}}>{{nam.name}}</option> 
+                   {% endfor %}  
+                 </select>
+               </div>
+               <div>
+                   <button type="submit" class = 'btn btn-default'>Suivant</button>
+               </div>
+            </form> 
+         </div>
+    </div>
+    
+</div>
+
+{% endblock content %}
+
+<!-- Specific JS goes HERE -->
+
+{% block javascripts %}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+{% endblock javascripts %}

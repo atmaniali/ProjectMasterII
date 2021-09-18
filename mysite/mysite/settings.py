@@ -71,6 +71,9 @@ ROOT_URLCONF = 'mysite.urls'
 LOGIN_REDIRECT_URL = "index"   # Route defined in app/urls.py
 LOGOUT_REDIRECT_URL = "/"  # Route defined in app/urls.py
 TEMPLATE_DIR = os.path.join(BASE_DIR, "mysite/templates")  # ROOT dir for templates
+# only if django version >= 3.0
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+SILENCED_SYSTEM_CHECKS = ['security.W019']
 
 
 TEMPLATES = [

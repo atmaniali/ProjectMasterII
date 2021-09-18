@@ -588,9 +588,12 @@ def show_csv(request):
     context["csv"] = csv_f
     if request.method  == "POST":
         id = request.POST.get("csv_name")
-
-        object = Upload_csv.objects.get(pk = id)
-        print("object", object)
+        obj = Upload_csv.objects.get(pk = id)
+        mp_path = obj.path
+        weight_path = obj.path_weight
+        Matrix = np.loadtxt(mp_path,dtype = str, skiprows=0, delimiter=',')
+        Mat = np.loadtxt(Mat,dtype = str, skiprows=0, delimiter=',')
+        print("object", obj.path)
     return render(request, template_name, context)        
 
 
