@@ -45,9 +45,9 @@ class Profile(models.Model):
 class Upload_csv(models.Model):
     user = models.ForeignKey(Profile, related_name= 'upload_csv', on_delete= models.CASCADE)
     name = models.CharField(max_length = 200, blank = True)
-    path = models.FileField(upload_to='promethee/', null= True, default='default.csv')
+    path = models.FileField(upload_to='media/promethee/', null= True, default='default.csv')
     weight_names = models.CharField(max_length = 200, blank = True)
-    path_weight = models.FileField(upload_to='promethee/', null= True, default='default_weight.csv')
+    path_weight = models.FileField(upload_to='media/promethee/', null= True, default='default_weight.csv')
     def __str__(self):
         return self.name
     
