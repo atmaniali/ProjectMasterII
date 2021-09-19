@@ -381,7 +381,15 @@ def shows(request):
     template_name = "show.html"
     context = {}
     # All
-    criters = Critere.objects.all()
+    cr = Critere.objects.all()
+    su = Subcritere.objects.all()
+    criters = []
+    subcriters = []
+    for i in cr:
+        criters.append(i.name)
+    for i in su :
+        subcriters.append(i.name)
+    criters.extend(subcriters)           
     alternatives = Alternative.objects.all()
     if 'check_box' in request.POST:    
         # get List of Critere Alternative cheking
@@ -522,6 +530,8 @@ def show_sub(request):
 
         if len(crits) != 0:
             messages.success(request,"succes critere")
+            x = len(crits)
+            taille_cri = Taille_sub.objects.create(rows = x)
             tab = list_str_to_int(crits)
             criters_2 = get_queryset(tab)
             # get dectionnaire of criteria and sub criteria
@@ -556,6 +566,16 @@ def show_sub(request):
         return redirect("app:home")
     elif 'tablcancel_cr'   in  request.POST:
         return redirect("app:home")
+    elif 'tabl'  in request.POST:
+        mp_names = request.POST.get('mp_names')
+        tab = request.POST.getlist('cells') 
+        tab_np = np.array(tab)  
+        taille = Taille_sub.objects.all().last() 
+        x = taille.rows+1
+        tabl_np = np.reshape(tab_np,(x, x))
+        user = request.user.id 
+        profile = Profile.objects.get(user = user)
+        numpy_to_csv_ahp(tabl_np,mp_names,profile)
 
     context["criters"] = criters
     return render(request, template_name, context)      

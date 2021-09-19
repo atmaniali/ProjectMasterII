@@ -45,9 +45,9 @@ class Profile(models.Model):
 class Upload_csv(models.Model):
     user = models.ForeignKey(Profile, related_name= 'upload_csv', on_delete= models.CASCADE)
     name = models.CharField(max_length = 200, blank = True)
-    path = models.FileField(upload_to='media/promethee/', null= True, default='default.csv')
+    path = models.FileField(upload_to='promethee/', null= True, default='default.csv')
     weight_names = models.CharField(max_length = 200, blank = True)
-    path_weight = models.FileField(upload_to='media/promethee/', null= True, default='default_weight.csv')
+    path_weight = models.FileField(upload_to='promethee/', null= True, default='default_weight.csv')
     def __str__(self):
         return self.name
     
@@ -125,7 +125,14 @@ class Taille(models.Model):
     def __str__(self) :
         return str(self.rows )
     def get_pk(self):
-        return self.pk    
+        return self.pk 
+class Taille_sub(models.Model):
+    rows = models.IntegerField() 
+      
+    def __str__(self) :
+        return str(self.rows )
+    def get_pk(self):
+        return self.pk          
 class Traveille(models.Model):
     name = models.CharField(max_length=200)
     def __str__(self):
@@ -136,6 +143,7 @@ class Promethee_file(models.Model):
     def __str__(self): 
         return self.name 
 class AHP_file(models.Model):
+    user = models.ForeignKey(Profile, related_name= 'upload_ahp', on_delete= models.CASCADE, null = True)
     name = models.CharField(max_length  = 200)
     files = models.FileField(db_index=True, upload_to='ahp/')  
     def __str__(self): 

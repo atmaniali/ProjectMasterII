@@ -122,6 +122,13 @@
                         {% csrf_token %}
                         <div class = "table-responsive">
                             <h3 class = "text-center">Table Critére:</h3>
+                            <div class = "row">
+                                <div class = "col-8">
+                                    <div class="p-4 bg-secondary">
+                                        <input type="text" class="form-control form-control-alternative" placeholder="Entrer Nom pour CSV file" name="mp_names" required>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- Table critere -->
                             <table class = "table" name = "Crites" border="1" id="exportMe">
                                 {% for row in mat_cri %}
@@ -158,13 +165,13 @@
                                             {% if forloop.first or forloop.parentloop.first %} 
                                             <div class="col">
                                                 <th> 
-                                                    <input type="text" class="form-control" READONLY id="{{forloop.counter0}} {{cell}}" name="cells" value={{cell}}>
+                                                    <input type="text" class="form-control" READONLY id="{{forloop.counter0}} {{cell}}" name="cells_sous_cr" value={{cell}}>
                                                 </th>
                                             </div>
                                             {% else %} 
                                             <div class="col">
                                                 <td>
-                                                    <input type="number" class="form-control" id="" name="cells" value={{ cell }}>
+                                                    <input type="number" class="form-control" id="" name="cells_sous_cr" value={{ cell }}>
                                                 </td>  
                                             </div>  
                                             {% endif %}

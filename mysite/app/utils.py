@@ -342,12 +342,13 @@ def slicing(matrix):
     mat_header = np.vstack([mat_header,test])
     matrix = np.vstack([mat_header,mat_body])
     return matrix
+
 """ turn numpy table into csv file"""
-from app.models import Upload_csv
+from app.models import Upload_csv, AHP_file
 def numpy_to_csv(matrix, names,user,weights):
     matrix = np.array(matrix)
-    urls = "media/promethee/promethee_csv{}.csv".format(names)
-    urls_weith = "media/promethee/weight_csv{}.csv".format(names)
+    urls = "media/promethee/{}_promethee_csv.csv".format(names)
+    urls_weith = "media/promethee/{}_weight_csv.csv".format(names)
     rows = matrix[0,1:]
     colmns = matrix[1:,0]
     body=matrix[1:,1:]  
@@ -370,4 +371,19 @@ def numpy_to_csv(matrix, names,user,weights):
 #     with open(urls_weith, 'w') as f:
 #        write = csv.writer(f)
 #        write.writerow(weights)  
-#     Upload_csv.objects.create(user = user,name = names, path = urls)    
+#     Upload_csv.objects.create(user = user,name = names, path = urls)  
+def numpy_to_csv_ahp(matrix, names, user):
+    matrix = np.array(matrix)
+    urls = "media/ahp/{}_ahp_csv.csv".format(names)    
+    rows = matrix[0,1:]
+    colmns = matrix[1:,0]
+    body=matrix[1:,1:]  
+    df = pd.DataFrame(data=body, index=colmns, columns=rows)
+    df.to_csv(urls)
+    mp_names = "ahp_crit{}".format(names)
+    AHP_file.objects.create(
+        user = user,
+        name = mp_names,
+        files = urls 
+    )
+    
