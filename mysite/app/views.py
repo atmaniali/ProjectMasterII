@@ -480,6 +480,18 @@ def listes(request):
         print(request.POST) 
         alternative = get_object_or_404(Alternative, pk=int(id)) 
         alternative.delete()
+    if 'addSub' in request.POST:
+        id  = request.POST.get('id_sub')
+        sub = get_object_or_404(Subcritere, pk=int(id))
+        name = request.POST.get('is')
+        select = request.POST.get("cri_sub")
+        print(id,sub,name,select)
+    if 'deleteSub' in request.POST:
+        id  = request.POST.get('id_del')
+        print(request.POST) 
+        sub = get_object_or_404(Subcritere, pk=int(id)) 
+        sub.delete()
+          
         
     paginator_crit = Paginator(criters, 5)
     page = "request.GET.get('page', 1)"
@@ -490,7 +502,7 @@ def listes(request):
     except EmptyPage:
         crits_paginater = paginator_crit.page(paginator_crit.num_pages)
     alternatives = Alternative.objects.all()
-    subcriters = Subcritere.objects.all()
+    subcriters = Subcritere.objects.order_by('critere') 
     paginator_alti = Paginator(alternatives, 5)
 
     context["criteres"] = criters

@@ -351,7 +351,17 @@
                         <div class="modal-body">
                           <form action="" method="post"> 
                             {% csrf_token %}  
-                        <input type="hidden" value= "{{sub.get_pk}}"  name= "id_alt">
+                        <input type="hidden" value= "{{sub.get_pk}}"  name= "id_sub">
+                        {{criteres }}
+                        <div class="form-group">
+                        <label for="exampleFormControlSelect1">Example select</label>
+                        {% for cr in criteres %}
+                        {% endfor %}
+                        <select class="form-control" id="exampleFormControlSelect1">
+                          <option value="cr.get_pk">{{cr.name}}</option>
+                          
+                        </select>
+                      </div>
                         <div class="p-4 bg-secondary">
                           <input type="text" class="form-control form-control-alternative" placeholder="Entrer nom d'Alternative" value="{{sub.name}}" name = "is">
                         </div>
@@ -377,14 +387,14 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          <p>voulez vous  suprimer <span class="fs-5">{{sub.nom_vaccin}}</span> </p>
+                          <p>voulez vous  suprimer <span class="fs-5">{{sub.name}}</span> </p>
                           <form action="" method="post"> 
                             {% csrf_token %}  
                         <input type="hidden" value= "{{sub.get_pk}}"  name= "id_del">
                         
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
-                          <button type="submit" class="btn btn-primary" name = "deleteAlternative">Oui </button>
+                          <button type="submit" class="btn btn-primary" name = "deleteSub">Oui </button>
                         </div>
                           </form>
                           
