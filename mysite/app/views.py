@@ -237,8 +237,7 @@ def ahp_final(request):
         return redirect("app:home")  
     elif 'ahp_crit_sui2' in request.POST: 
         test = ['yes','yes']
-        keys = ['Moderna', 'AstraZeneca', 'Sinovac', 'Janssen', 'Pfizer', 'sputnik']
-        values = [0.279, 0.208, 0.153, 0.138, 0.122, 0.099]
+        keys, values = ahp_finales()
         context['x'] = keys
         context['y'] = values  
         context['test']  = test  
@@ -381,15 +380,9 @@ def shows(request):
     template_name = "show.html"
     context = {}
     # All
-    cr = Critere.objects.all()
-    su = Subcritere.objects.all()
-    criters = []
-    subcriters = []
-    for i in cr:
-        criters.append(i.name)
-    for i in su :
-        subcriters.append(i.name)
-    criters.extend(subcriters)           
+   
+    criters = Subcritere.objects.all()
+             
     alternatives = Alternative.objects.all()
     if 'check_box' in request.POST:    
         # get List of Critere Alternative cheking
