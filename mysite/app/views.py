@@ -457,11 +457,30 @@ def listes(request):
 
     criters = Critere.objects.all().order_by('pk')
     
-    if request.method == "POST" :
+    if 'add' in request.POST :
         name = request.POST.get('is')
         id  = request.POST.get('id')
-        print(request.POST)
-        print(name, id)
+        critere = get_object_or_404(Critere, pk=int(id)) 
+        critere.name = name
+        critere.save()
+    if 'delete' in request.POST :
+        id  = request.POST.get('id') 
+        critere = get_object_or_404(Critere, pk=int(id)) 
+        critere.delete()
+    if 'addAlternatve' in request.POST:
+        name = request.POST.get('is')
+        id  = request.POST.get('id_alt')
+        print(request.POST) 
+        alternative = get_object_or_404(Alternative, pk=int(id))
+        alternative.nom_vaccin = name 
+        alternative.save()
+    if 'deleteAlternative' in request.POST:   
+        name = request.POST.get('is')
+        id  = request.POST.get('id_del')
+        print(request.POST) 
+        alternative = get_object_or_404(Alternative, pk=int(id)) 
+        alternative.delete()
+        
     paginator_crit = Paginator(criters, 5)
     page = "request.GET.get('page', 1)"
     try:

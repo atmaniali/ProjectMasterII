@@ -60,10 +60,9 @@
                             <i class="fas fa-ellipsis-v"></i>
                           </a>
                           <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                            <button class="dropdown-item"  type="button" data-toggle="modal" data-target="#exampleModal{{critere.get_pk}}">Ajouter</button>
-                            
-                            <a class="dropdown-item" id="update" type="button" href="{% url 'app:critere_list' %}">Modifier</a>
-                            <a class="dropdown-item" id="delete" type="button" href="{% url 'app:critere_list' %}">Suprimer</a>
+
+                            <button class="dropdown-item"  type="button" data-toggle="modal" data-target="#exampleModal{{critere.get_pk}}">Modifier</button>
+                            <button class="dropdown-item"  type="button" data-toggle="modal" data-target="#deletteModal{{critere.get_pk}}">Suprimer</button>
                             
                           </div>
                         </div>
@@ -72,11 +71,14 @@
                     </td>
                     
                   </tr>
+
+                  <!-- update -->
+
                   <div class="modal fade" id="exampleModal{{critere.get_pk}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                          <h5 class="modal-title" id="exampleModalLabel">Modifier Critére</h5>
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
@@ -84,19 +86,49 @@
                         <div class="modal-body">
                           <form action="" method="post"> 
                             {% csrf_token %}  
-                            <legend name = "id"><h3 >{{critere.get_pk}}</h3></legend>
+                        <input type="hidden" value= "{{critere.get_pk}}"  name= "id">
                         <div class="p-4 bg-secondary">
                           <input type="text" class="form-control form-control-alternative" placeholder="Entrer nom de critere" value="{{critere.name}}" name = "is">
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="submit" class="btn btn-primary">Save changes</button>
+                          <button type="submit" class="btn btn-primary" name = "add">Save changes</button>
                         </div>
                           </form>
                         </div>
                       </div>
                     </div>
                   </div>
+
+                  <!-- suprimer -->
+
+                  <div class="modal fade" id="deletteModal{{critere.get_pk}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Suprimer Critére</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <p>voulez vous  suprimer <span class="fs-5">{{critere.name}}</span> </p>
+                          <form action="" method="post"> 
+                            {% csrf_token %}  
+                        <input type="hidden" value= "{{critere.get_pk}}"  name= "id">
+                        
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
+                          <button type="submit" class="btn btn-primary" name = "delete">Oui </button>
+                        </div>
+                          </form>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
                   {% endfor %}
                 </tbody>
               </table>
@@ -169,14 +201,74 @@
                             <i class="fas fa-ellipsis-v"></i>
                           </a>
                           <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                            <a class="dropdown-item" href="#">Delete</a>
-                            <a class="dropdown-item" href="#">Update</a>
+
+                            <button class="dropdown-item"  type="button" data-toggle="modal" data-target="#exampleAlternativeModal{{altirnative.get_pk}}">Modifier</button>
+                            <button class="dropdown-item"  type="button" data-toggle="modal" data-target="#deleteAlternativeModal{{altirnative.get_pk}}">Suprimer</button>
+
                           </div>
                         </div>
                       </div>
                     </td>
                     
                   </tr>
+
+                  <!-- update -->
+
+                  <div class="modal fade" id="exampleAlternativeModal{{altirnative.get_pk}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Modifier Alternative</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="" method="post"> 
+                            {% csrf_token %}  
+                        <input type="hidden" value= "{{altirnative.get_pk}}"  name= "id_alt">
+                        <div class="p-4 bg-secondary">
+                          <input type="text" class="form-control form-control-alternative" placeholder="Entrer nom d'Alternative" value="{{altirnative.nom_vaccin}}" name = "is">
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary" name = "addAlternatve">Save changes</button>
+                        </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- suprimer -->
+
+                  <div class="modal fade" id="deleteAlternativeModal{{altirnative.get_pk}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Suprimer Alternative</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <p>voulez vous  suprimer <span class="fs-5">{{altirnative.nom_vaccin}}</span> </p>
+                          <form action="" method="post"> 
+                            {% csrf_token %}  
+                        <input type="hidden" value= "{{altirnative.get_pk}}"  name= "id_del">
+                        
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
+                          <button type="submit" class="btn btn-primary" name = "deleteAlternative">Oui </button>
+                        </div>
+                          </form>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
                   {% endfor %}
                 </tbody>
               </table>
@@ -185,7 +277,9 @@
         </div>
       </div>
       <hr>
-      <!-- Alternatives -->
+
+
+      <!-- Sous-Critere -->
       <div class="row">
         <div class="col">
           <div class="card shadow">
@@ -231,9 +325,9 @@
                             <i class="fas fa-ellipsis-v"></i>
                           </a>
                           <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                            <a class="dropdown-item" id="delete" type="button" href="{% url 'app:critere_list' %}">Delete</a>
-                            <a class="dropdown-item" id="update" type="button" href="{% url 'app:critere_list' %}">Update</a>
-                            <a class="dropdown-item" id="teste" type="button" href="{% url 'app:critere_list' %}">Tesdter</a>
+                            
+                            <button class="dropdown-item"  type="button" data-toggle="modal" data-target="#exampleSouModal{{sub.get_pk}}">Modifier</button>
+                            <button class="dropdown-item"  type="button" data-toggle="modal" data-target="#deleteSouModal{{sub.get_pk}}">Suprimer</button>
 
                           </div>
                         </div>
@@ -242,6 +336,64 @@
                     </td>
                     
                   </tr>
+
+                  <!-- update -->
+
+                  <div class="modal fade" id="exampleSouModal{{sub.get_pk}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Modifier Sous-critére</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="" method="post"> 
+                            {% csrf_token %}  
+                        <input type="hidden" value= "{{sub.get_pk}}"  name= "id_alt">
+                        <div class="p-4 bg-secondary">
+                          <input type="text" class="form-control form-control-alternative" placeholder="Entrer nom d'Alternative" value="{{sub.name}}" name = "is">
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary" name = "addSub">Save changes</button>
+                        </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- suprimer -->
+
+                  <div class="modal fade" id="deleteSouModal{{sub.get_pk}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Suprimer Sous-critere</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <p>voulez vous  suprimer <span class="fs-5">{{sub.nom_vaccin}}</span> </p>
+                          <form action="" method="post"> 
+                            {% csrf_token %}  
+                        <input type="hidden" value= "{{sub.get_pk}}"  name= "id_del">
+                        
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
+                          <button type="submit" class="btn btn-primary" name = "deleteAlternative">Oui </button>
+                        </div>
+                          </form>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
                   {% endfor %}
                 </tbody>
               </table>
