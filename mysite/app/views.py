@@ -456,7 +456,12 @@ def listes(request):
     context = {}
 
     criters = Critere.objects.all().order_by('pk')
-
+    
+    if request.method == "POST" :
+        name = request.POST.get('is')
+        id  = request.POST.get('id')
+        print(request.POST)
+        print(name, id)
     paginator_crit = Paginator(criters, 5)
     page = "request.GET.get('page', 1)"
     try:
@@ -474,6 +479,7 @@ def listes(request):
     context["subcriters"] = subcriters
     context["paginator_crit"] = crits_paginater
     context['paginator_alti'] = paginator_alti 
+    
 
     return render(request, template_name, context)
 
@@ -577,17 +583,17 @@ def show_sub(request):
 def add_critere(request):
     template_name = "addcritere.html"
     context = {}
-    form = CritereCritere(request.POST or None)
-    if request.method == 'POST':
-        print(request.POST)
-        print(request.user.id)
-        if form.is_valid():
-            critere = form.save(commit = False)
-            critere.user = request.user 
-            critere.save()   
-            return redirect('app:critere_list')
+    # form = CritereCritere(request.POST or None)
+    # if request.method == 'POST':
+    #     print(request.POST)
+    #     print(request.user.id)
+    #     if form.is_valid():
+    #         critere = form.save(commit = False)
+    #         critere.user = request.user 
+    #         critere.save()   
+    #         return redirect('app:critere_list')
            
-    context['form'] = form      
+    # context['form'] = form      
     return render(request, template_name, context)
 
 def show_csv(request):
@@ -609,6 +615,11 @@ def show_csv(request):
         # context['array_Mat'] = array_Mat
         
     return render(request, template_name, context)        
+def get_id(request, id):
+    template_name  = 'ahp_chart1.html'
+    context= {'id ' : id}
+    return render(request, template_name, context)
+
 
 
 

@@ -60,10 +60,11 @@
                             <i class="fas fa-ellipsis-v"></i>
                           </a>
                           <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                            <a class="dropdown-item" id="delete" type="button" href="{% url 'app:critere_list' %}">Ajouter</a>
+                            <button class="dropdown-item"  type="button" data-toggle="modal" data-target="#exampleModal{{critere.get_pk}}">Ajouter</button>
+                            
                             <a class="dropdown-item" id="update" type="button" href="{% url 'app:critere_list' %}">Modifier</a>
-                            <a class="dropdown-item" id="teste" type="button" href="{% url 'app:critere_list' %}">Suprimer</a>
-
+                            <a class="dropdown-item" id="delete" type="button" href="{% url 'app:critere_list' %}">Suprimer</a>
+                            
                           </div>
                         </div>
                       </div>
@@ -71,6 +72,31 @@
                     </td>
                     
                   </tr>
+                  <div class="modal fade" id="exampleModal{{critere.get_pk}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="" method="post"> 
+                            {% csrf_token %}  
+                            <legend name = "id"><h3 >{{critere.get_pk}}</h3></legend>
+                        <div class="p-4 bg-secondary">
+                          <input type="text" class="form-control form-control-alternative" placeholder="Entrer nom de critere" value="{{critere.name}}" name = "is">
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   {% endfor %}
                 </tbody>
               </table>
@@ -248,6 +274,8 @@
 
 </div>
 
+<!-- popup -->
+<!-- Modal -->
 
     
     

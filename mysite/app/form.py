@@ -15,7 +15,18 @@ class ContactForm(forms.ModelForm):
     phone_number = forms.CharField(initial='Your phone number')
     class Meta:
         model = Profile
-        exclude = ['user']       
+        exclude = ['user'] 
+class CritereModelForm (forms.ModelForm):
+    name = forms.CharField(
+        label='Critere Name',
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Enter Critere Name here'
+        })
+    ) 
+    class Meta:
+        model = Critere
+        exclude = ['user']             
 
 class CritereForm(forms.Form):
     name = forms.CharField(
@@ -26,33 +37,33 @@ class CritereForm(forms.Form):
         })
     )
 
-AlternativeModelFormset = modelformset_factory(
-    Alternative,
-    fields=('nom_vaccin', ),
-    extra=5,
-    widgets={'nom_vaccin': forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Enter Vaccin Name here'
-        })
-    }
-)
-CritereModelFormset = modelformset_factory(
-    Critere,
-    fields=('name', ),
-    extra=5,
-    widgets={'name': forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Enter Critere Name here'
-        })
-    }
-)
+# AlternativeModelFormset = modelformset_factory(
+#     Alternative,
+#     fields=('nom_vaccin', ),
+#     extra=5,
+#     widgets={'nom_vaccin': forms.TextInput(attrs={
+#             'class': 'form-control',
+#             'placeholder': 'Enter Vaccin Name here'
+#         })
+#     }
+# )
+# CritereModelFormset = modelformset_factory(
+#     Critere,
+#     fields=('name', ),
+#     extra=5,
+#     widgets={'name': forms.TextInput(attrs={
+#             'class': 'form-control',
+#             'placeholder': 'Enter Critere Name here'
+#         })
+#     }
+# )
 
-class CritereCritere(forms.ModelForm):
-    name = forms.CharField(        
-    )       
-    class Meta:
-        model = Critere
-        exclude = ('user',) 
+# class CritereCritere(forms.ModelForm):
+#     name = forms.CharField(        
+#     )       
+#     class Meta:
+#         model = Critere
+#         exclude = ('user',) 
 
 
 
