@@ -22,7 +22,7 @@
         <form action="" method="post">
             {% csrf_token %}
             <h2>Criteres</h2>
-            <p>Check one or more critere</p>
+            <p>Cochez une ou plusieurs critére</p>
             <fieldset name = "criters"> 
             {% for criter in criters %} 
                 <div class="custom-control custom-checkbox">
@@ -65,7 +65,7 @@
                         <h2>Sous Critere</h2>
                         {% for i in sub_cris %} 
                         {% if i.subcritere.0 != "" %} 
-                        <p>Check one or more <span name = 'crr_name'> {{i.critere}}</span></p>
+                        <p>Couchez une au plusieurs <span class="font-weight-bold" name = 'crr_name'> {{i.critere}}</span></p>
                             <fieldset name="Crit">
                                 {% if i.subcritere %}
                                     {% for j in i.subcritere %}

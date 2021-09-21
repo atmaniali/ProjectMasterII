@@ -86,27 +86,27 @@
             </a>
           </li>
           <li class="nav-item">
-          <a class=" nav-link {% if 'index' in segment %} active {% endif %}" href="{% url 'app:index' %}"> <i class="fas fa-file-medical-alt text-red"></i> Annalyse viruse
+          <a class=" nav-link {% if 'index' in segment %} active {% endif %}" href="{% url 'app:index' %}"> <i class="fas fa-file-medical-alt text-red"></i> Analyse du covid
             </a>
           
           </li>
           
           <li class="nav-item mx-2">
             <div class="dropdown nav-">
-              <a href="#" class=" nav-link  dropdown-toggle" data-toggle="dropdown"><i class="fas fa-folder-open text-orange"></i>Methode I</a>
+              <a href="#" class=" nav-link  dropdown-toggle" data-toggle="dropdown"><i class="fas fa-folder-open text-orange"></i>Promethee 2</a>
               <div class="dropdown-menu">
-                  <a href="{% url 'app:show' %}" class="dropdown-item"><i class="ni ni-planet text-blue"></i> Show Critére Altérnative</a>
-                  <a href="{% url 'app:promethee_2' %}" class="dropdown-item"><i class="fas fa-chart-bar text-red"></i> Promethee 2</a>
+                  <a href="{% url 'app:show' %}" class="dropdown-item"><i class="ni ni-planet text-blue"></i> Afficher Critére Altérnative</a>
+                  <a href="{% url 'app:promethee_2' %}" class="dropdown-item"><i class="fas fa-chart-bar text-red"></i> Promethee 2 méthodes</a>
               </div>
           </div>
           </li>
 
           <li class="nav-item mx-2">
             <div class="dropdown nav-">
-              <a href="#" class=" nav-link  dropdown-toggle" data-toggle="dropdown"><i class="fas fa-folder-open text-orange"></i>Methode II</a>
+              <a href="#" class=" nav-link  dropdown-toggle" data-toggle="dropdown"><i class="fas fa-folder-open text-orange"></i>AHP</a>
               <div class="dropdown-menu">
                   <a href="{% url 'app:show_sub' %}" class="dropdown-item"><i class="ni ni-planet text-blue"></i> Afficher Critére Altirnative Sous-critère</a>
-                  <a href="{% url 'app:ahp' %}" class="dropdown-item"><i class="fas fa-sitemap text-red"></i> AHP </a>
+                  <a href="{% url 'app:ahp' %}" class="dropdown-item"><i class="fas fa-sitemap text-red"></i> AHP méthodes</a>
               </div>
           </div>
           </li>

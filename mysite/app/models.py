@@ -137,6 +137,10 @@ class Traveille(models.Model):
     name = models.CharField(max_length=200)
     def __str__(self):
         return self.name
+
+
+
+# DELETE
 class Promethee_file(models.Model):
     name = models.CharField(max_length  = 200)
     files = models.FileField(db_index=True, upload_to='uploads/')  

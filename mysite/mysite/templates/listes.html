@@ -91,8 +91,8 @@
                           <input type="text" class="form-control form-control-alternative" placeholder="Entrer nom de critere" value="{{critere.name}}" name = "is">
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="submit" class="btn btn-primary" name = "add">Save changes</button>
+                          <button type="button" class="btn btn-primary" data-dismiss="modal">Annuler</button>
+                          <button type="submit" class="btn btn-default" name = "add">Sauvgarder</button>
                         </div>
                           </form>
                         </div>
@@ -112,14 +112,14 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          <p>voulez vous  suprimer <span class="fs-5">{{critere.name}}</span> </p>
+                          <p>voulez vous  suprimer <span class="font-weight-bold">{{critere.name}}</span> </p>
                           <form action="" method="post"> 
                             {% csrf_token %}  
                         <input type="hidden" value= "{{critere.get_pk}}"  name= "id">
                         
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
-                          <button type="submit" class="btn btn-primary" name = "delete">Oui </button>
+                          <button type="button" class="btn btn-primary" data-dismiss="modal">Non</button>
+                          <button type="submit" class="btn btn-default" name = "delete">Oui </button>
                         </div>
                           </form>
                           
@@ -231,8 +231,8 @@
                           <input type="text" class="form-control form-control-alternative" placeholder="Entrer nom d'Alternative" value="{{altirnative.nom_vaccin}}" name = "is">
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="submit" class="btn btn-primary" name = "addAlternatve">Save changes</button>
+                          <button type="button" class="btn btn-primary" data-dismiss="modal">Anuler</button>
+                          <button type="submit" class="btn btn-default" name = "addAlternatve">Sauvegarder</button>
                         </div>
                           </form>
                         </div>
@@ -252,14 +252,14 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          <p>voulez vous  suprimer <span class="fs-5">{{altirnative.nom_vaccin}}</span> </p>
+                          <p>voulez vous  suprimer <span class="font-weight-bold">{{altirnative.nom_vaccin}}</span> </p>
                           <form action="" method="post"> 
                             {% csrf_token %}  
                         <input type="hidden" value= "{{altirnative.get_pk}}"  name= "id_del">
                         
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
-                          <button type="submit" class="btn btn-primary" name = "deleteAlternative">Oui </button>
+                          <button type="button" class="btn btn-primary" data-dismiss="modal">Non</button>
+                          <button type="submit" class="btn btn-default" name = "deleteAlternative">Oui </button>
                         </div>
                           </form>
                           
@@ -365,8 +365,8 @@
                           <input type="text" class="form-control form-control-alternative" placeholder="Entrer nom d'Alternative" value="{{sub.name}}" name = "is">
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="submit" class="btn btn-primary" name = "addSub">Save changes</button>
+                          <button type="button" class="btn btn-primary" data-dismiss="modal">Anuler</button>
+                          <button type="submit" class="btn btn-default" name = "addSub">Sauvegarder</button>
                         </div>
                           </form>
                         </div>
@@ -386,14 +386,14 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          <p>voulez vous  suprimer <span class="fs-5">{{sub.name}}</span> </p>
+                          <p>voulez vous  suprimer <span class="font-weight-bold">{{sub.name}}</span> </p>
                           <form action="" method="post"> 
                             {% csrf_token %}  
                         <input type="hidden" value= "{{sub.get_pk}}"  name= "id_del">
                         
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
-                          <button type="submit" class="btn btn-primary" name = "deleteSub">Oui </button>
+                          <button type="button" class="btn btn-primary" data-dismiss="modal">Non</button>
+                          <button type="submit" class="btn btn-default" name = "deleteSub">Oui </button>
                         </div>
                           </form>
                           

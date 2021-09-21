@@ -34,7 +34,7 @@ urlpatterns = [
     path('show csv/', views.show_csv, name = "show_csv"),
     # Matches any html file
     path('get_id/<id>', views.get_id, name = "get_id"),
-    re_path(r'^.*\.*', views.pages, name='pages'),
+    # re_path(r'^.*\.*', views.pages, name='pages'),
 
 
 ]
