@@ -484,8 +484,12 @@ def listes(request):
         id  = request.POST.get('id_sub')
         sub = get_object_or_404(Subcritere, pk=int(id))
         name = request.POST.get('is')
-        select = request.POST.get("cri_sub")
-        print(id,sub,name,select)
+        select = request.POST.get("cri_sous")
+        sub = get_object_or_404(Subcritere, pk=int(id))
+        crit = get_object_or_404(Critere, pk=int(select))
+        sub.name = name
+        sub.critere = crit
+        sub.save()
     if 'deleteSub' in request.POST:
         id  = request.POST.get('id_del')
         print(request.POST) 

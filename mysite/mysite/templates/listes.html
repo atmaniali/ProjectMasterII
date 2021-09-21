@@ -352,14 +352,13 @@
                           <form action="" method="post"> 
                             {% csrf_token %}  
                         <input type="hidden" value= "{{sub.get_pk}}"  name= "id_sub">
-                        {{criteres }}
+                        
                         <div class="form-group">
                         <label for="exampleFormControlSelect1">Example select</label>
-                        {% for cr in criteres %}
-                        {% endfor %}
-                        <select class="form-control" id="exampleFormControlSelect1">
-                          <option value="cr.get_pk">{{cr.name}}</option>
-                          
+                        <select class="form-control" id="exampleFormControlSelect1" name="cri_sous">
+                          {% for cr in criteres %}
+                          <option value="{{cr.get_pk}}">{{cr.name}}</option>  
+                          {% endfor %}
                         </select>
                       </div>
                         <div class="p-4 bg-secondary">
