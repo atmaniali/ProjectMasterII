@@ -35,8 +35,41 @@
     </div>
     <div>
         {% if url %}
-            <a href="{% url '{{obj.path}}' %">link</a>
+            {{url.path}}
+           {{array_Matrix}}
         {% endif %}
+        <bh>
+            <div class="table-responsive">
+                <table class="table align-items-center table-dark table-flush">
+                  <thead class="thead-dark">
+                    <tr>
+                        {% for x in array_Matrix_header %}
+                           
+                            <th scope="col">{{x}}</th>
+                            
+                        {% endfor %}
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% for y in array_Matrix_body  %}
+                    <tr>
+                      {% for i in y%}
+                      <td>
+                        <span class="mb-0 text-sm">{{i}}</span>
+                    </td>
+                      {% endfor %}
+                  </tr>
+                  {% empty %}
+                  <tr>
+                      <td colspan="7" class="text-center bg-Secondary">
+                          <span class="mb-0 text-sm">No DATA</span>
+                      </td>
+                  </tr>    
+                  {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+        
     </div>
     
 </div>
