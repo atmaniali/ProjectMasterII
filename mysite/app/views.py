@@ -635,8 +635,10 @@ def show_csv(request):
     template_name = "show_csv.html"
     context = {}
     csv_f = Upload_csv.objects.all()
+    ahp_file = Upload_ahp.objects.all()
     context["csv"] = csv_f
-    if request.method  == "POST":
+    context['ahp_files'] = ahp_file
+    if 'mp' in request.POST:
         id = request.POST.get("csv_name")
         print(id)
         obj = get_object_or_404(Upload_csv, pk = id)
@@ -644,16 +646,32 @@ def show_csv(request):
         weight_path = obj.path_weight
         context['url'] = obj       
         Matrix = np.loadtxt(mp_path,dtype = str, skiprows=0, delimiter=',')
-        # Mat = np.loadtxt(weight_path,dtype = str, skiprows=0, delimiter=',')
+        Mat = np.loadtxt(weight_path,dtype = str, skiprows=0, delimiter=',')
         array_Matrix  = np.array(Matrix)
+        array_Mat  = np.array(Mat)
         mat_header  = array_Matrix[0]  
-        mat_body = array_Matrix[2:]  
-        # array_Mat  = np.array(Mat)
+        mat_weight_header = array_Mat[0]
+        mat_body = array_Matrix[2:] 
+        mat_weight_body =  array_Mat[1:]
         context['array_Matrix_header'] = mat_header
         context['array_Matrix_body'] = mat_body
-        # context['array_Mat'] = array_Mat
-        
-    return render(request, template_name, context)        
+        context['array_Matrix_weight_header'] = mat_weight_header
+        context['array_Matrix_weight_body'] = mat_weight_body
+        return redirect("app:show_csv")
+    elif  'crit' in request.POST:   
+        id = request.POST.get("ahp_name")
+        obj = get_object_or_404(Upload_ahp, pk = id)  
+        crit_mat = obj.path
+        print('crit_mat', crit_mat) 
+        Matrix = np.loadtxt(crit_mat,dtype = str, skiprows=0, delimiter=',') 
+        array_cri  = np.array(Matrix)
+        crit_header  = array_cri[0]     
+        crit_body = array_cri[1:] 
+        context['crit_header'] = crit_header
+        context['crit_body'] = crit_body  
+        return redirect("app:show_csv")  
+    return render(request, template_name, context) 
+
 def get_id(request, id):
     template_name  = 'ahp_chart1.html'
     context= {'id ' : id}

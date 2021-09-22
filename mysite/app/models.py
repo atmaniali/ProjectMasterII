@@ -51,7 +51,11 @@ class Upload_csv(models.Model):
     def __str__(self):
         return self.name
     
-
+class Upload_ahp (models.Model):
+    user = user = models.ForeignKey(Profile, related_name= 'upload_ahps', on_delete= models.CASCADE)
+    name = models.CharField(max_length = 200, blank = True)
+    path = models.FileField(upload_to='ahp/', null= True, default='default_ahp.csv')
+    
 
 class Resultat(models.Model):
     key = models.CharField(max_length=100)

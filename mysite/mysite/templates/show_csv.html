@@ -28,17 +28,14 @@
                  </select>
                </div>
                <div>
-                   <button type="submit" class = 'btn btn-default'>Suivant</button>
+                   <button type="submit" class = 'btn btn-default' name="mp">Suivant</button>
                </div>
             </form> 
          </div>
     </div>
+    
     <div>
-        {% if url %}
-            {{url.path}}
-           {{array_Matrix}}
-        {% endif %}
-        <bh>
+        <h3>Tableau de Matrice de Perfermance(MP) :</h3>
             <div class="table-responsive">
                 <table class="table align-items-center table-dark table-flush">
                   <thead class="thead-dark">
@@ -62,15 +59,98 @@
                   {% empty %}
                   <tr>
                       <td colspan="7" class="text-center bg-Secondary">
-                          <span class="mb-0 text-sm">No DATA</span>
+                          <span class="mb-0 text-sm">aucune donnée n'est disponible</span>
                       </td>
                   </tr>    
                   {% endfor %}
                   </tbody>
                 </table>
-              </div>
-        
+              </div>  
+
+
+        <h3>Tableau du Poids(weight) :</h3>  
+        <div class="table-responsive">
+          <table class="table align-items-center  table-flush">
+            <thead class="">
+              <tr>
+                  {% for x in array_Matrix_header %}   
+                      <th scope="col">{{x}}</th>
+                  {% empty %}
+                  <th scope="col">aucune donnée n'est disponible</th>  
+                  {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <span class="mb-0 text-sm">weight</span>
+                </td>
+                {% for y in array_Matrix_weight_body%}
+                <td>
+                  <span class="mb-0 text-sm">{{y}}</span>
+              </td>
+              {% endfor %}
+            </tr>
+            </tbody>
+          </table>
+        </div>    
     </div>
+    
+    <br>
+    <!-- AHP methode -->
+    <div class = 'row'>
+      <div class ='col-8'>
+          <form action="" method="post">
+              {% csrf_token %}
+           <div class="form-group">
+               <label for="exampleFormControlSelect1">Example select</label>
+               <select class="form-control" id="exampleFormControlSelect1" name="ahp_name">
+                 {% for nam in ahp_files %}
+                   <option value= {{nam.id}}>{{nam.name}}</option> 
+                 {% endfor %}  
+               </select>
+             </div>
+             <div>
+                 <button type="submit" class = 'btn btn-default' name="crit">Suivant</button>
+             </div>
+          </form> 
+       </div>
+
+      </div>
+       <div>
+        <h3>Tableau de Critére :</h3>
+        <div class="table-responsive">
+            <table class="table align-items-center table-dark table-flush">
+              <thead class="thead-dark">
+                <tr>
+                    {% for x in crit_header %}
+                       
+                        <th scope="col">{{x}}</th>
+                        
+                    {% endfor %}
+                </tr>
+              </thead>
+              <tbody>
+              {% for y in crit_body  %}
+                <tr>
+                  {% for i in y%}
+                  <td>
+                    <span class="mb-0 text-sm">{{i}}</span>
+                </td>
+                  {% endfor %}
+              </tr>
+              {% empty %}
+              <tr>
+                  <td colspan="7" class="text-center bg-Secondary">
+                      <span class="mb-0 text-sm">aucune donnée n'est disponible</span>
+                  </td>
+              </tr>    
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>  
+
+       </div>
     
 </div>
 
