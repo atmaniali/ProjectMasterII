@@ -441,7 +441,8 @@ def shows(request):
             user = request.user.id 
             profile = Profile.objects.get(user = user)
             # weight_to_csv(weight_numpy,weight_names, profile)
-            numpy_to_csv(matrix, mp_names, profile, weight_numpy)  
+            numpy_to_csv(matrix, mp_names, profile, weight_numpy)
+        return redirect('app:show_csv')      
     elif 'tablCancel' in request.POST : 
         return redirect('app:home')        
       
@@ -610,7 +611,7 @@ def show_sub(request):
         user = request.user.id 
         profile = Profile.objects.get(user = user)
         numpy_to_csv_ahp(tabl_np,mp_names,profile)
-
+        return redirect("app:show_csv")
     context["criters"] = criters
     return render(request, template_name, context)      
 
@@ -648,16 +649,18 @@ def show_csv(request):
         Matrix = np.loadtxt(mp_path,dtype = str, skiprows=0, delimiter=',')
         Mat = np.loadtxt(weight_path,dtype = str, skiprows=0, delimiter=',')
         array_Matrix  = np.array(Matrix)
+        print(array_Matrix) 
         array_Mat  = np.array(Mat)
         mat_header  = array_Matrix[0]  
         mat_weight_header = array_Mat[0]
         mat_body = array_Matrix[2:] 
-        mat_weight_body =  array_Mat[1:]
+        mat_weight_body =  array_Mat[1:]    
+        context['mat'] = array_Matrix
         context['array_Matrix_header'] = mat_header
         context['array_Matrix_body'] = mat_body
         context['array_Matrix_weight_header'] = mat_weight_header
-        context['array_Matrix_weight_body'] = mat_weight_body
-        return redirect("app:show_csv")
+        context['array_Matrix_weight_body'] = array_Mat 
+        
     elif  'crit' in request.POST:   
         id = request.POST.get("ahp_name")
         obj = get_object_or_404(Upload_ahp, pk = id)  
@@ -669,7 +672,7 @@ def show_csv(request):
         crit_body = array_cri[1:] 
         context['crit_header'] = crit_header
         context['crit_body'] = crit_body  
-        return redirect("app:show_csv")  
+         
     return render(request, template_name, context) 
 
 def get_id(request, id):
