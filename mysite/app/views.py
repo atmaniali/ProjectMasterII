@@ -147,7 +147,8 @@ def profile(request):
     html_template = loader.get_template( 'profile.html' )
     return HttpResponse(html_template.render(context, request))      
     
-      
+# @login_required(login_url="/login/")  
+
 class CritereListView(generic.ListView):
 
     model = Critere
@@ -179,7 +180,7 @@ class CritereListView(generic.ListView):
         return render(request, self.template_name)    
       
 
-
+@login_required(login_url="/login/")
 def promether_view(request) :
 
     context = {}
@@ -201,6 +202,7 @@ def promether_view(request) :
 
             context['dict'] = dict
         context['result'] = result_alter  
+        
         context ['poursentage'] = result_poursen
     elif 'annuler' in request.POST:
         return redirect('app:home') 
@@ -209,7 +211,7 @@ def promether_view(request) :
 
     return HttpResponse(html_template.render(context, request))
 
-
+@login_required(login_url="/login/")
 def ahp_final(request):
 
     html_template = loader.get_template( 'ahp_final.html')
@@ -355,6 +357,8 @@ def ahp_final(request):
         
     return HttpResponse(html_template.render(context, request))  
 
+
+@login_required(login_url="/login/")
 def maps (request):
     template_name = "maps.html"
     context = {}
@@ -375,7 +379,7 @@ def maps (request):
 
 # Methode I
 
-
+@login_required(login_url="/login/")
 def shows(request):
     template_name = "show.html"
     context = {}
@@ -451,13 +455,18 @@ def shows(request):
     return render(request, template_name, context)
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+@login_required(login_url="/login/")
 def listes(request):
 
     template_name = "listes.html"
     context = {}
 
     criters = Critere.objects.all().order_by('pk')
-    
+    if 'update' in request.POST:
+        name = request.POST.get('is')
+        user = request.user
+        criter = Critere.objects.create(name = name, user = user)
+        print(name)
     if 'add' in request.POST :
         name = request.POST.get('is')
         id  = request.POST.get('id')
@@ -468,6 +477,10 @@ def listes(request):
         id  = request.POST.get('id') 
         critere = get_object_or_404(Critere, pk=int(id)) 
         critere.delete()
+    if 'updateAlternatve' in request.POST:
+       name = request.POST.get('is')     
+       user = request.user
+       Alternative.objects.create(nom_vaccin = name, user = user)
     if 'addAlternatve' in request.POST:
         name = request.POST.get('is')
         id  = request.POST.get('id_alt')
@@ -481,6 +494,13 @@ def listes(request):
         print(request.POST) 
         alternative = get_object_or_404(Alternative, pk=int(id)) 
         alternative.delete()
+    if 'updSub' in request.POST:
+        select = request.POST.get("cri_sous")
+        critere = get_object_or_404(Critere, pk=int(select)) 
+        name = request.POST.get('is') 
+        user = request.user
+        Subcritere.objects.create(name = name , critere  = critere, user = user)  
+        print(select, name) 
     if 'addSub' in request.POST:
         id  = request.POST.get('id_sub')
         sub = get_object_or_404(Subcritere, pk=int(id))
@@ -521,6 +541,7 @@ def listes(request):
 
 
 """list str to list int"""
+# @login_required(login_url="/login/")  
 def list_str_to_int(lists):
     for i in range(len(lists)):
         lists[i] = int(lists[i])
@@ -553,7 +574,7 @@ def get_names(lists):
         Traveille.objects.create(name = i.name)
                
 
-
+@login_required(login_url="/login/")
 def show_sub(request):  
     template_name = "show_sub.html"  
     context = {}
@@ -616,22 +637,8 @@ def show_sub(request):
     return render(request, template_name, context)      
 
 
-def add_critere(request):
-    template_name = "addcritere.html"
-    context = {}
-    # form = CritereCritere(request.POST or None)
-    # if request.method == 'POST':
-    #     print(request.POST)
-    #     print(request.user.id)
-    #     if form.is_valid():
-    #         critere = form.save(commit = False)
-    #         critere.user = request.user 
-    #         critere.save()   
-    #         return redirect('app:critere_list')
-           
-    # context['form'] = form      
-    return render(request, template_name, context)
 
+@login_required(login_url="/login/")
 def show_csv(request):
     template_name = "show_csv.html"
     context = {}
@@ -675,6 +682,7 @@ def show_csv(request):
          
     return render(request, template_name, context) 
 
+@login_required(login_url="/login/")
 def get_id(request, id):
     template_name  = 'ahp_chart1.html'
     context= {'id ' : id}
