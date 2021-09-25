@@ -22,7 +22,7 @@
             <form action="" method="post">
                 {% csrf_token %}
              <div class="form-group">
-                 <label for="exampleFormControlSelect1">Example select</label>
+                 <label for="exampleFormControlSelect1">Selectionner Fichier:</label>
                  <select class="form-control" id="exampleFormControlSelect1" name="csv_name">
                    {% for nam in csv %}
                      <option value= {{nam.id}}>{{nam.name}}</option> 
@@ -104,7 +104,7 @@
           <form action="" method="post">
               {% csrf_token %}
            <div class="form-group">
-               <label for="exampleFormControlSelect1">Example select</label>
+               <label for="exampleFormControlSelect1">Selectionner Fichier</label>
                <select class="form-control" id="exampleFormControlSelect1" name="ahp_name">
                  {% for nam in ahp_files %}
                    <option value= {{nam.id}}>{{nam.name}}</option> 
