@@ -460,11 +460,10 @@ def listes(request):
 
     template_name = "listes.html"
     context = {}
-
-    criters = Critere.objects.all().order_by('pk')
+    user = request.user
+    criters = Critere.objects.filter(user = user).order_by('pk')
     if 'update' in request.POST:
         name = request.POST.get('is')
-        user = request.user
         criter = Critere.objects.create(name = name, user = user)
         print(name)
     if 'add' in request.POST :
@@ -479,7 +478,7 @@ def listes(request):
         critere.delete()
     if 'updateAlternatve' in request.POST:
        name = request.POST.get('is')     
-       user = request.user
+       
        Alternative.objects.create(nom_vaccin = name, user = user)
     if 'addAlternatve' in request.POST:
         name = request.POST.get('is')
@@ -526,8 +525,8 @@ def listes(request):
         crits_paginater = paginator_crit.page(1)
     except EmptyPage:
         crits_paginater = paginator_crit.page(paginator_crit.num_pages)
-    alternatives = Alternative.objects.all()
-    subcriters = Subcritere.objects.order_by('critere') 
+    alternatives = Alternative.objects.filter(user = user)
+    subcriters = Subcritere.objects.filter(user = user).order_by('critere') 
     paginator_alti = Paginator(alternatives, 5)
 
     context["criteres"] = criters
@@ -642,8 +641,10 @@ def show_sub(request):
 def show_csv(request):
     template_name = "show_csv.html"
     context = {}
-    csv_f = Upload_csv.objects.all()
-    ahp_file = Upload_ahp.objects.all()
+    user = request.user
+    profile = Profile.objects.get(user = user)
+    csv_f = Upload_csv.objects.filter(user = profile)
+    ahp_file = Upload_ahp.objects.filter(user = profile)
     context["csv"] = csv_f
     context['ahp_files'] = ahp_file
     if 'mp' in request.POST:

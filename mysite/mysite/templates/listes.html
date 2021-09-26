@@ -156,7 +156,12 @@
                       </div>
                     </div>
                   </div>
-
+                  {% empty %}
+                  <tr>
+                      <td colspan="7" class="text-center bg-Secondary">
+                          <span class="mb-0 text-sm">Aucune donnée n'est disponible</span>
+                      </td>
+                  </tr>    
 
                   {% endfor %}
                 </tbody>
@@ -326,7 +331,12 @@
                       </div>
                     </div>
                   </div>
-
+                  {% empty %}
+              <tr>
+                  <td colspan="7" class="text-center bg-Secondary">
+                      <span class="mb-0 text-sm">Aucune donnée n'est disponible</span>
+                  </td>
+              </tr>    
 
                   {% endfor %}
                 </tbody>
@@ -500,7 +510,13 @@
                       </div>
                     </div>
                   </div>
-
+                  {% empty %}
+                  <tr>
+                      <td colspan="7" class="text-center bg-Secondary">
+                          <span class="mb-0 text-sm">Aucune donnée n'est disponible</span>
+                      </td>
+                  </tr>    
+    
 
                   {% endfor %}
                 </tbody>
