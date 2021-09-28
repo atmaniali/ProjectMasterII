@@ -40,15 +40,15 @@
               <div class="dropdown-divider"></div>
               <a href="{% url 'logout' %}" class="dropdown-item">
                 <i class="ni ni-user-run  fa-flip-horizontal pl-3"></i>
-                <span>Logout</span>
+                <span>Se déconnecter</span>
               </a>
             </div>
           </li>
         </ul>
         {% else %}
         <div>
-          <a class="btn btn-primary" href="{% url 'register' %}">Sign in</a>
-          <a class="btn btn-primary" href="{% url 'app:index' %}">Login</a>
+          <a class="btn btn-primary" href="{% url 'register' %}">Créer un compte</a>
+          <a class="btn btn-primary" href="{% url 'app:index' %}">Se connecter</a>
           
         </div>
 

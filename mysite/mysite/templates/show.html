@@ -28,6 +28,8 @@
                 <input type="checkbox" class="custom-control-input" id="customCriCheck{{criter.id}}" value={{criter.get_name}} name="crits">
                 <label class="custom-control-label" for="customCriCheck{{criter.id}}">{{criter}}</label>
             </div>
+        {% empty %}
+        <h3 class = "text-warning">Aucune critere pour selectioner !</h3>    
         {% endfor %}
         </fieldset>
     </div>
@@ -41,7 +43,8 @@
                 <input type="checkbox" class="custom-control-input" id="customAltCheck{{alternative.id}}" value={{alternative.get_name}} name="alts">
                 <label class="custom-control-label" for="customAltCheck{{alternative.id}}">{{alternative}}</label>
             </div>
-            
+        {% empty %} 
+        <h3 class = "text-warning">Aucune Alternative selectioner</h3>   
         {% endfor %}
         </fieldset>
         <br></div> 
@@ -120,13 +123,43 @@
                                             {% if forloop.first or forloop.parentloop.first %} 
                                             <div class="col">
                                                 <th> 
-                                                    <input type="text" class="form-control" disabled id="{{forloop.counter0}} {{cel}}" name="weights" value={{cel}}>
+                                                    <input type="text" class="form-control" disabled id="{{forloop.counter0}} {{cel}}" name="weights" value="{{cel}}">
                                                 </th>
                                             </div>
                                             {% else %} 
                                             <div class="col">
                                                 <td>
                                                     <input type="number" step="0.1" min="0" max="1" class="form-control" id="" name="weights" value={{cel}}>
+                                                </td>  
+                                            </div>  
+                                            {% endif %}
+                                        </div>    
+                                    {% endfor %}
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div> <br>
+                    <div class = "table-responsive">
+                        Choisir criteres Maximiser et Minimiser :
+                        <ul>
+                            <li>1 pour maximiser </li>
+                            <li>0 pour minimiser </li>
+                        </ul>
+                        <table class = "table" name = "benificil"  id="exportMe">
+                            {% for row in weights %}
+                                <tr>
+                                    {% for cel in row %}
+                                        <div class = "row">
+                                            {% if forloop.first or forloop.parentloop.first %} 
+                                            <div class="col">
+                                                <th> 
+                                                    <input type="text" class="form-control" disabled id="{{forloop.counter0}} {{cel}}" name="bini" value="{{cel}}">
+                                                </th>
+                                            </div>
+                                            {% else %} 
+                                            <div class="col">
+                                                <td>
+                                                    <input type="number"  min="0" max="1" class="form-control" id="" name="bini" value={{cel}}>
                                                 </td>  
                                             </div>  
                                             {% endif %}

@@ -19,96 +19,105 @@
 
     <!-- CheckBox -->
     <div>
-        <form action="" method="post">
-            {% csrf_token %}
-            <h2>Criteres</h2>
+        <h2>Criteres</h2>
+        {% if criters %}
             <p>Cochez une ou plusieurs critére</p>
-            <fieldset name = "criters"> 
-            {% for criter in criters %} 
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="customCriCheck{{criter.id}}" value={{criter.id}} name="crits">
-                    <label class="custom-control-label" for="customCriCheck{{criter.id}}">{{criter.get_name}}</label>
-                </div>
-            {% endfor %}
-            </fieldset>
-            <button type="submit" class="btn btn-default my-2 position-absolute" name="check_box" style="right: 10px">Suivant</button>    
-        </form> 
-        {% if messages %}
-            {% for message in messages %}
-            <!-- messages succes -->
-                {% if message.tags == 'success'%}
-                
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <span class="alert-icon"><i class="fas fa-check text-secondary"></i></span>
-                    <span class="alert-text"><strong>{{ message }}</strong></span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div class = "my-3">
-                    <form action="" method="post">
-                        {% csrf_token %}
-                        <!-- Alternatives-->
-                        <h2>Alternatives</h2>
-                        <p>Check one or more alternatives</p>
-                        <fieldset name="altes">
-                        {% for alternative in alternatives %} 
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="customAltCheck{{alternative.id}}" value={{alternative.get_name}} name="alts">
-                                <label class="custom-control-label" for="customAltCheck{{alternative.id}}">{{alternative}}</label>
-                            </div>
-                            
-                        {% endfor %}
-                        </fieldset> 
-                        <!-- Criteres -->
-                        <h2>Sous Critere</h2>
-                        {% for i in sub_cris %} 
-                        {% if i.subcritere.0 != "" %} 
-                        <p>Couchez une au plusieurs <span class="font-weight-bold" name = 'crr_name'> {{i.critere}}</span></p>
-                            <fieldset name="Crit">
-                                {% if i.subcritere %}
-                                    {% for j in i.subcritere %}
-                                    
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="check{{j}}" value={{j}} name="i_sub">
-                                        <label class="custom-control-label" for="check{{j}}">{{j}}</label>
-                                    </div>
-                                    
-                                    {% endfor %}
-                                {% else %}    
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="check{{i.subcritere.0}}" value={{i.subcritere.0}} name="i_sub" >
-                                    <label class="custom-control-label" for="check{{i.subcritere.0}}">{{i.subcritere.0}}</label>
-                                </div>
-                                {% endif %}
-                            </fieldset> 
-                        {% endif %}   
-                        {% endfor %}
-                         <div class = "position-absolute" style="right: 5px">
-                            <button type="submit" class="btn btn-primary my-2" name="check_box_all_cancel">Annuler</button> 
-                            <button type="submit" class="btn btn-successbtn btn-default my-2" name="check_box_all">Suivant</button>
-                         </div>  
-                        
-                    </form> 
-                   
+            <form action="" method="post">
+                {% csrf_token %}
+                <fieldset name = "criters"> 
+                {% for criter in criters %} 
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="customCriCheck{{criter.id}}" value={{criter.id}} name="crits">
+                        <label class="custom-control-label" for="customCriCheck{{criter.id}}">{{criter.get_name}}</label>
+                    </div>
+                {% empty %}   
+                  <h3 class= "text-warning">Aucune crétere pour cocher </h3> 
+                {% endfor %}
+                </fieldset>
+                <button type="submit" class="btn btn-default my-2 position-absolute" name="check_box" style="right: 10px">Suivant</button>    
+            </form> 
+            
+            {% if messages %}
+                {% for message in messages %}
+                <!-- messages succes -->
+                    {% if message.tags == 'success'%}
                     
-                </div>
-                <br>
-                <br>
-                
-                <!-- messages err -->
-                {% elif message.tags == 'error'%}
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <span class="alert-icon"><i class="fas fa-exclamation-triangle text-secondary"></i></span>
-                    <span class="alert-text"><strong>{{ message }}</strong> </span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                {% endif %}
-            {% endfor %}
-        {% endif %} 
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <span class="alert-icon"><i class="fas fa-check text-secondary"></i></span>
+                        <span class="alert-text"><strong>{{ message }}</strong></span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class = "my-3">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <!-- Alternatives-->
+                            <h2>Alternatives</h2>
+                            <p>Cocher un au plusieurs Alternatives</p>
+                            <fieldset name="altes">
+                            {% for alternative in alternatives %} 
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customAltCheck{{alternative.id}}" value={{alternative.get_name}} name="alts">
+                                    <label class="custom-control-label" for="customAltCheck{{alternative.id}}">{{alternative}}</label>
+                                </div>
+                            {% empty %} 
+                            <h3 class = "text-warning">Aucune Alternative a choisé</h3>   
+                            {% endfor %}
+                            </fieldset> 
+                            <!-- Criteres -->
+                            <h2>Sous Critere</h2>
+                            {% for i in sub_cris %} 
+                            {% if i.subcritere.0 != "" %} 
+                            <p>Couchez une au plusieurs <span class="font-weight-bold" name = 'crr_name'> {{i.critere}}</span></p>
+                                <fieldset name="Crit">
+                                    {% if i.subcritere %}
+                                        {% for j in i.subcritere %}
+                                        
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="check{{j}}" value={{j}} name="i_sub">
+                                            <label class="custom-control-label" for="check{{j}}">{{j}}</label>
+                                        </div>
+                                        {% empty%}
+                                        <h3 class = "text-warning">Aucune sous critere pour cocher</h3>
+                                        {% endfor %}
+                                    {% else %}    
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="check{{i.subcritere.0}}" value={{i.subcritere.0}} name="i_sub" >
+                                        <label class="custom-control-label" for="check{{i.subcritere.0}}">{{i.subcritere.0}}</label>
+                                    </div>
+                                    {% endif %}
+                                </fieldset> 
+                            {% endif %}   
+                            {% endfor %}
+                            <div class = "position-absolute" style="right: 5px">
+                                <button type="submit" class="btn btn-primary my-2" name="check_box_all_cancel">Annuler</button> 
+                                <button type="submit" class="btn btn-successbtn btn-default my-2" name="check_box_all">Suivant</button>
+                            </div>  
+                            
+                        </form> 
+                    
+                        
+                    </div>
+                    <br>
+                    <br>
+                    
+                    <!-- messages err -->
+                    {% elif message.tags == 'error'%}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <span class="alert-icon"><i class="fas fa-exclamation-triangle text-secondary"></i></span>
+                        <span class="alert-text"><strong>{{ message }}</strong> </span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %} 
+        {% else %} 
+        <h3 class = 'text-warning'>Tu n'as pas du critére pour selectioner !</h3>   
+       {% endif %} 
     </div> 
 </div>
        

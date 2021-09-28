@@ -320,6 +320,11 @@ def get_matrix(x, y):
 
 def get_matrix_ahp(x, y):
     zeros = np.zeros((len(y),len(x)))
+    for i in range(len(zeros)):
+        for j in range(len(zeros)):
+            if i == j:
+                zeros[i][j] = 1
+
     mat = np.vstack([y,zeros.transpose()]).transpose()
     x.insert(0,"")
     matrix = np.vstack([x,mat])
@@ -329,14 +334,23 @@ def get_list(x):
     zeros = np.zeros(len(x))
     matrix = np.vstack([x,zeros])
     return matrix    
- 
+"""turn int to boolean""" 
+def int_to_bool(lists):
+    d= []
+    for i in lists:
+        if i == 0:
+            d.append('no')
+        else :
+            d.append('yes')
+    return d 
+
 """ add a list to matrix and return matrix for prometheeII"""   
-def slicing(matrix):
+def slicing(matrix, binificalt):
     matrix = np.array(matrix)
     mat_header  = matrix[0]  
     mat_body = matrix[1:]  
-    test = ['test']
-    rend = random.choices(['yes','no'], k=len(mat_header)-1)
+    test = ['Benefique']
+    rend = binificalt
     test.extend(rend)
     # print(test)
     mat_header = np.vstack([mat_header,test])

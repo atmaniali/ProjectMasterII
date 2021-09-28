@@ -36,7 +36,7 @@
             </div>
             <a href="{% url 'app:profile' %}" class="dropdown-item">
               <i class="ni ni-single-02"></i>
-              <span>My profile</span>
+              <span>Profile</span>
             </a>
             {% comment %} <a href="{% url 'app:profile' %}" class="dropdown-item">
               <i class="ni ni-settings-gear-65"></i>
@@ -53,7 +53,7 @@
             <div class="dropdown-divider"></div>
             <a href="{% url 'logout'%}" class="dropdown-item">
               <i class="ni ni-user-run fa-flip-horizontal pl-3"></i>
-              <span>Logout</span>
+              <span>Déconnecter</span>
             </a>
           </div>
         </li>
@@ -128,20 +128,22 @@
           </li>
           <li class="nav-item">
             <a class="nav-link {% if 'profile' in segment %} active {% endif %}" href="{% url 'app:profile' %}">
-              <i class="ni ni-single-02 text-yellow"></i> User profile
+              <i class="ni ni-single-02 text-yellow"></i> Profile
             </a>
           </li>
+          {% if request.user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'logout' %}">
-              <i class="ni ni-user-run text-red"></i> Logout
+              <i class="ni ni-user-run text-red"></i> Déconnecter
             </a>
           </li>
+          {% else %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'login' %}">
-              <i class="ni ni-user-run text-red fa-flip-horizontal pl-3"></i> Login
+              <i class="ni ni-user-run text-red fa-flip-horizontal pl-3"></i> Connecter
             </a>
           </li>
-
+          {% endif %}
         </ul>
         <!-- Divider -->
         <hr class="my-3">

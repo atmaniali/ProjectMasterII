@@ -385,9 +385,9 @@ def shows(request):
     context = {}
     # All
    
-    criters = Subcritere.objects.all()
+    criters = Subcritere.objects.filter(user = request.user)
              
-    alternatives = Alternative.objects.all()
+    alternatives = Alternative.objects.filter(user = request.user)
     if 'check_box' in request.POST:    
         # get List of Critere Alternative cheking
         crits = request.POST.getlist('crits')
@@ -421,8 +421,13 @@ def shows(request):
         
         # get list of weight
         weight = request.POST.getlist("weights")
-
+        bini = request.POST.getlist("bini")
+        print("bini++")
+        print(bini)
         weight_numpy = np.array(weight).astype(float)
+        binif = np.array(bini).astype(int)
+        binif_to_bol = int_to_bool(binif)
+        print(binif)    
 
         summs = np.sum(weight_numpy)
 
@@ -435,7 +440,8 @@ def shows(request):
 
         tabl_np = np.reshape(tab_np,(x, y))
 
-        matrix = slicing(tabl_np)
+        matrix = slicing(tabl_np, binif_to_bol)
+
         if summs <= 0:
             messages.info(request,"weight should be > 0")
         elif summs > 1:
@@ -561,11 +567,12 @@ def get_cri_et_sub(lists):
     d = []    
     for i in lists:
         s = i.get_subcriters()
-        z = s.split(',')
-        if len(z) ==0:
-            z = ''     
-        case= {'critere':i.name, 'subcritere': z}
-        d.append(case)     
+        if s != '':
+            z = s.split(',')
+            if len(z) ==0:
+                z = ''     
+            case= {'critere':i.name, 'subcritere': z}
+            d.append(case)     
     return d 
 """ store names """    
 def get_names(lists):
@@ -578,7 +585,8 @@ def show_sub(request):
     template_name = "show_sub.html"  
     context = {}
     sub_cris = None
-    criters = Critere.objects.all()
+    # user = request.user
+    criters = Critere.objects.filter(user = request.user)
     if 'check_box' in request.POST:
         # list of critere id
         crits = request.POST.getlist('crits')
@@ -594,7 +602,7 @@ def show_sub(request):
             get_names(criters_2)
             print("cri_sub", cri_sub)
             
-            alternatives = Alternative.objects.all()
+            alternatives = Alternative.objects.filter(user = request.user)
             context["alternatives"] = alternatives
             context["cri_2"] = criters_2
             context["sub_cris"]= cri_sub
@@ -661,7 +669,7 @@ def show_csv(request):
         array_Mat  = np.array(Mat)
         mat_header  = array_Matrix[0]  
         mat_weight_header = array_Mat[0]
-        mat_body = array_Matrix[2:] 
+        mat_body = array_Matrix[1:] 
         mat_weight_body =  array_Mat[1:]    
         context['mat'] = array_Matrix
         context['array_Matrix_header'] = mat_header
